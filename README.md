@@ -21,21 +21,33 @@ currency.
 
 ## Bar Rush — `gold-rush.html`
 
-A pseudo-3D canyon-runner in the "swipe to build your stack" style of a
-money-stacker game, reskinned as a gold-mining cart run instead of a
-money run. The road renders in perspective (converging toward a horizon,
-like the reference), the path splits into two branches at each gate —
-swipe/steer left or right into the branch with the value you want — and
-every 6th checkpoint is a **furnace** that smelts your current bar stack
-into permanent nuggets. Stray onto a rockslide obstacle and your cart
-wrecks.
+A real-3D (Three.js) hyper-casual runner in the look of a "swipe to make
+money" game: bright sky, green hills and low-poly trees, a blue-and-white
+striped bridge road, a red runner, and translucent blue/red value gates —
+reskinned around **gold bars** instead of cash. The runner stands on a
+tower of gold bars that grows and shrinks with every choice.
 
-- **Main menu** — best distance / nugget balance, Play, Shop, Settings.
-- **Gameplay** — perspective road, branching `+N` / `-N` / `x2` / `÷2`
-  gates, single-lane rock obstacles, nugget pickups, furnace checkpoints,
-  ramping speed, pause/resume, results screen with retry.
-- **Shop** — 5 alternate cart/character color skins.
-- **Settings** — music/SFX toggles, progress reset.
+- **Levels** — each level is a hand-length track that ends at a finish
+  arch and a rainbow **multiplier staircase** (x1.2 … x5) leading up to a
+  gold bank. Every step costs bars, so the more you carry, the higher you
+  climb and the bigger the payout. Every 5th level is a bonus level with
+  only good gates and no traps.
+- **Gates** — two side-by-side panels per gate (blue = good, red = bad):
+  `+N` vs `+N`, `+N` vs `-N`, `x2` vs `+N` (which one is better depends on
+  what you carry), `x2` vs `-N`, `-N` vs `÷2`.
+- **Traps** — spiked walls, swinging hammers and sliding saw blades knock
+  bars off your tower. Lose all your gold and the level fails.
+- **Pickups** — lines of gold bars on the road.
+- **Main menu** — gold total, current level, "tap anywhere to play" with a
+  swipe tutorial, and two upgrades: **Start Gold** and **Income**.
+- **Shop** — 9 runner skins. **Settings** — sound, music, vibration,
+  progress reset.
+- Synthesized sound effects and background music (Web Audio), vibration
+  feedback, confetti, floating value pop-ups.
+
+Three.js (r128) loads from cdnjs, so the game needs an internet
+connection the first time; for an offline Play Store build, download
+`three.min.js` next to the file and point the `<script src>` at it.
 
 ## Play them
 
@@ -90,13 +102,11 @@ the page online and wrap the live URL instead of bundling the file.)
 
 ## Notes / next steps
 
-- All rendering is 2D Canvas; all UI is plain HTML/CSS overlaid on the
-  canvas — no framework, no external fonts beyond the bundled Google Fonts
-  `<link>`.
+- Crystal Rush renders with 2D Canvas; Bar Rush renders with Three.js.
+  All UI is plain HTML/CSS overlaid on the canvas.
 - Swap the Web Audio beeps in each game's `sfx` object for real music/SFX
   files by adding `<audio>` elements gated on `save.music` / `save.sfx`.
 - Skin colors/costs live in each file's `SKINS` object near the top of the
   `<script>` — add more there to expand the shop.
-- Bar Rush's perspective/road tuning (`FOV_Z`, `ROAD_HALF_NEAR`,
-  `GATE_SPACING`, speeds) lives in the "perspective road" / "game
-  constants" sections near the top of its `<script>`.
+- Bar Rush's level tuning (track length, speed, step cost, gate values,
+  trap mix) lives in `buildLevel()` and `genGateOpts()`.
