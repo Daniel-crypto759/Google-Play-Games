@@ -1,0 +1,13 @@
+# Godot 4 editor cache
+.godot/
+.import/
+export.cfg
+
+# Export output
+build/
+*.apk
+*.aab
+
+# Local keystores - never commit signing keys
+*.keystore
+*.jks

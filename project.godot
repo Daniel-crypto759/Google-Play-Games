@@ -1,0 +1,43 @@
+; Engine configuration file.
+; Crystal Rush - a swipe-to-collect endless runner for Android (Godot 4.x)
+
+config_version=5
+
+[application]
+
+config/name="Crystal Rush"
+config/description="Swipe across a neon alien highway, smash through value gates and cash in glowing crystals before the harvester catches you."
+run/main_scene="res://scenes/MainMenu.tscn"
+config/features=PackedStringArray("4.3", "Mobile")
+boot_splash/bg_color=Color(0.043, 0.035, 0.09, 1)
+config/icon="res://assets/icons/icon.svg"
+
+[autoload]
+
+Save=*"res://scripts/SaveManager.gd"
+Audio=*"res://scripts/AudioManager.gd"
+
+[display]
+
+window/size/viewport_width=1080
+window/size/viewport_height=1920
+window/size/mode=2
+window/handheld/orientation="portrait"
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+
+[input_devices]
+
+pointing/emulate_mouse_from_touch=false
+
+[physics]
+
+3d/physics_engine="GodotPhysics3D"
+common/physics_ticks_per_second=60
+
+[rendering]
+
+renderer/rendering_method="mobile"
+renderer/rendering_method.mobile="mobile"
+textures/vram_compression/import_etc2_astc=true
+environment/defaults/default_clear_color=Color(0.043, 0.035, 0.09, 1)
