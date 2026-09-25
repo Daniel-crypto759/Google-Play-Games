@@ -27,23 +27,39 @@ striped bridge road, a red runner, and translucent blue/red value gates —
 reskinned around **gold bars** instead of cash. The runner stands on a
 tower of gold bars that grows and shrinks with every choice.
 
-- **Levels** — each level is a hand-length track that ends at a finish
-  arch and a rainbow **multiplier staircase** (x1.2 … x5) leading up to a
-  gold bank. Every step costs bars, so the more you carry, the higher you
-  climb and the bigger the payout. Every 5th level is a bonus level with
-  only good gates and no traps.
-- **Gates** — two side-by-side panels per gate (blue = good, red = bad):
-  `+N` vs `+N`, `+N` vs `-N`, `x2` vs `+N` (which one is better depends on
-  what you carry), `x2` vs `-N`, `-N` vs `÷2`.
-- **Traps** — spiked walls, swinging hammers and sliding saw blades knock
-  bars off your tower. Lose all your gold and the level fails.
-- **Pickups** — lines of gold bars on the road.
-- **Main menu** — gold total, current level, "tap anywhere to play" with a
-  swipe tutorial, and two upgrades: **Start Gold** and **Income**.
-- **Shop** — 9 runner skins. **Settings** — sound, music, vibration,
-  progress reset.
-- Synthesized sound effects and background music (Web Audio), vibration
-  feedback, confetti, floating value pop-ups.
+### Gameplay
+
+- **Levels** end at a finish arch and a rainbow **multiplier staircase**
+  (x1.2 … x5) leading up to a gold bank. Each step costs more bars than the
+  last, so the more you carry, the higher you climb. Rated 1–3 stars; all
+  10 steps is a PERFECT bonus. Every 5th level is a bonus level.
+- **Zones** — Meadow, Desert, Snow and Candy, switching every 5 levels.
+- **Gates** — blue = good, red = bad, plus **golden gates** (big x3 / +N
+  rewards), purple **mystery "?" gates** (a gamble), and **moving gates**
+  whose panels slide and swap sides.
+- **Combo → Gold Fever** — blue gates, pickups, boosts and near misses fill
+  the combo bar. When it's full, Gold Fever starts: you run faster, bars
+  count double, and you smash through traps.
+- **Traps** — spiked walls (some move), swinging hammers and sliding saws.
+  Hits knock bars off your tower; running out of gold fails the level.
+  Dodging closely gives a "CLOSE!" combo bonus.
+- **Pickups** — gold bars, **gems** (often hidden in risky spots), and
+  **keys**. **Boost pads** give a speed burst.
+- **Revive** for 10 gems once per run.
+
+### Main menu (Home / Upgrades / Skins / Missions)
+
+- **8 upgrades** bought with gold: Start Gold, Income, Magnet, Armor,
+  Bubble Shield, Gold Fever duration, Lucky Gates, and a **Gold Mine**
+  that earns gold while you're away (8h max).
+- **Daily reward** calendar (7-day streak), **Lucky Wheel** (free spin
+  every 3 hours, or 5 gems), **Treasure Room** (3 keys open chests with
+  gold, gems or a free skin).
+- **Daily missions** — 3 per day plus a bonus for finishing all 3.
+- **Skins** — 9 runners (gold) and 6 gold-bar styles (gems).
+- **Settings** — sound, music, vibration, progress reset.
+- Synthesized sound and music (Web Audio), vibration, confetti, fly-to-
+  counter coin animations. Progress is saved in `localStorage`.
 
 Three.js (r128) loads from cdnjs, so the game needs an internet
 connection the first time; for an offline Play Store build, download
