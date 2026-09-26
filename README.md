@@ -27,37 +27,58 @@ striped bridge road, a red runner, and translucent blue/red value gates —
 reskinned around **gold bars** instead of cash. The runner stands on a
 tower of gold bars that grows and shrinks with every choice.
 
+### Game modes
+
+- **Levels** — each zone has 5 levels. Most end at a rainbow **multiplier
+  staircase** (x1.2 … x5) up to a gold bank; each step costs more bars than
+  the last. Every 5th level is a **boss fight**: tap as fast as you can to
+  throw your bars at the zone boss (Bandit King, Sand Golem, Frost Yeti,
+  Sugar Tyrant) before your tower runs out. Levels are rated 1–3 stars.
+- **Daily Challenge** (from level 2) — a special level each day with a twist
+  (Speed Rush, Mystery Madness, Trap Gauntlet, Thief Invasion, Golden
+  Hour). First clear of the day pays +15 gems and bonus gold.
+- **Endless Run** (from level 3) — an infinite, ever-faster track. Gold
+  bank arches save 30% of your tower; you earn 1 gold per meter plus what
+  you banked. Beat your best distance.
+
 ### Gameplay
 
-- **Levels** end at a finish arch and a rainbow **multiplier staircase**
-  (x1.2 … x5) leading up to a gold bank. Each step costs more bars than the
-  last, so the more you carry, the higher you climb. Rated 1–3 stars; all
-  10 steps is a PERFECT bonus. Every 5th level is a bonus level.
-- **Zones** — Meadow, Desert, Snow and Candy, switching every 5 levels.
-- **Gates** — blue = good, red = bad, plus **golden gates** (big x3 / +N
-  rewards), purple **mystery "?" gates** (a gamble), and **moving gates**
-  whose panels slide and swap sides.
-- **Combo → Gold Fever** — blue gates, pickups, boosts and near misses fill
-  the combo bar. When it's full, Gold Fever starts: you run faster, bars
-  count double, and you smash through traps.
-- **Traps** — spiked walls (some move), swinging hammers and sliding saws.
-  Hits knock bars off your tower; running out of gold fails the level.
-  Dodging closely gives a "CLOSE!" combo bonus.
-- **Pickups** — gold bars, **gems** (often hidden in risky spots), and
-  **keys**. **Boost pads** give a speed burst.
+- **Swipe** left/right to steer, **swipe up** to jump (arrow keys / A-D /
+  W or Space on desktop). The first jumpable obstacle triggers a
+  slow-motion jump tutorial.
+- **Gates** — blue = good, red = bad, **golden gates**, purple **mystery
+  "?" gates**, and **moving gates** whose panels swap sides.
+- **Traps** — spiked walls (some move), swinging hammers, sliding saws,
+  **hurdles** and **rolling barrels** you can jump, and **pits** that make
+  you fall and lose bars unless you jump.
+- **Thieves** — gangs of masked runners that chase you and steal bars.
+  Dodge them, jump over them, or knock them flying with a shield or Gold
+  Fever.
+- **Power-ups** — Magnet (pulls in everything), Double Bars, Bubble Shield.
+- **Combo → Gold Fever** — good gates, pickups, jumps and near misses fill
+  the combo bar; Gold Fever makes you faster, doubles bars and smashes
+  traps.
+- **Pickups** — gold bars, gems (often in risky spots), keys; boost pads.
 - **Revive** for 10 gems once per run.
+- **Zones** — Meadow, Desert, Snow and Candy, switching every 5 levels.
 
-### Main menu (Home / Upgrades / Skins / Missions)
+### Main menu (Home / Upgrades / Skins / Missions / Trophies)
 
-- **8 upgrades** bought with gold: Start Gold, Income, Magnet, Armor,
-  Bubble Shield, Gold Fever duration, Lucky Gates, and a **Gold Mine**
-  that earns gold while you're away (8h max).
-- **Daily reward** calendar (7-day streak), **Lucky Wheel** (free spin
-  every 3 hours, or 5 gems), **Treasure Room** (3 keys open chests with
-  gold, gems or a free skin).
-- **Daily missions** — 3 per day plus a bonus for finishing all 3.
-- **Skins** — 9 runners (gold) and 6 gold-bar styles (gems).
-- **Settings** — sound, music, vibration, progress reset.
+- **Home** — level journey map for the current zone (stars earned, boss
+  node), Daily Challenge and Endless cards, and quick buttons for the
+  daily reward, lucky wheel, gold mine and treasure room. The runner waves
+  at you.
+- **10 upgrades** — Start Gold, Income, Magnet, Armor, Bubble Shield, Gold
+  Fever, Power-Ups, Throw Power (boss damage), Lucky Gates, Gold Mine.
+- **Wardrobe** — 9 runner colors, 8 hats (cap, party hat, cowboy, top hat,
+  crown, viking helmet, halo) and 6 gold-bar styles. Tap to try an item on
+  the 3D runner, tap again to buy.
+- **Missions** — 3 daily missions plus an all-clear bonus.
+- **Trophies** — lifetime stats and 11 three-tier achievements that pay
+  gold and gems.
+- **Daily reward** (7-day streak), **Lucky Wheel** (free every 3 hours),
+  **Treasure Room** (3 keys open chests; the jackpot is a free skin or hat).
+- **Settings** — sound, music, vibration, high/low graphics, reset.
 - Synthesized sound and music (Web Audio), vibration, confetti, fly-to-
   counter coin animations. Progress is saved in `localStorage`.
 
