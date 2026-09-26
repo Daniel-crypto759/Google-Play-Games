@@ -23,9 +23,14 @@ currency.
 
 A real-3D (Three.js) hyper-casual runner in the look of a "swipe to make
 money" game: bright sky, green hills and low-poly trees, a blue-and-white
-striped bridge road, a red runner, and translucent blue/red value gates —
-reskinned around **gold bars** instead of cash. The runner stands on a
-tower of gold bars that grows and shrinks with every choice.
+striped bridge road, and translucent blue/red value gates — reskinned
+around **gold bars** instead of cash. The runner is a cel-shaded cartoon
+character with ink outlines, big blinking eyes and expressions (happy,
+"ouch" on hits, "wow" in Gold Fever), and stands on a tower of gold bars
+that grows and shrinks with every choice. Thieves and bosses share the same
+cartoon style. The menu uses a bright sticker look: thick outlines, glossy
+buttons with shine sweeps, a bouncing logo with spinning light rays, and
+wiggling notification icons.
 
 ### Game modes
 
@@ -47,10 +52,14 @@ tower of gold bars that grows and shrinks with every choice.
   W or Space on desktop). The first jumpable obstacle triggers a
   slow-motion jump tutorial.
 - **Gates** — blue = good, red = bad, **golden gates**, purple **mystery
-  "?" gates**, and **moving gates** whose panels swap sides.
+  "?" gates**, **moving gates** whose panels swap sides, and **Lucky Slot**
+  gates whose value keeps cycling — time your pass. Picking the better of
+  two gates builds a **Best Pick** streak; every 3rd pick pays a bonus.
+- **Ramps** launch you through an arc of floating gold bars.
 - **Traps** — spiked walls (some move), swinging hammers, sliding saws,
-  **hurdles** and **rolling barrels** you can jump, and **pits** that make
-  you fall and lose bars unless you jump.
+  **hurdles** and **rolling barrels** you can jump, **pits** that make
+  you fall and lose bars unless you jump, and spinning **sweeper bars** you
+  have to time a jump over.
 - **Thieves** — gangs of masked runners that chase you and steal bars.
   Dodge them, jump over them, or knock them flying with a shield or Gold
   Fever.

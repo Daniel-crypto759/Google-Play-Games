@@ -3,6 +3,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
 <style>
+  :root{--ink:#1d2a4d}
   [hidden]{display:none!important}
   *{box-sizing:border-box}
   html,body{height:100%;margin:0}
@@ -15,24 +16,38 @@
   canvas.gl{position:absolute;inset:0;width:100%;height:100%;display:block}
   #fx{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:40}
   #pops{position:absolute;inset:0;pointer-events:none;z-index:20;overflow:hidden}
-  button{font:inherit;-webkit-tap-highlight-color:transparent;color:inherit}
-  button:focus-visible{outline:3px solid #1d2a4d;outline-offset:2px}
+  button{font:inherit;color:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
+  button:focus-visible{outline:3px solid #fff;outline-offset:2px}
 
   .display{font-family:'Lilita One','Arial Black',sans-serif;font-weight:400;letter-spacing:.5px}
   .outline{
     color:#fff;
     text-shadow:0 4px 0 #1d2a4d,3px 0 0 #1d2a4d,-3px 0 0 #1d2a4d,0 -3px 0 #1d2a4d,
-      2px 2px 0 #1d2a4d,-2px 2px 0 #1d2a4d,2px -2px 0 #1d2a4d,-2px -2px 0 #1d2a4d;
+      2px 2px 0 #1d2a4d,-2px 2px 0 #1d2a4d,2px -2px 0 #1d2a4d,-2px -2px 0 #1d2a4d,0 7px 0 rgba(0,0,0,.18);
   }
+  .ol2{text-shadow:0 2px 0 #1d2a4d,1.5px 0 0 #1d2a4d,-1.5px 0 0 #1d2a4d,0 -1.5px 0 #1d2a4d}
+
+  /* ---------- sticker kit ---------- */
+  .shine{position:relative;overflow:hidden}
+  .shine::after{
+    content:"";position:absolute;top:-30%;bottom:-30%;width:34%;left:-60%;pointer-events:none;
+    background:linear-gradient(100deg,rgba(255,255,255,0),rgba(255,255,255,.65),rgba(255,255,255,0));
+    transform:skewX(-20deg);animation:sweep 3.2s ease-in-out infinite;
+  }
+  @keyframes sweep{0%,55%{left:-60%}100%{left:140%}}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes wiggle{0%,62%,100%{transform:rotate(0)}68%{transform:rotate(-13deg) scale(1.1)}76%{transform:rotate(11deg) scale(1.1)}84%{transform:rotate(-6deg)}92%{transform:rotate(3deg)}}
+  @keyframes nudge{0%,70%,100%{transform:scale(1)}78%{transform:scale(1.1)}86%{transform:scale(.96)}94%{transform:scale(1.04)}}
+  @keyframes popin{0%{transform:scale(.3);opacity:0}60%{transform:scale(1.12);opacity:1}80%{transform:scale(.95)}100%{transform:scale(1)}}
 
   .coin{
     display:inline-block;flex:0 0 auto;width:24px;height:24px;border-radius:50%;
-    background:radial-gradient(circle at 35% 30%,#fff6c8 0 16%,#ffd54a 42%,#e0a100 100%);
-    box-shadow:inset 0 -2px 0 #b57b00,0 0 0 2px rgba(255,255,255,.35);
+    background:radial-gradient(circle at 35% 30%,#fff9d6 0 15%,#ffd84d 40%,#f0a800 100%);
+    box-shadow:inset 0 -3px 0 #c98600,0 0 0 2px #1d2a4d;
   }
   .gem{
     display:inline-block;flex:0 0 auto;width:22px;height:24px;
-    background:linear-gradient(135deg,#e6fbff 0%,#5fd6ff 45%,#1a8fd6 100%);
+    background:linear-gradient(135deg,#f0fdff 0%,#6fe0ff 40%,#1a8fd6 100%);
     clip-path:polygon(50% 0,100% 36%,50% 100%,0 36%);
   }
   .keyi{width:22px;height:22px;flex:0 0 auto}
@@ -40,144 +55,188 @@
 
   .pop{
     position:absolute;transform:translate(-50%,-50%);
-    font-family:'Lilita One','Arial Black',sans-serif;font-size:30px;white-space:nowrap;
-    animation:pop .9s ease-out forwards;
-    text-shadow:0 3px 0 #1d2a4d,2px 0 0 #1d2a4d,-2px 0 0 #1d2a4d,0 -2px 0 #1d2a4d;
+    font-family:'Lilita One','Arial Black',sans-serif;font-size:32px;white-space:nowrap;
+    animation:pop .95s cubic-bezier(.2,1.4,.4,1) forwards;
+    text-shadow:0 3px 0 #1d2a4d,2.5px 0 0 #1d2a4d,-2.5px 0 0 #1d2a4d,0 -2.5px 0 #1d2a4d,2px 2px 0 #1d2a4d,-2px 2px 0 #1d2a4d;
   }
-  .pop.small{font-size:21px}
-  .pop.big{font-size:40px}
+  .pop.small{font-size:22px}
+  .pop.big{font-size:44px}
   @keyframes pop{
-    0%{opacity:0;transform:translate(-50%,-30%) scale(.6)}
-    15%{opacity:1;transform:translate(-50%,-60%) scale(1.15)}
-    100%{opacity:0;transform:translate(-50%,-190%) scale(1)}
+    0%{opacity:0;transform:translate(-50%,-30%) scale(.4) rotate(-8deg)}
+    18%{opacity:1;transform:translate(-50%,-60%) scale(1.25) rotate(4deg)}
+    30%{transform:translate(-50%,-70%) scale(1) rotate(0)}
+    100%{opacity:0;transform:translate(-50%,-200%) scale(.95)}
   }
 
   .pill{
-    display:flex;align-items:center;gap:7px;
-    background:rgba(29,42,77,.58);color:#fff;border-radius:999px;
-    padding:4px 13px 4px 5px;font-family:'Lilita One','Arial Black',sans-serif;font-size:19px;
+    display:flex;align-items:center;gap:6px;
+    background:linear-gradient(#3b4c7c,#1d2a4d);color:#fff;border-radius:999px;border:2.5px solid #1d2a4d;
+    box-shadow:inset 0 2px 0 rgba(255,255,255,.22),0 3px 0 rgba(0,0,0,.25);
+    padding:3px 4px;font-family:'Lilita One','Arial Black',sans-serif;font-size:17px;
     font-variant-numeric:tabular-nums;transition:transform .15s;
   }
-  .pill.bump{transform:scale(1.18)}
-  .keys{display:flex;gap:1px;padding:4px 8px}
-  .icon-btn{
-    width:46px;height:46px;border-radius:14px;border:none;cursor:pointer;
-    background:#3d8bff;box-shadow:0 4px 0 #2059c9;display:grid;place-items:center;pointer-events:auto;
+  .pill .n{padding-right:2px}
+  .pill.bump{transform:scale(1.2)}
+  .keys{display:flex;gap:1px;padding:3px 8px}
+  .plus{
+    width:23px;height:23px;border-radius:50%;border:2px solid #1d2a4d;padding:0;
+    background:linear-gradient(#8ef59c,#2fc653);color:#fff;font-family:'Lilita One','Arial Black',sans-serif;
+    font-size:18px;line-height:18px;text-shadow:0 1.5px 0 #1d2a4d;box-shadow:inset 0 2px 0 rgba(255,255,255,.4);
   }
-  .icon-btn:active{transform:translateY(3px);box-shadow:0 1px 0 #2059c9}
-  .icon-btn svg{width:26px;height:26px}
-  .dot{position:absolute;top:-5px;right:-5px;width:17px;height:17px;border-radius:50%;background:#ff4d5e;border:2px solid #fff;box-shadow:0 1px 0 rgba(0,0,0,.2)}
+  .icon-btn{
+    width:46px;height:46px;border-radius:15px;border:3px solid #1d2a4d;
+    background:linear-gradient(#78b8ff,#347ff0);box-shadow:inset 0 3px 0 rgba(255,255,255,.35),0 4px 0 #1d2a4d;
+    display:grid;place-items:center;pointer-events:auto;
+  }
+  .icon-btn:active{transform:translateY(3px);box-shadow:inset 0 3px 0 rgba(255,255,255,.35),0 1px 0 #1d2a4d}
+  .icon-btn svg{width:24px;height:24px;filter:drop-shadow(0 2px 0 rgba(0,0,0,.25))}
+  .dot{
+    position:absolute;top:-6px;right:-6px;width:21px;height:21px;border-radius:50%;background:#ff3b4e;
+    border:2.5px solid #1d2a4d;display:grid;place-items:center;z-index:3;animation:dotb 1.2s ease-in-out infinite;
+  }
+  .dot::after{content:"!";color:#fff;font-family:'Lilita One','Arial Black',sans-serif;font-size:12px;line-height:1}
+  @keyframes dotb{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
 
   /* ---------- menu shell ---------- */
   #menu{position:absolute;inset:0;z-index:10;pointer-events:none}
-  .topbar{position:absolute;top:0;left:0;right:0;display:flex;align-items:center;gap:6px;padding:calc(12px + env(safe-area-inset-top,0px)) 12px 0;pointer-events:auto;z-index:2}
+  #menu::before{content:"";position:absolute;left:0;right:0;top:0;height:170px;background:linear-gradient(rgba(29,42,77,.28),rgba(29,42,77,0));pointer-events:none}
+  .topbar{position:absolute;top:0;left:0;right:0;display:flex;align-items:center;gap:7px;padding:calc(12px + env(safe-area-inset-top,0px)) 12px 0;pointer-events:auto;z-index:2}
   .topbar .spacer{flex:1}
-  .topbar .pill{font-size:17px}
-  .tab{position:absolute;left:0;right:0;top:calc(64px + env(safe-area-inset-top,0px));bottom:calc(76px + env(safe-area-inset-bottom,0px))}
+  .tab{position:absolute;left:0;right:0;top:calc(64px + env(safe-area-inset-top,0px));bottom:calc(92px + env(safe-area-inset-bottom,0px))}
   .tabbar{
-    position:absolute;left:0;right:0;bottom:0;display:flex;gap:6px;
-    padding:10px 10px calc(10px + env(safe-area-inset-bottom,0px));pointer-events:auto;
-    background:linear-gradient(rgba(29,42,77,0),rgba(29,42,77,.35));
+    position:absolute;left:8px;right:8px;bottom:calc(10px + env(safe-area-inset-bottom,0px));display:flex;gap:3px;
+    padding:5px;background:#fff;border:3px solid #1d2a4d;border-radius:24px;box-shadow:0 5px 0 #1d2a4d;pointer-events:auto;
   }
   .tabbar button{
-    flex:1;min-width:0;position:relative;border:none;border-radius:15px;background:#fff;box-shadow:0 4px 0 #b9cde8;
-    padding:6px 0 5px;display:flex;flex-direction:column;align-items:center;gap:1px;cursor:pointer;
-    font-family:'Lilita One','Arial Black',sans-serif;font-size:11px;color:#6b7a99;letter-spacing:.3px;
+    flex:1;min-width:0;position:relative;border:3px solid transparent;border-radius:16px;background:transparent;
+    padding:4px 0 3px;display:flex;flex-direction:column;align-items:center;gap:1px;
+    font-family:'Lilita One','Arial Black',sans-serif;font-size:10.5px;color:#8995b0;letter-spacing:.3px;
+    transition:transform .2s cubic-bezier(.2,1.6,.4,1),background .2s;
   }
-  .tabbar button.on{background:#3d8bff;color:#fff;box-shadow:0 4px 0 #2059c9}
-  .tabbar svg{width:24px;height:24px}
+  .tabbar svg{width:24px;height:24px;transition:transform .2s cubic-bezier(.2,1.6,.4,1)}
+  .tabbar button.on{
+    background:var(--tc);color:#fff;transform:translateY(-12px);border-color:#1d2a4d;
+    box-shadow:inset 0 3px 0 rgba(255,255,255,.35),0 4px 0 #1d2a4d;text-shadow:0 1.5px 0 #1d2a4d;
+  }
+  .tabbar button.on svg{transform:scale(1.22);filter:drop-shadow(0 2px 0 #1d2a4d)}
 
   /* ---------- home ---------- */
   .home{display:flex;flex-direction:column;align-items:center;pointer-events:none}
-  .logo{font-size:56px;line-height:.88;display:inline-block;text-align:center;margin-top:2px;animation:bob 2.6s ease-in-out infinite}
-  .logo .g{color:#ffc233}
-  @keyframes bob{0%,100%{transform:rotate(-4deg) translateY(0)}50%{transform:rotate(-2deg) translateY(-5px)}}
-  .badge-row{display:flex;gap:6px;align-items:center;margin-top:10px}
-  .lvl-badge{background:#1d2a4d;color:#fff;border-radius:999px;padding:4px 14px;font-size:17px}
-  .lvl-badge.bonus{background:#ff8a1f}
-  .lvl-badge.boss{background:#d6344a}
-  .star-badge{display:flex;align-items:center;gap:4px;background:rgba(29,42,77,.58);color:#fff;border-radius:999px;padding:4px 11px 4px 7px;font-size:16px}
-  .star-badge svg{width:17px;height:17px}
-  .journey{display:flex;align-items:center;margin-top:10px;background:rgba(29,42,77,.45);border-radius:999px;padding:5px 10px;gap:0}
-  .jn{width:30px;height:30px;border-radius:50%;background:#fff;border:3px solid #c9d6ea;display:grid;place-items:center;font-family:'Lilita One','Arial Black',sans-serif;font-size:13px;color:#6b7a99;position:relative;flex:0 0 auto}
-  .jn.done{background:#4cd964;border-color:#2a9d44;color:#fff}
-  .jn.cur{background:#ffc233;border-color:#d99100;color:#1d2a4d;transform:scale(1.18)}
-  .jn.boss{background:#ff4d5e;border-color:#c2283a;color:#fff}
-  .jn.boss.done{background:#4cd964;border-color:#2a9d44}
-  .jn svg{width:17px;height:17px}
-  .jn .st{position:absolute;bottom:-11px;left:50%;transform:translateX(-50%);font-size:9px;color:#ffc233;white-space:nowrap;letter-spacing:-1px;text-shadow:0 1px 0 #1d2a4d}
-  .jl{width:12px;height:4px;background:#c9d6ea;flex:0 0 auto}
-  .jl.done{background:#4cd964}
-  .zone-name{margin-top:12px;font-size:13px;color:#fff;font-weight:900;letter-spacing:2px;background:rgba(29,42,77,.4);border-radius:999px;padding:2px 12px}
-  .side{position:absolute;top:84px;display:flex;flex-direction:column;gap:10px;pointer-events:auto}
-  .side.l{left:10px} .side.r{right:10px}
-  .sbtn{
-    width:62px;position:relative;border:none;background:#fff;border-radius:16px;box-shadow:0 4px 0 #b9cde8;
-    padding:5px 0 4px;display:flex;flex-direction:column;align-items:center;gap:1px;cursor:pointer;
-    font-family:'Lilita One','Arial Black',sans-serif;font-size:11px;letter-spacing:.3px;color:#1d2a4d;
+  .logo-wrap{position:relative;display:flex;flex-direction:column;align-items:center}
+  .rays{
+    position:absolute;left:50%;top:50%;width:380px;height:380px;margin:-190px 0 0 -190px;border-radius:50%;pointer-events:none;
+    background:repeating-conic-gradient(rgba(255,255,255,.42) 0 9deg,rgba(255,255,255,0) 9deg 18deg);
+    -webkit-mask:radial-gradient(circle,#000 18%,transparent 66%);mask:radial-gradient(circle,#000 18%,transparent 66%);
+    animation:spin 22s linear infinite;
   }
-  .sbtn:active{transform:translateY(3px);box-shadow:0 1px 0 #b9cde8}
-  .sbtn svg{width:32px;height:32px}
-  .sbtn .sub2{font-size:10px;color:#6b7a99;font-family:'Nunito',sans-serif;font-weight:900;font-variant-numeric:tabular-nums}
-  .play-wrap{margin-top:auto;display:flex;flex-direction:column;align-items:center;gap:10px;pointer-events:auto;padding-bottom:4px;width:100%}
+  .logo{position:relative;font-size:56px;line-height:.86;text-align:center;transform:rotate(-5deg);margin-top:2px}
+  .logo .r2{font-size:66px;display:block}
+  .logo span span{display:inline-block;animation:letter 2.6s ease-in-out infinite;animation-delay:calc(var(--i)*.1s)}
+  .logo .g span{color:#ffc233}
+  @keyframes letter{0%,100%{transform:translateY(0) scale(1)}12%{transform:translateY(-10px) scale(1.12)}24%{transform:translateY(2px) scale(.96)}34%{transform:translateY(0) scale(1)}}
+  .spark{position:absolute;width:16px;height:16px;background:#fff;clip-path:polygon(50% 0,61% 39%,100% 50%,61% 61%,50% 100%,39% 61%,0 50%,39% 39%);animation:twinkle 1.9s ease-in-out infinite;animation-delay:var(--d);pointer-events:none}
+  .spark.y{background:#ffe066}
+  @keyframes twinkle{0%,100%{transform:scale(0) rotate(0)}50%{transform:scale(1) rotate(90deg)}}
+  .badge-row{display:flex;gap:6px;align-items:center;margin-top:8px;position:relative}
+  .lvl-badge{background:linear-gradient(#3b4c7c,#1d2a4d);color:#fff;border-radius:999px;padding:3px 14px;font-size:17px;border:2.5px solid #fff;box-shadow:0 0 0 2.5px #1d2a4d,0 4px 0 2.5px #1d2a4d}
+  .lvl-badge.bonus{background:linear-gradient(#ffb04d,#ff7a1a)}
+  .lvl-badge.boss{background:linear-gradient(#ff6d7e,#d6344a)}
+  .star-badge{display:flex;align-items:center;gap:4px;background:linear-gradient(#ffe066,#ffb300);color:#fff;border-radius:999px;padding:3px 11px 3px 6px;font-size:16px;border:2.5px solid #fff;box-shadow:0 0 0 2.5px #1d2a4d,0 4px 0 2.5px #1d2a4d;text-shadow:0 1.5px 0 #1d2a4d}
+  .star-badge svg{width:17px;height:17px;filter:drop-shadow(0 1.5px 0 #1d2a4d)}
+  .journey{display:flex;align-items:center;margin-top:13px;background:rgba(255,255,255,.9);border:3px solid #1d2a4d;border-radius:999px;padding:5px 9px;box-shadow:0 4px 0 #1d2a4d;position:relative}
+  .jn{width:30px;height:30px;border-radius:50%;background:#eef3fb;border:3px solid #1d2a4d;display:grid;place-items:center;font-family:'Lilita One','Arial Black',sans-serif;font-size:13px;color:#8995b0;position:relative;flex:0 0 auto}
+  .jn.done{background:linear-gradient(#8ef59c,#2fc653);color:#fff;text-shadow:0 1.5px 0 #1d2a4d}
+  .jn.cur{background:linear-gradient(#ffe066,#ffb300);color:#1d2a4d;animation:nudge 1.4s ease-in-out infinite}
+  .jn.boss{background:linear-gradient(#ff6d7e,#d6344a);color:#fff}
+  .jn.boss.done{background:linear-gradient(#8ef59c,#2fc653)}
+  .jn svg{width:17px;height:17px;filter:drop-shadow(0 1.5px 0 #1d2a4d)}
+  .jn .st{position:absolute;bottom:-12px;left:50%;transform:translateX(-50%);font-size:10px;color:#ffc233;white-space:nowrap;letter-spacing:-1px;text-shadow:0 1px 0 #1d2a4d,1px 0 0 #1d2a4d,-1px 0 0 #1d2a4d}
+  .jl{width:11px;height:5px;background:#d3dceb;flex:0 0 auto;border-top:1.5px solid #1d2a4d;border-bottom:1.5px solid #1d2a4d}
+  .jl.done{background:#4cd964}
+  .zone-name{margin-top:14px;font-size:14px;letter-spacing:2px;position:relative}
+  .side{position:absolute;top:80px;display:flex;flex-direction:column;gap:6px;pointer-events:auto}
+  .side.l{left:8px} .side.r{right:8px}
+  .sbtn{width:68px;position:relative;border:none;background:none;padding:0;display:flex;flex-direction:column;align-items:center}
+  .sbtn .ico{
+    width:56px;height:56px;border-radius:50%;display:grid;place-items:center;background:var(--c);border:3px solid #1d2a4d;
+    box-shadow:inset 0 -5px 0 rgba(0,0,0,.18),inset 0 4px 0 rgba(255,255,255,.45),0 4px 0 #1d2a4d;
+  }
+  .sbtn .ico svg{width:32px;height:32px;filter:drop-shadow(0 2px 0 rgba(0,0,0,.3))}
+  .sbtn .lab{margin-top:-9px;background:#fff;border:2.5px solid #1d2a4d;border-radius:9px;padding:1px 6px 0;font-family:'Lilita One','Arial Black',sans-serif;font-size:11px;letter-spacing:.3px;position:relative;z-index:1;color:#1d2a4d}
+  .sbtn .sub2{font-size:11px;font-weight:900;color:#fff;font-variant-numeric:tabular-nums;margin-top:1px;text-shadow:0 1.5px 0 #1d2a4d,1.5px 0 0 #1d2a4d,-1.5px 0 0 #1d2a4d,0 -1.5px 0 #1d2a4d}
+  .sbtn.ready .ico{animation:wiggle 1.8s ease-in-out infinite}
+  .sbtn:active .ico{transform:translateY(3px);box-shadow:inset 0 -5px 0 rgba(0,0,0,.18),inset 0 4px 0 rgba(255,255,255,.45),0 1px 0 #1d2a4d}
+  .play-wrap{margin-top:auto;display:flex;flex-direction:column;align-items:center;gap:12px;pointer-events:auto;padding-bottom:6px;width:100%}
   .modes{display:flex;gap:10px;width:100%;padding:0 12px}
   .mode{
-    flex:1;position:relative;border:none;border-radius:16px;box-shadow:0 4px 0 rgba(0,0,0,.22);cursor:pointer;
+    flex:1;position:relative;border:3px solid #1d2a4d;border-radius:18px;
+    box-shadow:inset 0 3px 0 rgba(255,255,255,.35),inset 0 -4px 0 rgba(0,0,0,.15),0 4px 0 #1d2a4d;
     padding:7px 8px;display:flex;align-items:center;gap:8px;text-align:left;color:#fff;
   }
-  .mode:active{transform:translateY(3px)}
-  .mode.daily{background:linear-gradient(135deg,#ff8a1f,#ff4d5e)}
-  .mode.endless{background:linear-gradient(135deg,#9b5cff,#3d8bff)}
-  .mode.locked{filter:grayscale(.8);opacity:.85}
-  .mode svg{width:30px;height:30px;flex:0 0 auto}
-  .mode .mt{font-family:'Lilita One','Arial Black',sans-serif;font-size:14px;line-height:1.05;letter-spacing:.3px}
-  .mode .ms{font-size:11px;font-weight:900;opacity:.92;line-height:1.2}
-  .play{font-size:34px!important;padding:11px 62px!important;animation:pulse 1.3s ease-in-out infinite}
-  @keyframes pulse{50%{transform:scale(1.06)}}
+  .mode:active{transform:translateY(3px);box-shadow:0 1px 0 #1d2a4d}
+  .mode.daily{background:linear-gradient(135deg,#ffae4d,#ff4d6a)}
+  .mode.endless{background:linear-gradient(135deg,#b67aff,#3d8bff)}
+  .mode.locked{filter:grayscale(.85)}
+  .mode svg{width:32px;height:32px;flex:0 0 auto;filter:drop-shadow(0 2px 0 rgba(0,0,0,.3))}
+  .mode .mt{font-family:'Lilita One','Arial Black',sans-serif;font-size:15px;line-height:1.02;letter-spacing:.3px;text-shadow:0 2px 0 #1d2a4d,1.5px 0 0 #1d2a4d,-1.5px 0 0 #1d2a4d,0 -1.5px 0 #1d2a4d}
+  .mode .ms{font-size:11px;font-weight:900;line-height:1.2;margin-top:2px;text-shadow:0 1px 0 rgba(0,0,0,.35)}
+  .mode .dot{top:-9px;right:-7px}
+  .btn.play{font-size:42px;padding:6px 64px 9px;border-radius:26px;animation:playb 1.3s ease-in-out infinite;gap:10px}
+  .btn.play svg{width:34px;height:34px;filter:drop-shadow(0 3px 0 #1d2a4d)}
+  @keyframes playb{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
 
   /* ---------- panels ---------- */
   .panel{
-    position:absolute;inset:0 10px 0;background:#fff;border-radius:24px;box-shadow:0 6px 0 #b9cde8;
-    display:flex;flex-direction:column;overflow:hidden;pointer-events:auto;
+    position:absolute;inset:0 10px 6px;background:#fff;border:3px solid #1d2a4d;border-radius:24px;box-shadow:0 6px 0 #1d2a4d;
+    display:flex;flex-direction:column;overflow:hidden;pointer-events:auto;animation:popin .35s cubic-bezier(.2,1.4,.4,1);
   }
   #tabSkins .panel{top:40%}
-  .panel h2{margin:0;padding:13px 16px 8px;font-size:23px;color:#3d8bff;display:flex;align-items:center;gap:8px}
+  .panel h2{
+    margin:0;padding:9px 16px 10px;font-size:25px;display:flex;align-items:center;gap:8px;
+    background:var(--hc);border-bottom:3px solid #1d2a4d;box-shadow:inset 0 4px 0 rgba(255,255,255,.3);
+  }
+  #tabUpgrades{--hc:linear-gradient(#ffd24d,#ff9f1a)}
+  #tabSkins{--hc:linear-gradient(#ff8ec8,#e0457b)}
+  #tabMissions{--hc:linear-gradient(#78b8ff,#347ff0)}
+  #tabTrophies{--hc:linear-gradient(#c197ff,#8a47f0)}
   .panel h2 .grow{flex:1}
-  .panel h2 small{font-family:'Nunito',sans-serif;font-size:12px;color:#6b7a99;font-weight:900}
-  .scroll{overflow-y:auto;padding:4px 12px 14px;flex:1;display:flex;flex-direction:column;gap:10px}
-  .urow{display:flex;align-items:center;gap:10px;background:#eef3fb;border-radius:16px;padding:10px}
-  .uicon{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;flex:0 0 auto;box-shadow:inset 0 -3px 0 rgba(0,0,0,.18)}
-  .uicon svg{width:28px;height:28px}
+  .panel h2 small{font-family:'Nunito',sans-serif;font-size:12px;font-weight:900;color:#fff;text-shadow:0 1px 0 #1d2a4d}
+  .scroll{overflow-y:auto;padding:12px 12px 16px;flex:1;display:flex;flex-direction:column;gap:11px;background:linear-gradient(#f4f8ff,#fff)}
+  .urow{display:flex;align-items:center;gap:10px;background:#fff;border:2.5px solid #1d2a4d;border-radius:16px;padding:9px;box-shadow:0 3px 0 #1d2a4d}
+  .uicon{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;flex:0 0 auto;border:2.5px solid #1d2a4d;box-shadow:inset 0 -4px 0 rgba(0,0,0,.18),inset 0 3px 0 rgba(255,255,255,.4)}
+  .uicon svg{width:27px;height:27px;filter:drop-shadow(0 2px 0 rgba(0,0,0,.25))}
   .uinfo{flex:1;min-width:0}
   .uname{font-family:'Lilita One','Arial Black',sans-serif;font-size:16px;display:flex;gap:6px;align-items:baseline;flex-wrap:wrap}
-  .uname small{font-family:'Nunito',sans-serif;font-weight:900;font-size:12px;color:#6b7a99}
+  .uname small{font-family:'Nunito',sans-serif;font-weight:900;font-size:11px;color:#fff;background:#1d2a4d;border-radius:999px;padding:0 7px}
   .udesc{font-size:12px;color:#6b7a99;font-weight:800;line-height:1.25}
-  .ubar{height:7px;border-radius:4px;background:#d3dceb;margin-top:5px;overflow:hidden}
-  .ubar i{display:block;height:100%;background:linear-gradient(90deg,#4cd964,#8be86f)}
+  .ubar{height:9px;border-radius:5px;background:#e3e9f4;margin-top:5px;overflow:hidden;border:2px solid #1d2a4d}
+  .ubar i{display:block;height:100%;background:linear-gradient(#8ef59c,#2fc653)}
   .ubuy{
-    min-width:86px;border:none;border-radius:12px;background:#ffc233;box-shadow:0 3px 0 #d99100;
-    padding:6px 6px 7px;display:flex;flex-direction:column;align-items:center;gap:1px;cursor:pointer;flex:0 0 auto;
+    min-width:86px;border:2.5px solid #1d2a4d;border-radius:13px;background:linear-gradient(#ffe066,#ffb300);
+    box-shadow:inset 0 3px 0 rgba(255,255,255,.45),inset 0 -3px 0 rgba(0,0,0,.12),0 3px 0 #1d2a4d;
+    padding:5px 6px 6px;display:flex;flex-direction:column;align-items:center;gap:1px;flex:0 0 auto;
   }
-  .ubuy:active{transform:translateY(2px);box-shadow:0 1px 0 #d99100}
-  .ubuy .nx{font-size:11px;font-weight:900;color:#7a5200}
-  .ubuy .c{display:flex;align-items:center;gap:4px;font-family:'Lilita One','Arial Black',sans-serif;font-size:15px;font-variant-numeric:tabular-nums}
+  .ubuy.can{animation:nudge 1.8s ease-in-out infinite}
+  .ubuy:active{transform:translateY(2px);box-shadow:0 1px 0 #1d2a4d}
+  .ubuy .nx{font-size:11px;font-weight:900;color:#7a4a00}
+  .ubuy .c{display:flex;align-items:center;gap:4px;font-family:'Lilita One','Arial Black',sans-serif;font-size:15px;font-variant-numeric:tabular-nums;color:#1d2a4d}
   .ubuy .c .coin,.ubuy .c .gem{width:16px;height:16px}
   .ubuy .c .keyi{width:18px;height:18px}
-  .ubuy.no{background:#dde3ee;box-shadow:0 3px 0 #b3bccc;color:#7d879b}
-  .ubuy.no .nx{color:#7d879b}
-  .ubuy.max{background:#4cd964;box-shadow:0 3px 0 #2a9d44;color:#fff}
-  .ubuy.max .nx{color:#e8ffe8}
+  .ubuy.no{background:#e3e9f4;color:#8995b0}
+  .ubuy.no .nx,.ubuy.no .c{color:#8995b0}
+  .ubuy.max{background:linear-gradient(#8ef59c,#2fc653)}
+  .ubuy.max .nx,.ubuy.max .c{color:#fff;text-shadow:0 1px 0 #1d2a4d}
 
-  .seg{display:flex;background:#eef3fb;border-radius:12px;padding:3px;margin:0 12px 8px}
-  .seg button{flex:1;border:none;background:none;border-radius:10px;padding:7px 2px;font-family:'Lilita One','Arial Black',sans-serif;font-size:14px;color:#6b7a99;cursor:pointer}
-  .seg button.on{background:#fff;color:#3d8bff;box-shadow:0 2px 0 #c9d6ea}
+  .seg{display:flex;background:#e3e9f4;border:2.5px solid #1d2a4d;border-radius:14px;padding:3px;margin:10px 12px 0}
+  .seg button{flex:1;border:none;background:none;border-radius:10px;padding:6px 2px;font-family:'Lilita One','Arial Black',sans-serif;font-size:14px;color:#8995b0}
+  .seg button.on{background:linear-gradient(#ff8ec8,#e0457b);color:#fff;box-shadow:0 2px 0 #1d2a4d;text-shadow:0 1.5px 0 #1d2a4d}
   .skin-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
   .skin{
-    background:#eef3fb;border-radius:14px;padding:8px 2px;border:3px solid transparent;cursor:pointer;
-    display:flex;flex-direction:column;align-items:center;gap:4px;
+    background:#fff;border-radius:14px;padding:7px 2px;border:2.5px solid #1d2a4d;box-shadow:0 3px 0 #1d2a4d;
+    display:flex;flex-direction:column;align-items:center;gap:3px;
   }
-  .skin.on{border-color:#4cd964;background:#e8fbe9}
-  .skin.sel{border-color:#ffc233;background:#fff7dc}
+  .skin.on{background:#e7fbe9;box-shadow:0 0 0 3px #4cd964,0 3px 0 3px #1d2a4d}
+  .skin.sel{background:#fff7dc;box-shadow:0 0 0 3px #ffc233,0 3px 0 3px #1d2a4d;animation:nudge 1.4s ease-in-out infinite}
   .skin .fig{width:34px;height:40px}
   .skin .nm{font-weight:900;font-size:11px;line-height:1.1;text-align:center}
   .skin .pr{font-family:'Lilita One','Arial Black',sans-serif;font-size:13px;display:flex;gap:3px;align-items:center}
@@ -185,54 +244,55 @@
   .skin .pr.bad{color:#d6344a}
   .skin.locked .fig{opacity:.6}
 
-  .mrow{background:#eef3fb;border-radius:16px;padding:10px 12px;display:flex;align-items:center;gap:10px}
-  .mrow.done{background:#e8fbe9}
+  .mrow{background:#fff;border:2.5px solid #1d2a4d;border-radius:16px;padding:9px 11px;display:flex;align-items:center;gap:10px;box-shadow:0 3px 0 #1d2a4d}
+  .mrow.done{background:#e7fbe9}
   .mtext{flex:1;min-width:0;font-weight:900;font-size:14px}
-  .mbar{height:10px;border-radius:5px;background:#d3dceb;margin-top:6px;overflow:hidden;position:relative}
-  .mbar i{display:block;height:100%;background:linear-gradient(90deg,#3d8bff,#6fb0ff)}
+  .mbar{height:12px;border-radius:6px;background:#e3e9f4;margin-top:6px;overflow:hidden;border:2px solid #1d2a4d}
+  .mbar i{display:block;height:100%;background:linear-gradient(#78b8ff,#347ff0)}
   .mprog{font-size:11px;color:#6b7a99;font-weight:900;margin-top:2px;font-variant-numeric:tabular-nums}
   .mrew{display:flex;align-items:center;gap:4px;font-family:'Lilita One','Arial Black',sans-serif;font-size:15px}
-  .mrew .coin,.mrew .gem{width:16px;height:16px}
   .note{font-size:12px;color:#6b7a99;font-weight:800;text-align:center;padding:4px 8px}
   .stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-  .stat{background:#eef3fb;border-radius:14px;padding:8px 4px;text-align:center}
-  .stat b{display:block;font-family:'Lilita One','Arial Black',sans-serif;font-size:19px;font-weight:400;color:#1d2a4d;font-variant-numeric:tabular-nums}
+  .stat{background:#fff;border:2.5px solid #1d2a4d;border-radius:14px;padding:6px 4px;text-align:center;box-shadow:0 3px 0 #1d2a4d}
+  .stat b{display:block;font-family:'Lilita One','Arial Black',sans-serif;font-size:19px;font-weight:400;color:#8a47f0;font-variant-numeric:tabular-nums}
   .stat span{font-size:10px;font-weight:900;color:#6b7a99;letter-spacing:.3px}
   .tier{display:flex;gap:3px;margin-top:4px}
-  .tier svg{width:16px;height:16px}
-  .tier svg path{fill:#d3dceb}
+  .tier svg{width:17px;height:17px}
+  .tier svg path{fill:#e3e9f4;stroke:#1d2a4d;stroke-width:1.6}
   .tier svg.on path{fill:#ffc233}
-  .sec{font-family:'Lilita One','Arial Black',sans-serif;font-size:15px;color:#6b7a99;margin:4px 2px -2px;letter-spacing:.5px}
+  .sec{font-family:'Lilita One','Arial Black',sans-serif;font-size:15px;color:#8a47f0;margin:2px 2px -3px;letter-spacing:.5px}
 
   /* ---------- hud ---------- */
   #hud{position:absolute;inset:0;z-index:10;pointer-events:none}
   .hud-top{display:flex;align-items:flex-start;gap:8px;padding:calc(12px + env(safe-area-inset-top,0px)) 12px 0}
-  .lvl-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;padding-top:2px}
-  .lvl{font-size:21px;text-align:center}
-  .dist{font-size:26px;font-variant-numeric:tabular-nums}
-  .progress{width:74%;max-width:220px;height:13px;background:rgba(29,42,77,.35);border-radius:999px;overflow:hidden;border:2px solid #fff}
-  .progress .fill{height:100%;width:0;background:linear-gradient(90deg,#ffd54a,#ffb300)}
-  .combo{width:62%;max-width:210px;height:18px;border-radius:999px;background:rgba(29,42,77,.45);border:2px solid #fff;overflow:hidden;position:relative;margin-top:2px}
-  .combo .f{height:100%;width:0;background:linear-gradient(90deg,#ff8a1f,#ffc233);transition:width .15s}
-  .combo.fever .f{background:linear-gradient(90deg,#fff3a0,#ffc233,#ff8a1f,#ffc233);background-size:200% 100%;animation:shine .6s linear infinite;transition:none}
-  @keyframes shine{to{background-position:-200% 0}}
-  .combo span{position:absolute;inset:0;display:grid;place-items:center;font-family:'Lilita One','Arial Black',sans-serif;font-size:11px;color:#fff;letter-spacing:1px;text-shadow:0 1px 0 #1d2a4d}
+  .lvl-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;padding-top:2px}
+  .lvl{font-size:22px;text-align:center}
+  .dist{font-size:28px;font-variant-numeric:tabular-nums}
+  .progress{width:76%;max-width:230px;height:16px;background:#fff;border-radius:999px;overflow:hidden;border:3px solid #1d2a4d;box-shadow:0 3px 0 rgba(29,42,77,.5)}
+  .progress .fill{height:100%;width:0;background:linear-gradient(#ffe066,#ffb300);box-shadow:inset 0 3px 0 rgba(255,255,255,.45)}
+  .combo{width:64%;max-width:210px;height:20px;border-radius:999px;background:#fff;border:3px solid #1d2a4d;overflow:hidden;position:relative;box-shadow:0 3px 0 rgba(29,42,77,.5)}
+  .combo .f{height:100%;width:0;background:linear-gradient(#ffb04d,#ff6a1f);box-shadow:inset 0 3px 0 rgba(255,255,255,.4);transition:width .15s}
+  .combo.fever .f{background:linear-gradient(90deg,#fff3a0,#ffc233,#ff8a1f,#ffc233);background-size:200% 100%;animation:fevershine .6s linear infinite;transition:none}
+  .combo.fever{animation:nudge .6s ease-in-out infinite}
+  @keyframes fevershine{to{background-position:-200% 0}}
+  .combo span{position:absolute;inset:0;display:grid;place-items:center;font-family:'Lilita One','Arial Black',sans-serif;font-size:11.5px;color:#fff;letter-spacing:1px;text-shadow:0 1.5px 0 #1d2a4d,1.5px 0 0 #1d2a4d,-1.5px 0 0 #1d2a4d,0 -1.5px 0 #1d2a4d}
   .hud-row2{display:flex;gap:6px;align-items:center;min-height:22px}
   .shields{display:flex;gap:3px}
-  .shields svg{width:20px;height:20px}
+  .shields svg{width:21px;height:21px}
   .pows{display:flex;gap:5px}
-  .powc{display:flex;align-items:center;gap:3px;border-radius:999px;padding:2px 8px 2px 3px;color:#fff;font-family:'Lilita One','Arial Black',sans-serif;font-size:13px;font-variant-numeric:tabular-nums;box-shadow:0 2px 0 rgba(0,0,0,.2)}
+  .powc{display:flex;align-items:center;gap:3px;border-radius:999px;padding:1px 8px 1px 3px;color:#fff;font-family:'Lilita One','Arial Black',sans-serif;font-size:13px;font-variant-numeric:tabular-nums;border:2.5px solid #1d2a4d;box-shadow:0 2px 0 #1d2a4d;text-shadow:0 1px 0 #1d2a4d}
   .powc svg{width:18px;height:18px}
-  #bossBar{position:absolute;left:50%;top:calc(96px + env(safe-area-inset-top,0px));transform:translateX(-50%);width:78%;max-width:300px;text-align:center}
-  #bossBar .bname{font-size:20px;margin-bottom:4px}
-  .bbar{height:22px;border-radius:999px;background:rgba(29,42,77,.55);border:3px solid #fff;overflow:hidden;position:relative}
-  .bbar i{display:block;height:100%;width:100%;background:linear-gradient(90deg,#ff4d5e,#ff8a1f);transition:width .12s}
-  .bbar span{position:absolute;inset:0;display:grid;place-items:center;font-family:'Lilita One','Arial Black',sans-serif;font-size:13px;color:#fff;text-shadow:0 1px 0 #1d2a4d;font-variant-numeric:tabular-nums}
-  #banner{position:absolute;left:0;right:0;top:30%;text-align:center;font-size:44px;pointer-events:none;opacity:0;z-index:15;padding:0 10px}
-  #banner.show{animation:banner 1.5s ease-out forwards}
-  @keyframes banner{0%{opacity:0;transform:scale(.4)}15%{opacity:1;transform:scale(1.12)}25%{transform:scale(1)}80%{opacity:1}100%{opacity:0;transform:scale(1.05)}}
+  #bossBar{position:absolute;left:50%;top:calc(104px + env(safe-area-inset-top,0px));transform:translateX(-50%);width:80%;max-width:310px;text-align:center}
+  #bossBar .bname{font-size:22px;margin-bottom:4px}
+  .bbar{height:24px;border-radius:999px;background:#fff;border:3px solid #1d2a4d;overflow:hidden;position:relative;box-shadow:0 4px 0 #1d2a4d}
+  .bbar i{display:block;height:100%;width:100%;background:linear-gradient(#ff6d7e,#d6344a);box-shadow:inset 0 4px 0 rgba(255,255,255,.35);transition:width .12s}
+  .bbar span{position:absolute;inset:0;display:grid;place-items:center;font-family:'Lilita One','Arial Black',sans-serif;font-size:13px;color:#fff;text-shadow:0 1.5px 0 #1d2a4d,1.5px 0 0 #1d2a4d,-1.5px 0 0 #1d2a4d;font-variant-numeric:tabular-nums}
+  #banner{position:absolute;left:0;right:0;top:28%;text-align:center;font-size:50px;pointer-events:none;opacity:0;z-index:15;padding:0 10px;line-height:1}
+  #banner .bsub{display:block;font-size:20px;margin-top:8px;color:#ffe066}
+  #banner.show{animation:banner 1.6s ease-out forwards}
+  @keyframes banner{0%{opacity:0;transform:scale(.3) rotate(-10deg)}14%{opacity:1;transform:scale(1.18) rotate(3deg)}24%{transform:scale(.96) rotate(-1deg)}32%{transform:scale(1) rotate(0)}82%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(1.1) translateY(-20px)}}
   #hudHint{position:absolute;left:0;right:0;bottom:calc(60px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;align-items:center;transition:opacity .3s;opacity:0}
-  .hint{font-size:26px;text-align:center}
+  .hint{font-size:27px;text-align:center}
   .hand{width:66px;height:66px}
   .hand.side{animation:swipe 1.6s ease-in-out infinite}
   .hand.up{animation:swipeUp 1s ease-in-out infinite}
@@ -244,98 +304,110 @@
   #slowmo{position:absolute;inset:0;pointer-events:none;z-index:5;opacity:0;transition:opacity .2s;box-shadow:inset 0 0 90px 30px rgba(61,139,255,.55)}
 
   .toast{
-    position:absolute;left:50%;top:calc(70px + env(safe-area-inset-top,0px));transform:translateX(-50%);z-index:55;
-    background:#4cd964;color:#fff;border-radius:14px;box-shadow:0 4px 0 #2a9d44;padding:8px 16px;
-    font-family:'Lilita One','Arial Black',sans-serif;font-size:17px;white-space:nowrap;pointer-events:none;
+    position:absolute;left:50%;top:calc(72px + env(safe-area-inset-top,0px));transform:translateX(-50%);z-index:55;
+    background:linear-gradient(#8ef59c,#2fc653);color:#fff;border-radius:16px;border:3px solid #1d2a4d;box-shadow:0 4px 0 #1d2a4d;padding:7px 16px;
+    font-family:'Lilita One','Arial Black',sans-serif;font-size:17px;white-space:nowrap;pointer-events:none;text-shadow:0 1.5px 0 #1d2a4d;
     animation:toast 2.2s ease-out forwards;
   }
-  .toast.bad{background:#ff4d5e;box-shadow:0 4px 0 #c2283a}
-  @keyframes toast{0%{opacity:0;transform:translate(-50%,-20px)}12%{opacity:1;transform:translate(-50%,0)}85%{opacity:1}100%{opacity:0;transform:translate(-50%,-10px)}}
+  .toast.bad{background:linear-gradient(#ff6d7e,#d6344a)}
+  @keyframes toast{0%{opacity:0;transform:translate(-50%,-24px) scale(.7)}12%{opacity:1;transform:translate(-50%,0) scale(1.08)}20%{transform:translate(-50%,0) scale(1)}85%{opacity:1}100%{opacity:0;transform:translate(-50%,-10px)}}
 
   /* ---------- modals ---------- */
-  .modal{position:absolute;inset:0;z-index:30;background:rgba(20,40,80,.5);display:flex;align-items:center;justify-content:center;padding:34px 18px 18px;animation:fade .2s ease-out}
+  .modal{position:absolute;inset:0;z-index:30;background:radial-gradient(circle at 50% 40%,rgba(40,70,140,.45),rgba(12,20,45,.72));display:flex;align-items:center;justify-content:center;padding:34px 18px 18px;animation:fade .2s ease-out}
   @keyframes fade{from{opacity:0}}
   .sheet{
-    position:relative;width:100%;max-width:360px;background:#fff;border-radius:24px;
-    box-shadow:0 8px 0 #b9cde8;padding:44px 16px 18px;text-align:center;
-    animation:rise .32s cubic-bezier(.2,1.4,.4,1);
+    position:relative;width:100%;max-width:360px;background:#fff;border-radius:26px;border:3px solid #1d2a4d;
+    box-shadow:0 8px 0 #1d2a4d;padding:46px 16px 18px;text-align:center;
+    animation:rise .4s cubic-bezier(.2,1.5,.4,1);
   }
-  @keyframes rise{from{transform:translateY(30px) scale(.9);opacity:0}}
+  @keyframes rise{from{transform:translateY(40px) scale(.7);opacity:0}}
   .ribbon{
-    position:absolute;top:-22px;left:50%;transform:translateX(-50%);
-    background:#3d8bff;box-shadow:0 4px 0 #2059c9;color:#fff;border-radius:14px;
-    padding:8px 22px;font-size:23px;white-space:nowrap;
+    position:absolute;top:-24px;left:50%;transform:translateX(-50%);
+    background:linear-gradient(#78b8ff,#347ff0);border:3px solid #1d2a4d;box-shadow:inset 0 4px 0 rgba(255,255,255,.35),0 5px 0 #1d2a4d;color:#fff;border-radius:16px;
+    padding:7px 22px 8px;font-size:23px;white-space:nowrap;
+    text-shadow:0 2.5px 0 #1d2a4d,2px 0 0 #1d2a4d,-2px 0 0 #1d2a4d,0 -2px 0 #1d2a4d;
   }
-  .ribbon.red{background:#ff4d5e;box-shadow:0 4px 0 #c2283a}
-  .ribbon.green{background:#4cd964;box-shadow:0 4px 0 #2a9d44}
-  .ribbon.gold{background:#ffb300;box-shadow:0 4px 0 #c98600}
-  .ribbon.purple{background:#9b5cff;box-shadow:0 4px 0 #6d35d1}
-  .sheet-body{display:flex;flex-direction:column;gap:12px}
+  .ribbon.red{background:linear-gradient(#ff6d7e,#d6344a)}
+  .ribbon.green{background:linear-gradient(#8ef59c,#2fc653)}
+  .ribbon.gold{background:linear-gradient(#ffd24d,#ff9f1a)}
+  .ribbon.purple{background:linear-gradient(#c197ff,#8a47f0)}
+  .sheet-body{display:flex;flex-direction:column;gap:12px;position:relative}
   .btn{
-    border:none;cursor:pointer;border-radius:16px;padding:13px 18px;
+    position:relative;overflow:hidden;border:3px solid #1d2a4d;border-radius:18px;padding:11px 18px 13px;
     font-family:'Lilita One','Arial Black',sans-serif;font-size:22px;color:#fff;letter-spacing:.5px;
-    text-shadow:0 2px 0 rgba(0,0,0,.18);display:flex;align-items:center;justify-content:center;gap:8px;
+    text-shadow:0 2.5px 0 #1d2a4d,2px 0 0 #1d2a4d,-2px 0 0 #1d2a4d,0 -2px 0 #1d2a4d;
+    display:flex;align-items:center;justify-content:center;gap:8px;
+    box-shadow:inset 0 -5px 0 rgba(0,0,0,.16),0 5px 0 #1d2a4d;transition:transform .08s;
   }
-  .btn:active{transform:translateY(3px)}
-  .btn.green{background:#4cd964;box-shadow:0 5px 0 #2a9d44}
-  .btn.blue{background:#3d8bff;box-shadow:0 5px 0 #2059c9}
-  .btn.red{background:#ff4d5e;box-shadow:0 5px 0 #c2283a}
-  .btn.purple{background:#9b5cff;box-shadow:0 5px 0 #6d35d1}
-  .btn.orange{background:#ff8a1f;box-shadow:0 5px 0 #c9620a}
-  .btn.ghost{background:#eef3fb;color:#1d2a4d;box-shadow:0 5px 0 #c9d6ea;text-shadow:none}
-  .btn.small{font-size:16px;padding:10px 14px}
-  .btn[disabled]{filter:grayscale(1);opacity:.55;cursor:default}
+  .btn::before{content:"";position:absolute;left:10px;right:10px;top:4px;height:34%;border-radius:12px;background:rgba(255,255,255,.32);pointer-events:none}
+  .btn:active{transform:translateY(4px);box-shadow:inset 0 -3px 0 rgba(0,0,0,.16),0 1px 0 #1d2a4d}
+  .btn.green{background:linear-gradient(#86f394,#2bc452)}
+  .btn.blue{background:linear-gradient(#78b8ff,#2f7cf0)}
+  .btn.red{background:linear-gradient(#ff8391,#e5344a)}
+  .btn.purple{background:linear-gradient(#c197ff,#8a47f0)}
+  .btn.orange{background:linear-gradient(#ffb866,#ff7a1a)}
+  .btn.ghost{background:#fff;color:#1d2a4d;text-shadow:none}
+  .btn.small{font-size:16px;padding:8px 14px 10px}
+  .btn[disabled]{filter:grayscale(1);opacity:.6;cursor:default}
   .btn .gem,.btn .coin{width:20px;height:20px}
-  .reward{display:flex;align-items:center;justify-content:center;gap:10px;font-family:'Lilita One','Arial Black',sans-serif;font-size:48px;font-variant-numeric:tabular-nums}
-  .reward .coin{width:44px;height:44px}
-  .mult{align-self:center;background:#ffc233;box-shadow:0 3px 0 #d99100;border-radius:999px;padding:4px 16px;font-family:'Lilita One','Arial Black',sans-serif;font-size:17px}
-  .newbest{align-self:center;background:#ff4d5e;color:#fff;box-shadow:0 3px 0 #c2283a;border-radius:999px;padding:3px 14px;font-family:'Lilita One','Arial Black',sans-serif;font-size:16px;animation:pulse .8s ease-in-out infinite}
+  .reward{position:relative;display:flex;align-items:center;justify-content:center;gap:10px;font-family:'Lilita One','Arial Black',sans-serif;font-size:50px;font-variant-numeric:tabular-nums;color:#1d2a4d}
+  .reward .coin{width:46px;height:46px}
+  .reward > *{position:relative}
+  .reward .rays{position:absolute;width:300px;height:300px;margin:0;left:50%;top:50%;transform:translate(-50%,-50%);animation:spinc 10s linear infinite;
+    background:repeating-conic-gradient(rgba(255,194,51,.45) 0 10deg,rgba(255,194,51,0) 10deg 20deg);
+    -webkit-mask:radial-gradient(circle,#000 10%,transparent 65%);mask:radial-gradient(circle,#000 10%,transparent 65%)}
+  @keyframes spinc{to{transform:translate(-50%,-50%) rotate(360deg)}}
+  .mult{align-self:center;background:linear-gradient(#ffe066,#ffb300);border:2.5px solid #1d2a4d;box-shadow:0 3px 0 #1d2a4d;border-radius:999px;padding:3px 16px;font-family:'Lilita One','Arial Black',sans-serif;font-size:17px;position:relative}
+  .newbest{align-self:center;background:linear-gradient(#ff6d7e,#d6344a);color:#fff;border:2.5px solid #1d2a4d;box-shadow:0 3px 0 #1d2a4d;border-radius:999px;padding:2px 14px;font-family:'Lilita One','Arial Black',sans-serif;font-size:17px;animation:nudge .9s ease-in-out infinite;text-shadow:0 1.5px 0 #1d2a4d}
   .stats{color:#6b7a99;font-weight:800;font-size:14px;line-height:1.5}
   .sub{color:#6b7a99;font-weight:800;font-size:15px;margin:0;text-wrap:balance}
-  .stars{display:flex;justify-content:center;gap:4px;margin-top:-4px}
-  .stars svg{width:46px;height:46px}
-  .stars svg path{fill:#d3dceb;stroke:#1d2a4d;stroke-width:1.3}
+  .stars{display:flex;justify-content:center;gap:4px;margin-top:-6px;position:relative}
+  .stars svg{width:52px;height:52px}
+  .stars svg path{fill:#e3e9f4;stroke:#1d2a4d;stroke-width:1.6}
   .stars svg.on path{fill:#ffc233}
-  .stars svg.on{animation:starpop .45s cubic-bezier(.2,1.6,.4,1) both}
-  .stars svg:nth-child(2){transform:translateY(-8px)}
-  @keyframes starpop{from{transform:scale(0) rotate(-40deg)}}
-  .extra{display:flex;justify-content:center;gap:10px;font-family:'Lilita One','Arial Black',sans-serif;font-size:17px;flex-wrap:wrap}
+  .stars svg.on{animation:starpop .5s cubic-bezier(.2,1.8,.4,1) both}
+  .stars svg:nth-child(2){transform:translateY(-10px) scale(1.12)}
+  @keyframes starpop{from{transform:scale(0) rotate(-60deg)}}
+  .extra{display:flex;justify-content:center;gap:10px;font-family:'Lilita One','Arial Black',sans-serif;font-size:17px;flex-wrap:wrap;position:relative}
   .extra span{display:flex;align-items:center;gap:4px}
-  .modbox{background:#fff4e6;border-radius:14px;padding:10px;display:flex;flex-direction:column;gap:2px}
-  .modbox b{font-family:'Lilita One','Arial Black',sans-serif;font-weight:400;font-size:20px;color:#ff6a1f}
+  .modbox{background:#fff4e6;border:2.5px solid #1d2a4d;border-radius:14px;padding:9px;display:flex;flex-direction:column;gap:2px}
+  .modbox b{font-family:'Lilita One','Arial Black',sans-serif;font-weight:400;font-size:21px;color:#ff6a1f}
   .modbox span{font-weight:800;font-size:13px;color:#6b7a99}
 
   .daily-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-  .dcell{background:#eef3fb;border-radius:14px;padding:8px 2px;display:flex;flex-direction:column;align-items:center;gap:4px;border:3px solid transparent;font-family:'Lilita One','Arial Black',sans-serif;font-size:14px;position:relative}
+  .dcell{background:#fff;border:2.5px solid #1d2a4d;box-shadow:0 3px 0 #1d2a4d;border-radius:14px;padding:7px 2px;display:flex;flex-direction:column;align-items:center;gap:4px;font-family:'Lilita One','Arial Black',sans-serif;font-size:14px;position:relative}
   .dcell .d{font-family:'Nunito',sans-serif;font-weight:900;font-size:11px;color:#6b7a99}
-  .dcell.today{border-color:#ffc233;background:#fff7dc}
+  .dcell.today{background:linear-gradient(#fff7d0,#ffe38a);animation:nudge 1.3s ease-in-out infinite}
   .dcell.got{opacity:.55}
   .dcell.got::after{content:"✓";position:absolute;inset:0;display:grid;place-items:center;font-size:34px;color:#2a9d44}
   .dcell.big{grid-column:span 2}
 
   .wheel-wrap{position:relative;width:260px;height:260px;margin:4px auto 6px;max-width:100%}
-  .wheel{position:absolute;inset:0;border-radius:50%;border:7px solid #1d2a4d;box-shadow:0 6px 0 #b9cde8;transition:transform 4.2s cubic-bezier(.15,.7,.2,1)}
-  .wlabel{position:absolute;left:50%;top:50%;display:flex;flex-direction:column;align-items:center;gap:2px;font-family:'Lilita One','Arial Black',sans-serif;font-size:15px;color:#fff;text-shadow:0 2px 0 #1d2a4d}
+  .wheel{position:absolute;inset:0;border-radius:50%;border:7px solid #1d2a4d;box-shadow:0 6px 0 #1d2a4d;transition:transform 4.2s cubic-bezier(.15,.7,.2,1)}
+  .wlabel{position:absolute;left:50%;top:50%;display:flex;flex-direction:column;align-items:center;gap:2px;font-family:'Lilita One','Arial Black',sans-serif;font-size:15px;color:#fff;text-shadow:0 2px 0 #1d2a4d,1.5px 0 0 #1d2a4d,-1.5px 0 0 #1d2a4d}
   .wlabel .coin,.wlabel .gem,.wlabel .keyi{width:20px;height:20px}
-  .wheel-hub{position:absolute;left:50%;top:50%;width:46px;height:46px;margin:-23px 0 0 -23px;border-radius:50%;background:#fff;border:6px solid #1d2a4d}
+  .wheel-hub{position:absolute;left:50%;top:50%;width:46px;height:46px;margin:-23px 0 0 -23px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff9d6,#ffc233);border:6px solid #1d2a4d}
   .wheel-ptr{position:absolute;left:50%;top:-14px;margin-left:-16px;width:32px;height:40px;z-index:2}
 
   .chest-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-  .chest{border:none;background:#eef3fb;border-radius:16px;height:86px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-family:'Lilita One','Arial Black',sans-serif;font-size:15px}
+  .chest{border:2.5px solid #1d2a4d;box-shadow:0 3px 0 #1d2a4d;background:#fff;border-radius:16px;height:86px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-family:'Lilita One','Arial Black',sans-serif;font-size:15px}
+  .chest:not(.open) svg{animation:wiggle 2.4s ease-in-out infinite}
+  .chest:nth-child(3n+2):not(.open) svg{animation-delay:.4s}
+  .chest:nth-child(3n):not(.open) svg{animation-delay:.8s}
   .chest svg{width:52px;height:44px}
-  .chest.open{background:#fff7dc;animation:starpop .4s cubic-bezier(.2,1.6,.4,1)}
+  .chest.open{background:#fff7dc;animation:popin .45s cubic-bezier(.2,1.6,.4,1)}
   .chest.open .coin,.chest.open .gem{width:26px;height:26px}
   .chest.jack{background:#f1e6ff}
   .key-row{display:flex;justify-content:center;gap:4px}
   .key-row .keyi{width:34px;height:34px}
 
-  .srow{display:flex;align-items:center;justify-content:space-between;background:#eef3fb;border-radius:14px;padding:12px 14px;font-weight:900}
-  .tog{width:56px;height:32px;border-radius:999px;background:#c9d3e3;position:relative;border:none;cursor:pointer;flex:0 0 auto}
-  .tog::after{content:'';position:absolute;top:3px;left:3px;width:26px;height:26px;border-radius:50%;background:#fff;box-shadow:0 2px 0 rgba(0,0,0,.15);transition:left .15s}
-  .tog.on{background:#4cd964}
+  .srow{display:flex;align-items:center;justify-content:space-between;background:#fff;border:2.5px solid #1d2a4d;box-shadow:0 3px 0 #1d2a4d;border-radius:14px;padding:10px 14px;font-weight:900}
+  .tog{width:58px;height:32px;border-radius:999px;background:#d3dceb;position:relative;border:2.5px solid #1d2a4d;flex:0 0 auto}
+  .tog::after{content:'';position:absolute;top:2px;left:2px;width:23px;height:23px;border-radius:50%;background:#fff;border:2px solid #1d2a4d;transition:left .18s cubic-bezier(.2,1.6,.4,1)}
+  .tog.on{background:linear-gradient(#8ef59c,#2fc653)}
   .tog.on::after{left:27px}
   #loadErr{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:30px;text-align:center;font-weight:900;z-index:80;background:#bfe6ff}
-  @media (prefers-reduced-motion: reduce){ .hand,.play,.sheet,.wheel,.logo{animation:none!important;transition:none!important} }
+  @media (prefers-reduced-motion: reduce){ *{animation:none!important;transition:none!important} }
 </style>
 
 <div id="app">
@@ -373,9 +445,8 @@
   <!-- ================= MENU ================= -->
   <div id="menu">
     <div class="topbar">
-      <div class="pill" id="topGold"><span class="coin"></span><span id="topGoldN">0</span></div>
-      <div class="pill" id="topGems"><span class="gem"></span><span id="topGemsN">0</span></div>
-      <div class="pill keys" id="topKeys"></div>
+      <div class="pill" id="topGold"><span class="coin"></span><span class="n" id="topGoldN">0</span><button class="plus" id="goldPlus" aria-label="Get gold">+</button></div>
+      <div class="pill" id="topGems"><span class="gem"></span><span class="n" id="topGemsN">0</span><button class="plus" id="gemPlus" aria-label="Get gems">+</button></div>
       <div class="spacer"></div>
       <button class="icon-btn" id="settingsBtn" aria-label="Settings">
         <svg viewBox="0 0 24 24"><g fill="#fff">
@@ -393,59 +464,48 @@
 
     <!-- HOME -->
     <div class="tab home" id="tabHome">
-      <div class="logo display outline">BAR<br><span class="g">RUSH</span></div>
+      <div class="logo-wrap">
+        <div class="rays"></div>
+        <i class="spark" style="left:-18px;top:14px;--d:0s"></i><i class="spark y" style="right:-22px;top:4px;--d:.6s"></i>
+        <i class="spark y" style="left:-6px;bottom:0;--d:1.1s"></i><i class="spark" style="right:-10px;bottom:14px;--d:1.5s"></i>
+        <div class="logo display outline"><span><span style="--i:0">B</span><span style="--i:1">A</span><span style="--i:2">R</span></span><span class="r2 g"><span style="--i:3">R</span><span style="--i:4">U</span><span style="--i:5">S</span><span style="--i:6">H</span></span></div>
+      </div>
       <div class="badge-row">
         <div class="lvl-badge display" id="menuLevel">LEVEL 1</div>
         <div class="star-badge display"><svg viewBox="0 0 24 24"><path d="M12 2l3 6.5 7 .8-5.2 4.8 1.5 7L12 17.6 5.7 21.1l1.5-7L2 9.3l7-.8z" fill="#ffc233"/></svg><span id="menuStars">0</span></div>
       </div>
       <div class="journey" id="journey"></div>
-      <div class="zone-name" id="menuZone">MEADOW</div>
+      <div class="zone-name display outline" id="menuZone">MEADOW</div>
 
       <div class="side l">
-        <button class="sbtn" id="dailyBtn">
-          <svg viewBox="0 0 24 24"><rect x="3" y="9" width="18" height="12" rx="2" fill="#ff4d5e"/><rect x="2" y="6.5" width="20" height="4.5" rx="1.5" fill="#ff6b7a"/><rect x="10.5" y="6.5" width="3" height="14.5" fill="#ffc233"/><path d="M12 6.5C10 2.5 6 2.5 6 5s4 1.5 6 1.5zm0 0c2-4 6-4 6-1.5s-4 1.5-6 1.5z" fill="#ffc233"/></svg>
-          DAILY<span class="sub2" id="dailySub">CLAIM</span>
-          <span class="dot" id="dailyDot" hidden></span>
-        </button>
-        <button class="sbtn" id="spinBtn">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#ffc233"/><path d="M12 12V2a10 10 0 0 1 10 10z" fill="#3d8bff"/><path d="M12 12v10A10 10 0 0 1 2 12z" fill="#3d8bff"/><path d="M12 12H2A10 10 0 0 1 12 2z" fill="#ff4d5e"/><path d="M12 12h10a10 10 0 0 1-10 10z" fill="#4cd964"/><circle cx="12" cy="12" r="2.6" fill="#fff"/></svg>
-          SPIN<span class="sub2" id="spinSub">FREE</span>
-          <span class="dot" id="spinDot" hidden></span>
-        </button>
+        <button class="sbtn" id="dailyBtn"><span class="ico" style="--c:linear-gradient(#ff8391,#e5344a)"><svg viewBox="0 0 24 24"><rect x="3" y="9" width="18" height="12" rx="2" fill="#fff"/><rect x="2" y="6.5" width="20" height="4.5" rx="1.5" fill="#ffe2e6"/><rect x="10.5" y="6.5" width="3" height="14.5" fill="#ffc233"/><path d="M12 6.5C10 2.5 6 2.5 6 5s4 1.5 6 1.5zm0 0c2-4 6-4 6-1.5s-4 1.5-6 1.5z" fill="#ffc233"/></svg></span><span class="lab">DAILY</span><span class="sub2" id="dailySub">CLAIM</span><span class="dot" id="dailyDot" hidden></span></button>
+        <button class="sbtn" id="spinBtn"><span class="ico" style="--c:linear-gradient(#c197ff,#8a47f0)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#ffc233"/><path d="M12 12V2a10 10 0 0 1 10 10z" fill="#3d8bff"/><path d="M12 12v10A10 10 0 0 1 2 12z" fill="#3d8bff"/><path d="M12 12H2A10 10 0 0 1 12 2z" fill="#ff4d5e"/><path d="M12 12h10a10 10 0 0 1-10 10z" fill="#4cd964"/><circle cx="12" cy="12" r="2.6" fill="#fff"/></svg></span><span class="lab">SPIN</span><span class="sub2" id="spinSub">FREE</span><span class="dot" id="spinDot" hidden></span></button>
       </div>
       <div class="side r">
-        <button class="sbtn" id="mineBtn">
-          <svg viewBox="0 0 24 24"><path d="M3 9c5-5 13-5 18 0-5-2-13-2-18 0z" fill="#8a96ad"/><rect x="11" y="6" width="2.6" height="16" rx="1.2" fill="#a0662e" transform="rotate(20 12 12)"/><circle cx="6" cy="19" r="3" fill="#ffc233"/></svg>
-          MINE<span class="sub2" id="mineSub">LOCKED</span>
-          <span class="dot" id="mineDot" hidden></span>
-        </button>
-        <button class="sbtn" id="chestBtn">
-          <svg viewBox="0 0 48 40"><rect x="4" y="14" width="40" height="22" rx="3" fill="#b9722e"/><path d="M4 16c0-8 6-12 20-12s20 4 20 12z" fill="#d28b3c"/><rect x="4" y="14" width="40" height="4" fill="#ffc233"/><rect x="21" y="12" width="6" height="9" rx="1.5" fill="#ffc233"/></svg>
-          CHESTS<span class="sub2" id="chestSub">0/3 KEYS</span>
-          <span class="dot" id="chestDot" hidden></span>
-        </button>
+        <button class="sbtn" id="mineBtn"><span class="ico" style="--c:linear-gradient(#d9a066,#9a6a3a)"><svg viewBox="0 0 24 24"><path d="M3 9c5-5 13-5 18 0-5-2-13-2-18 0z" fill="#8a96ad"/><rect x="11" y="6" width="2.6" height="16" rx="1.2" fill="#a0662e" transform="rotate(20 12 12)"/><circle cx="6" cy="19" r="3" fill="#ffc233"/></svg></span><span class="lab">MINE</span><span class="sub2" id="mineSub">LOCKED</span><span class="dot" id="mineDot" hidden></span></button>
+        <button class="sbtn" id="chestBtn"><span class="ico" style="--c:linear-gradient(#ffd24d,#ff9f1a)"><svg viewBox="0 0 48 40"><rect x="4" y="14" width="40" height="22" rx="3" fill="#b9722e"/><path d="M4 16c0-8 6-12 20-12s20 4 20 12z" fill="#d28b3c"/><rect x="4" y="14" width="40" height="4" fill="#ffc233"/><rect x="21" y="12" width="6" height="9" rx="1.5" fill="#ffc233"/></svg></span><span class="lab">CHESTS</span><span class="sub2" id="chestSub">0/3 KEYS</span><span class="dot" id="chestDot" hidden></span></button>
       </div>
 
       <div class="play-wrap">
         <div class="modes">
-          <button class="mode daily" id="modeDaily">
+          <button class="mode daily shine" id="modeDaily">
             <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3" fill="#fff"/><rect x="3" y="5" width="18" height="5" rx="2" fill="#ffe2cc"/><rect x="7" y="2.5" width="2.5" height="5" rx="1" fill="#fff"/><rect x="14.5" y="2.5" width="2.5" height="5" rx="1" fill="#fff"/><path d="M12 11.5l1.4 2.9 3.1.4-2.3 2.1.6 3.1-2.8-1.6-2.8 1.6.6-3.1-2.3-2.1 3.1-.4z" fill="#ff8a1f"/></svg>
             <div><div class="mt">DAILY<br>CHALLENGE</div><div class="ms" id="modeDailySub">NEW TODAY</div></div>
             <span class="dot" id="dailyChalDot" hidden></span>
           </button>
-          <button class="mode endless" id="modeEndless">
+          <button class="mode endless shine" id="modeEndless">
             <svg viewBox="0 0 24 24"><path d="M7 8c-2.5 0-4.5 1.8-4.5 4s2 4 4.5 4c4 0 6-8 10-8 2.5 0 4.5 1.8 4.5 4s-2 4-4.5 4c-4 0-6-8-10-8z" fill="none" stroke="#fff" stroke-width="2.8"/></svg>
             <div><div class="mt">ENDLESS<br>RUN</div><div class="ms" id="modeEndlessSub">BEST 0 m</div></div>
           </button>
         </div>
-        <button class="btn green play" id="playBtn">PLAY</button>
+        <button class="btn green play shine" id="playBtn">PLAY<svg viewBox="0 0 24 24"><path d="M7 4.5v15l12-7.5z" fill="#fff" stroke="#1d2a4d" stroke-width="2" stroke-linejoin="round"/></svg></button>
       </div>
     </div>
 
     <!-- UPGRADES -->
     <div class="tab" id="tabUpgrades" hidden>
       <div class="panel">
-        <h2 class="display"><span class="grow">UPGRADES</span></h2>
+        <h2 class="display outline"><span class="grow">UPGRADES</span></h2>
         <div class="scroll" id="upList"></div>
       </div>
     </div>
@@ -453,7 +513,7 @@
     <!-- SKINS -->
     <div class="tab" id="tabSkins" hidden>
       <div class="panel">
-        <h2 class="display"><span class="grow">WARDROBE</span><small id="skinNote">Tap to try on</small></h2>
+        <h2 class="display outline"><span class="grow">WARDROBE</span><small id="skinNote">Tap to try on</small></h2>
         <div class="seg"><button class="on" data-seg="runners">RUNNERS</button><button data-seg="hats">HATS</button><button data-seg="bars">GOLD BARS</button></div>
         <div class="scroll"><div class="skin-grid" id="skinGrid"></div></div>
       </div>
@@ -462,7 +522,7 @@
     <!-- MISSIONS -->
     <div class="tab" id="tabMissions" hidden>
       <div class="panel">
-        <h2 class="display"><span class="grow">DAILY MISSIONS</span></h2>
+        <h2 class="display outline"><span class="grow">DAILY MISSIONS</span></h2>
         <div class="scroll" id="missionList"></div>
       </div>
     </div>
@@ -470,17 +530,17 @@
     <!-- TROPHIES -->
     <div class="tab" id="tabTrophies" hidden>
       <div class="panel">
-        <h2 class="display"><span class="grow">TROPHIES</span></h2>
+        <h2 class="display outline"><span class="grow">TROPHIES</span></h2>
         <div class="scroll" id="trophyList"></div>
       </div>
     </div>
 
     <nav class="tabbar">
-      <button class="on" data-tab="Home"><svg viewBox="0 0 24 24"><path d="M3 11 12 3l9 8v10h-6v-6H9v6H3z" fill="currentColor"/></svg>HOME</button>
-      <button data-tab="Upgrades"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M12 6l5 6h-3v6h-4v-6H7z" fill="#fff"/></svg>UPGRADES<span class="dot" id="upDot" hidden></span></button>
-      <button data-tab="Skins"><svg viewBox="0 0 24 24"><path d="M8 3 3 6l2 5 3-1v11h8V10l3 1 2-5-5-3c-1 2-2.4 3-4 3S9 5 8 3z" fill="currentColor"/></svg>SKINS</button>
-      <button data-tab="Missions"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="3" fill="currentColor"/><path d="M8 9l2 2 4-4M8 15h8" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>MISSIONS<span class="dot" id="misDot" hidden></span></button>
-      <button data-tab="Trophies"><svg viewBox="0 0 24 24"><path d="M7 3h10v5a5 5 0 0 1-10 0z" fill="currentColor"/><path d="M7 5H4v2a3 3 0 0 0 3 3M17 5h3v2a3 3 0 0 1-3 3" fill="none" stroke="currentColor" stroke-width="2"/><rect x="10.5" y="12" width="3" height="5" fill="currentColor"/><rect x="7" y="17" width="10" height="3.5" rx="1" fill="currentColor"/></svg>TROPHIES<span class="dot" id="troDot" hidden></span></button>
+      <button class="on" data-tab="Home" style="--tc:linear-gradient(#86f394,#2bc452)"><svg viewBox="0 0 24 24"><path d="M3 11 12 3l9 8v10h-6v-6H9v6H3z" fill="currentColor"/></svg>HOME</button>
+      <button data-tab="Upgrades" style="--tc:linear-gradient(#ffd24d,#ff9f1a)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M12 6l5 6h-3v6h-4v-6H7z" fill="#fff"/></svg>UPGRADES<span class="dot" id="upDot" hidden></span></button>
+      <button data-tab="Skins" style="--tc:linear-gradient(#ff8ec8,#e0457b)"><svg viewBox="0 0 24 24"><path d="M8 3 3 6l2 5 3-1v11h8V10l3 1 2-5-5-3c-1 2-2.4 3-4 3S9 5 8 3z" fill="currentColor"/></svg>SKINS</button>
+      <button data-tab="Missions" style="--tc:linear-gradient(#78b8ff,#347ff0)"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="3" fill="currentColor"/><path d="M8 9l2 2 4-4M8 15h8" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>MISSIONS<span class="dot" id="misDot" hidden></span></button>
+      <button data-tab="Trophies" style="--tc:linear-gradient(#c197ff,#8a47f0)"><svg viewBox="0 0 24 24"><path d="M7 3h10v5a5 5 0 0 1-10 0z" fill="currentColor"/><path d="M7 5H4v2a3 3 0 0 0 3 3M17 5h3v2a3 3 0 0 1-3 3" fill="none" stroke="currentColor" stroke-width="2"/><rect x="10.5" y="12" width="3" height="5" fill="currentColor"/><rect x="7" y="17" width="10" height="3.5" rx="1" fill="currentColor"/></svg>TROPHIES<span class="dot" id="troDot" hidden></span></button>
     </nav>
   </div>
 
@@ -499,7 +559,7 @@
     <div class="sheet"><div class="ribbon green display" id="winTitle">LEVEL 1 COMPLETE!</div>
       <div class="sheet-body">
         <div class="stars" id="winStars"></div>
-        <div class="reward"><span class="coin"></span><span id="winReward">0</span></div>
+        <div class="reward"><div class="rays"></div><span class="coin"></span><span id="winReward">0</span></div>
         <div class="mult" id="winMult">x1 MULTIPLIER</div>
         <div class="extra" id="winExtra"></div>
         <div class="stats" id="winStats"></div>
@@ -522,7 +582,7 @@
   <div class="modal" id="endModal" hidden>
     <div class="sheet"><div class="ribbon purple display">RUN OVER</div>
       <div class="sheet-body">
-        <div class="reward" style="font-size:44px" id="endDist">0 m</div>
+        <div class="reward" style="font-size:44px"><div class="rays"></div><span id="endDist">0 m</span></div>
         <div class="newbest" id="endBest" hidden>NEW BEST!</div>
         <div class="stats" id="endStats"></div>
         <div class="reward" style="font-size:34px"><span class="coin" style="width:32px;height:32px"></span><span id="endGold">0</span></div>
@@ -943,6 +1003,18 @@ G.pitTex = canvasTex(64, 64, (x,w,h)=>{
   x.strokeStyle = "#ffc233"; x.lineWidth = 4; x.setLineDash([8,6]); x.strokeRect(2,2,w-4,h-4);
 });
 G.pitMat = new THREE.MeshBasicMaterial({map:G.pitTex});
+G.sweepArm = new THREE.BoxGeometry(6.1, 0.24, 0.24);
+G.sweepPole = new THREE.CylinderGeometry(0.16, 0.22, 1.1, 10);
+G.sweepBall = new THREE.SphereGeometry(0.22, 12, 8);
+G.rampGeo = (function(){
+  const sh = new THREE.Shape(); sh.moveTo(0,0); sh.lineTo(2.6,0); sh.lineTo(2.6,0.75); sh.lineTo(0,0);
+  const g = new THREE.ExtrudeGeometry(sh, {depth:2.2, bevelEnabled:false});
+  g.rotateY(Math.PI/2); g.translate(-1.1, 0, 0);
+  return g;
+})();
+G.rampEdges = new THREE.EdgesGeometry(G.rampGeo);
+G.inkLine = new THREE.LineBasicMaterial({color:0x1d2a4d});
+G.rampArrowGeo = new THREE.PlaneGeometry(1.7, 2.3);
 G.checker = canvasTex(64, 16, (x)=>{ for(let i=0;i<16;i++) for(let j=0;j<4;j++){ x.fillStyle = (i+j)%2 ? "#1d2a4d" : "#fff"; x.fillRect(i*4,j*4,4,4); } });
 G.checker.magFilter = THREE.NearestFilter;
 G.finishTex = canvasTex(512, 96, (x,w,h)=>{
@@ -992,22 +1064,28 @@ for(const k of ["magnet","double","shield"]){
   });
   G.orbMat[k] = new THREE.MeshPhongMaterial({color:new THREE.Color(POW_COL[k]), transparent:true, opacity:0.35, shininess:120, depthWrite:false});
 }
-// figure parts
-G.fTorso = new THREE.CylinderGeometry(0.3, 0.25, 0.86, 16);
-G.fChest = new THREE.SphereGeometry(0.3, 16, 12);
-G.fHips = new THREE.SphereGeometry(0.26, 16, 12);
-G.fHead = new THREE.SphereGeometry(0.31, 20, 16);
-G.fLeg = new THREE.CylinderGeometry(0.12, 0.1, 0.72, 10); G.fLeg.translate(0, -0.36, 0);
-G.fFoot = new THREE.SphereGeometry(0.105, 10, 8);
-G.fArm = new THREE.CylinderGeometry(0.095, 0.08, 0.62, 10); G.fArm.translate(0, -0.31, 0);
-G.fHand = new THREE.SphereGeometry(0.084, 10, 8);
-G.thiefMat = phong(0x3b5bdb);
+// cartoon figure parts (cel shading + ink outlines)
+G.grad = new THREE.DataTexture(new Uint8Array([120,120,120,255, 190,190,190,255, 255,255,255,255]), 3, 1, THREE.RGBAFormat);
+G.grad.minFilter = G.grad.magFilter = THREE.NearestFilter; G.grad.generateMipmaps = false; G.grad.needsUpdate = true;
+const toon = (color, extra) => new THREE.MeshToonMaterial(Object.assign({color, gradientMap:G.grad}, extra||{}));
+G.outlineMat = new THREE.MeshBasicMaterial({color:0x1d2a4d, side:THREE.BackSide});
+G.rampMat = toon(0xff8a1f);
+G.rampArrowMat = new THREE.MeshBasicMaterial({map:G.boostTex, transparent:true, opacity:0.9});
+G.sph = new THREE.SphereGeometry(1, 22, 16);
+G.sphLo = new THREE.SphereGeometry(1, 12, 8);
+G.legGeo = new THREE.CylinderGeometry(0.085, 0.08, 0.32, 10); G.legGeo.translate(0, -0.16, 0);
+G.armGeo = new THREE.CylinderGeometry(0.075, 0.07, 0.3, 10); G.armGeo.translate(0, -0.15, 0);
+G.smileGeo = new THREE.TorusGeometry(0.1, 0.028, 6, 14, Math.PI);
+G.faceDark = new THREE.MeshBasicMaterial({color:0x2a1a2a});
+G.faceWhite = new THREE.MeshBasicMaterial({color:0xffffff});
+G.tongue = new THREE.MeshBasicMaterial({color:0xff6b8a});
+G.cheekMat = new THREE.MeshBasicMaterial({color:0xff7aa2, transparent:true, opacity:0.6, depthWrite:false});
+G.shoeMat = toon(0xffffff);
+G.soleMat = toon(0x2d3142);
+G.browGeo = new THREE.BoxGeometry(0.17, 0.045, 0.05);
+G.thiefMat = toon(0x3b5bdb);
 G.maskMat = new THREE.MeshLambertMaterial({color:0x14182b});
-G.maskGeo = new THREE.BoxGeometry(0.62, 0.12, 0.2);
-G.eyeWhite = new THREE.MeshLambertMaterial({color:0xffffff});
-G.eyeGeo = new THREE.SphereGeometry(0.075, 10, 8);
-G.pupilGeo = new THREE.SphereGeometry(0.04, 8, 6);
-G.browGeo = new THREE.BoxGeometry(0.16, 0.035, 0.04);
+G.maskGeo = new THREE.BoxGeometry(0.84, 0.15, 0.26);
 
 /* ---------- environment (built once, recolored per zone) ---------- */
 const env = {};
@@ -1100,19 +1178,70 @@ function applyZone(z){
 }
 
 /* =============================== FIGURES =============================== */
-function buildFigure(mat, shadows){
+function buildFigure(mat, o){
+  o = o || {};
   const root = new THREE.Group(), body = new THREE.Group(); root.add(body);
-  const part = (geo, x, y, z, parent) => { const m = new THREE.Mesh(geo, mat); m.position.set(x,y,z); m.castShadow = !!shadows; (parent||body).add(m); return m; };
-  part(G.fTorso, 0, 1.08, 0);
-  part(G.fChest, 0, 1.5, 0).scale.set(1, 0.55, 1);
-  part(G.fHips, 0, 0.66, 0);
-  const head = part(G.fHead, 0, 1.86, 0);
-  const limb = (geo, joint, len, x, y) => { const p = new THREE.Group(); p.position.set(x, y, 0); body.add(p); part(geo,0,0,0,p); part(joint,0,-len,0,p); return p; };
-  const legL = limb(G.fLeg, G.fFoot, 0.72, -0.15, 0.7), legR = limb(G.fLeg, G.fFoot, 0.72, 0.15, 0.7);
-  const armL = limb(G.fArm, G.fHand, 0.62, -0.38, 1.42), armR = limb(G.fArm, G.fHand, 0.62, 0.38, 1.42);
-  armL.rotation.z = 0.1; armR.rotation.z = -0.1;
-  return {root, body, head, legL, legR, armL, armR};
+  const add = (geo, m, x, y, z, sx, sy, sz, parent, ol) => {
+    const mesh = new THREE.Mesh(geo, m); mesh.position.set(x,y,z); mesh.scale.set(sx,sy,sz);
+    mesh.castShadow = !!o.shadows; (parent||body).add(mesh);
+    if(ol && o.outline){ const e = new THREE.Mesh(geo, G.outlineMat); e.scale.setScalar(ol); mesh.add(e); }
+    return mesh;
+  };
+  add(G.sph, mat, 0, 0.93, 0, 0.34, 0.4, 0.3, null, 1.1);            // round belly
+  const head = add(G.sph, mat, 0, 1.62, 0, 0.44, 0.42, 0.42, null, 1.07); // big chibi head
+  const limb = (geo, x, y, len, foot) => {
+    const p = new THREE.Group(); p.position.set(x, y, 0); body.add(p);
+    add(geo, mat, 0, 0, 0, 1, 1, 1, p, 1.35);
+    if(foot){
+      add(G.sph, G.shoeMat, 0, -len - 0.12, -0.05, 0.13, 0.1, 0.19, p, 1.14);
+      add(G.sph, G.soleMat, 0, -len - 0.17, -0.05, 0.12, 0.04, 0.18, p, 0);
+    } else add(G.sph, mat, 0, -len - 0.03, 0, 0.1, 0.1, 0.1, p, 1.2);
+    return p;
+  };
+  const legL = limb(G.legGeo, -0.13, 0.55, 0.32, true), legR = limb(G.legGeo, 0.13, 0.55, 0.32, true);
+  const armL = limb(G.armGeo, -0.34, 1.16, 0.3, false), armR = limb(G.armGeo, 0.34, 1.16, 0.3, false);
+  armL.rotation.z = 0.15; armR.rotation.z = -0.15;
+  // face (front of the character is -z)
+  const face = new THREE.Group(); face.position.set(0, 1.62, 0); body.add(face);
+  const eyes = [], pupils = [];
+  for(const s of [-1,1]){
+    const eg = new THREE.Group(); eg.position.set(s*0.16, 0.07, -0.35); face.add(eg);
+    const w = new THREE.Mesh(G.sphLo, G.faceWhite); w.scale.set(0.13, 0.16, 0.07); eg.add(w);
+    if(o.outline){ const ring = new THREE.Mesh(G.sphLo, G.outlineMat); ring.scale.set(0.15, 0.18, 0.06); ring.position.z = 0.012; eg.add(ring); }
+    const pupil = new THREE.Group(); pupil.position.set(-s*0.012, -0.02, -0.05); eg.add(pupil);
+    const pm = new THREE.Mesh(G.sphLo, G.faceDark); pm.scale.set(0.078, 0.1, 0.04); pupil.add(pm);
+    const hl = new THREE.Mesh(G.sphLo, G.faceWhite); hl.scale.setScalar(0.03); hl.position.set(0.025, 0.035, -0.035); pupil.add(hl);
+    eyes.push(eg); pupils.push(pupil);
+  }
+  const smile = new THREE.Mesh(G.smileGeo, G.faceDark); smile.position.set(0, -0.13, -0.39); smile.rotation.z = Math.PI; face.add(smile);
+  const oMouth = new THREE.Group(); oMouth.position.set(0, -0.17, -0.37); oMouth.visible = false; face.add(oMouth);
+  const om = new THREE.Mesh(G.sphLo, G.faceDark); om.scale.set(0.075, 0.09, 0.045); oMouth.add(om);
+  const tg = new THREE.Mesh(G.sphLo, G.tongue); tg.scale.set(0.045, 0.03, 0.02); tg.position.set(0, -0.045, -0.03); oMouth.add(tg);
+  if(!o.lite){
+    for(const s of [-1,1]){ const c = new THREE.Mesh(G.sphLo, G.cheekMat); c.scale.set(0.075, 0.048, 0.02); c.position.set(s*0.27, -0.07, -0.32); c.rotation.y = s*0.55; face.add(c); }
+  }
+  if(o.mood === "angry"){
+    for(const s of [-1,1]){ const b = new THREE.Mesh(G.browGeo, G.faceDark); b.position.set(s*0.16, 0.27, -0.37); b.rotation.z = s*0.5; face.add(b); }
+  }
+  return {root, body, head, face, eyes, pupils, smile, oMouth, legL, legR, armL, armR, blinkT:1 + Math.random()*3, mood:"happy"};
 }
+// Cartoon expressions: "happy" smile, "ouch" (squint + open mouth), "wow" (big open mouth).
+function setMood(f, mood){
+  if(f.mood === mood) return;
+  f.mood = mood;
+  f.smile.visible = mood === "happy";
+  f.oMouth.visible = mood !== "happy";
+  f.oMouth.scale.setScalar(mood === "wow" ? 1.35 : 1);
+}
+function animateFace(f, dt){
+  f.blinkT -= dt;
+  let sy = 1;
+  if(f.blinkT < 0){ sy = 0.1; if(f.blinkT < -0.12) f.blinkT = 1.8 + Math.random()*3; }
+  if(f.mood === "ouch") sy = Math.min(sy, 0.35);
+  f.eyes.forEach(e=>{ e.scale.y += (sy - e.scale.y)*0.6; });
+}
+// Hats were modelled for a small head; this fits them onto the big cartoon head.
+function fitHat(h){ h.scale.setScalar(1.4); h.position.y = -0.98; return h; }
 function buildHat(id){
   const g = new THREE.Group();
   const add = (geo, mat, x, y, z) => { const m = new THREE.Mesh(geo, mat); m.position.set(x,y,z); m.castShadow = true; g.add(m); return m; };
@@ -1150,14 +1279,14 @@ function buildHat(id){
 }
 
 /* =============================== PLAYER =============================== */
-const skinMat = new THREE.MeshPhongMaterial({color:0xff3b3b, specular:0x555555, shininess:45, emissive:0x000000});
-const P = buildFigure(skinMat, true);
+const skinMat = toon(0xff3b3b, {emissive:0x000000});
+const P = buildFigure(skinMat, {shadows:true, outline:true});
 const player = P.root, body = P.body, legL = P.legL, legR = P.legR, armL = P.armL, armR = P.armR;
 scene.add(player);
 let hatObj = null;
 function setHat(id){
   if(hatObj){ body.remove(hatObj); hatObj.traverse(o=>{ if(o.geometry) o.geometry.dispose(); }); hatObj = null; }
-  if(id && id !== "none"){ hatObj = buildHat(id); body.add(hatObj); }
+  if(id && id !== "none"){ hatObj = fitHat(buildHat(id)); body.add(hatObj); }
 }
 const bubble = new THREE.Mesh(G.shieldGeo, G.shieldMat);
 bubble.position.y = 1.1; bubble.visible = false; player.add(bubble);
@@ -1183,7 +1312,7 @@ for(let i=0;i<LAYERS_MAX;i++){
 const labelCanvas = document.createElement("canvas"); labelCanvas.width = 320; labelCanvas.height = 100;
 const labelTex = new THREE.CanvasTexture(labelCanvas);
 const label = new THREE.Sprite(new THREE.SpriteMaterial({map:labelTex, depthTest:false, transparent:true}));
-label.renderOrder = 10; label.scale.set(2.3, 0.72, 1); label.position.y = 2.75;
+label.renderOrder = 10; label.scale.set(2.3, 0.72, 1); label.position.y = 2.55;
 player.add(label);
 function drawLabel(v){
   const x = labelCanvas.getContext("2d");
@@ -1218,8 +1347,8 @@ let disposables = [];
 const track = o => { disposables.push(o); return o; };
 let rng = Math.random;
 let mode = "level", L = 200, speed = 9, isBonus = false, isBoss = false, stepBase = 100, curLevel = 1, mod = null;
-let gates = [], pickups = [], obstacles = [], boosts = [], steps = [], thieves = [], pows = [], banks = [], chunks = [];
-const allLists = () => [gates, pickups, obstacles, boosts, thieves, pows, banks, chunks];
+let gates = [], pickups = [], obstacles = [], boosts = [], steps = [], thieves = [], pows = [], banks = [], chunks = [], ramps = [];
+const allLists = () => [gates, pickups, obstacles, boosts, thieves, pows, banks, chunks, ramps];
 function addTo(entry, o){ levelGroup.add(o); (entry.objs = entry.objs || []).push(o); return o; }
 function disposeEntry(e){
   if(e.objs) e.objs.forEach(o=>levelGroup.remove(o));
@@ -1231,7 +1360,7 @@ function clearLevel(){
   disposables.forEach(d=>d.dispose && d.dispose());
   disposables = [];
   levelGroup = new THREE.Group(); scene.add(levelGroup);
-  gates = []; pickups = []; obstacles = []; boosts = []; steps = []; thieves = []; pows = []; banks = []; chunks = [];
+  gates = []; pickups = []; obstacles = []; boosts = []; steps = []; thieves = []; pows = []; banks = []; chunks = []; ramps = [];
   projectiles.forEach(q=>scene.remove(q.m));
   boss = null; projectiles.length = 0;
 }
@@ -1264,13 +1393,14 @@ function gateLabel(o){
 const isGood = o => o.kind==="add" || o.kind==="mul";
 function gateTexture(o){
   return canvasTex(300, 365, (x,w,h)=>{
-    const col = o.gold ? "255,190,40" : o.kind==="mystery" ? "155,92,255" : isGood(o) ? "61,139,255" : "255,77,94";
+    const col = o.slot ? "120,60,220" : o.gold ? "255,190,40" : o.kind==="mystery" ? "155,92,255" : isGood(o) ? "61,139,255" : "255,77,94";
     const gr = x.createLinearGradient(0,0,0,h);
     gr.addColorStop(0, `rgba(${col},0.22)`); gr.addColorStop(0.45, `rgba(${col},0.58)`); gr.addColorStop(1, `rgba(${col},0.95)`);
     x.fillStyle = gr; x.fillRect(0,0,w,h);
     x.strokeStyle = o.gold ? "rgba(255,248,200,1)" : "rgba(255,255,255,0.9)"; x.lineWidth = o.gold ? 14 : 8; x.strokeRect(5,5,w-10,h-10);
-    outlinedText(x, gateLabel(o), w/2, 72, o.kind==="mystery" ? 110 : 86, o.gold ? "#fff3a0" : "#fff");
+    outlinedText(x, gateLabel(o), w/2, 72, o.kind==="mystery" ? 110 : 86, o.slot ? (isGood(o) ? "#9dffae" : "#ffb3bb") : o.gold ? "#fff3a0" : "#fff");
     if(o.gold) outlinedText(x, "GOLDEN", w/2, 150, 36, "#fff");
+    if(o.slot){ outlinedText(x, "LUCKY", w/2, 150, 34, "#ffe066"); outlinedText(x, "SLOT", w/2, 190, 34, "#ffe066"); }
   });
 }
 function genGateOpts(lv){
@@ -1294,15 +1424,25 @@ function genGateOpts(lv){
     const i = (rng()*2)|0;
     opts[i] = rng()<0.5 ? {kind:"mul", n:3, gold:true} : {kind:"add", n:r10(base*3.5), gold:true};
   }
+  if(!isBonus && lv >= 3 && rng() < 0.16) opts[(rng()*2)|0] = {kind:"slot"};
   return opts;
 }
 function addGate(z, lv){
   const e = {z, done:false, chosen:-1, t:0, disp:[]};
   e.opts = genGateOpts(lv);
   e.panels = e.opts.map((o,i)=>{
-    const tex = gateTexture(o);
+    let tex;
+    if(o.kind === "slot"){
+      // Lucky Slot: the value keeps cycling, you get whatever shows when you pass
+      const base = 60 + lv*25, r10 = v => Math.max(10, Math.round(v/10)*10);
+      const list = [{kind:"add", n:r10(base*2.6)}, {kind:"sub", n:r10(base*1.3)}, {kind:"mul", n:2}, {kind:"div", n:2}, {kind:"add", n:r10(base*1.1)}, {kind:"mul", n:3}];
+      const texes = list.map(x=>gateTexture(Object.assign({slot:true}, x)));
+      e.disp.push(...texes);
+      e.slot = {i, list, texes, idx:(rng()*list.length)|0, t:0};
+      tex = texes[e.slot.idx];
+    } else { tex = gateTexture(o); e.disp.push(tex); }
     const mat = new THREE.MeshBasicMaterial({map:tex, transparent:true, depthWrite:false, side:THREE.DoubleSide});
-    e.disp.push(tex, mat);
+    e.disp.push(mat);
     const m = new THREE.Mesh(G.gatePlane, mat);
     m.position.set(i===0 ? -1.5 : 1.5, 1.8, z);
     return addTo(e, m);
@@ -1349,6 +1489,7 @@ function obsTypes(lv){
   if(lv >= 2) t.push("hammer", "hurdle");
   if(lv >= 3) t.push("saw");
   if(lv >= 4) t.push("barrel", "pit");
+  if(lv >= 5) t.push("sweeper", "sweeper");
   return t;
 }
 function addObstacle(z, lv, gemOk, forced){
@@ -1392,6 +1533,15 @@ function addObstacle(z, lv, gemOk, forced){
     o.group = addTo(o, g);
     o.jumpy = true;
     if(gemOk) addPickup("gem", 0, z - 0.2);
+  } else if(type==="sweeper"){
+    const g = new THREE.Group();
+    const pole = new THREE.Mesh(G.sweepPole, G.darkMat); pole.position.y = 0.55; pole.castShadow = true; g.add(pole);
+    const arm = new THREE.Group(); arm.position.y = 0.48; g.add(arm);
+    const bar = new THREE.Mesh(G.sweepArm, G.hurdleMat); bar.castShadow = true; arm.add(bar);
+    for(const s of [-1,1]){ const ball = new THREE.Mesh(G.sweepBall, G.redMat); ball.position.x = s*3.05; arm.add(ball); }
+    g.position.z = z; addTo(o, g);
+    Object.assign(o, {group:arm, arm, w:(1.5 + Math.min(0.8, lv*0.03))*(rng()<0.5 ? -1 : 1), ph:rng()*6.28, jumpy:true});
+    if(gemOk) addPickup("gem", rng()<0.5 ? -1.8 : 1.8, z);
   } else if(type==="barrel"){
     const n = lv >= 7 && rng() < 0.5 ? 2 : 1;
     const lanes = [-1.5, 0, 1.5].sort(()=>rng()-0.5).slice(0, n);
@@ -1429,9 +1579,9 @@ function addBoost(z){
   for(let k=1;k<=4;k++) addPickup("bar", x, z - 2 - k*1.4);
 }
 function makeThief(){
-  const f = buildFigure(G.thiefMat, false);
-  const mask = new THREE.Mesh(G.maskGeo, G.maskMat); mask.position.set(0, 1.9, -0.18); f.body.add(mask);
-  f.root.scale.setScalar(0.62);
+  const f = buildFigure(G.thiefMat, {lite:true});
+  const mask = new THREE.Mesh(G.maskGeo, G.maskMat); mask.position.set(0, 0.06, -0.26); f.face.add(mask);
+  f.root.scale.setScalar(0.72);
   return f;
 }
 function addThieves(z, lv){
@@ -1472,6 +1622,23 @@ function addBank(z){
   banks.push(e);
 }
 
+function addRamp(z){
+  const x = [-1.5, 0, 1.5][(rng()*3)|0];
+  const e = {x, z, done:false};
+  const m = new THREE.Mesh(G.rampGeo, G.rampMat); m.position.set(x, 0, z); m.castShadow = true; addTo(e, m);
+  const edge = new THREE.LineSegments(G.rampEdges, G.inkLine); edge.position.set(x, 0, z); addTo(e, edge);
+  const arrows = new THREE.Mesh(G.rampArrowGeo, G.rampArrowMat); arrows.position.set(x, 0.4, z - 1.3); arrows.rotation.x = -Math.PI/2 + Math.atan2(0.75, 2.6); addTo(e, arrows);
+  ramps.push(e);
+  for(let k=1;k<=3;k++) addPickup("bar", x, z + 1.2 + k*1.3);
+  // an arc of gold in the air along the jump path
+  for(let k=0;k<8;k++){
+    const t = 0.16 + k*0.1;
+    addPickup("bar", x, z - 1.3 - speed*t);
+    const b = pickups[pickups.length-1];
+    b.air = true; b.baseY = 0.35 + 13.5*t - 14*t*t + 0.75; b.mesh.position.y = b.baseY;
+  }
+}
+
 /* ---------- row generation (shared by levels and endless) ---------- */
 function rowKind(lv, row, last){
   if(row===0) return "bars";
@@ -1482,7 +1649,8 @@ function rowKind(lv, row, last){
   const pThief = isBonus ? 0 : lv >= 3 ? (mod && mod.id==="thieves" ? 0.28 : 0.09) : 0;
   const pPow = lv >= 2 ? 0.06 : 0;
   const pBoost = lv >= 2 ? 0.07 : 0;
-  const table = [["obs",pObs],["thief",pThief],["gate",0.36],["pow",pPow],["boost",pBoost]];
+  const pRamp = isBonus ? 0.1 : lv >= 3 ? 0.07 : 0;
+  const table = [["obs",pObs],["thief",pThief],["gate",0.36],["pow",pPow],["boost",pBoost],["ramp",pRamp]];
   const r = rng(); let acc = 0, k = "bars";
   for(const [n,p] of table){ acc += p; if(r < acc){ k = n; break; } }
   if(k===last && k!=="gate") k = "gate";
@@ -1494,9 +1662,10 @@ function genRow(kind, z, lv, ctx){
   else if(kind==="thief") addThieves(z, lv);
   else if(kind==="pow") addPow(z);
   else if(kind==="boost") addBoost(z);
+  else if(kind==="ramp") addRamp(z);
   else { const k = ctx.keys > 0 && ctx.row > 2 && rng() < 0.5; if(k) ctx.keys--; addBars(z, lv, k); }
   const d = Math.min(1, (lv-1)/14);
-  return (kind==="bars" || kind==="boost" || kind==="pow" ? 16 : kind==="thief" ? 15 : 13) + rng()*4 - d*2;
+  return (kind==="ramp" ? 22 : kind==="bars" || kind==="boost" || kind==="pow" ? 16 : kind==="thief" ? 15 : 13) + rng()*4 - d*2;
 }
 
 function buildLevel(lv, opts){
@@ -1570,17 +1739,12 @@ let boss = null;
 const projectiles = [];
 function buildBoss(z){
   const zone = zoneFor(curLevel);
-  const mat = track(phong(zone.bossCol, {emissive:0x000000, shininess:30}));
-  const f = buildFigure(mat, true);
-  const crown = buildHat("crown"); f.body.add(crown);
-  for(const s of [-1,1]){
-    const e = new THREE.Mesh(G.eyeGeo, G.eyeWhite); e.position.set(s*0.12, 1.92, -0.26); f.body.add(e);
-    const p = new THREE.Mesh(G.pupilGeo, G.maskMat); p.position.set(s*0.12, 1.91, -0.33); f.body.add(p);
-    const b = new THREE.Mesh(G.browGeo, G.maskMat); b.position.set(s*0.12, 2.02, -0.3); b.rotation.z = s*0.45; f.body.add(b);
-  }
-  const sack = new THREE.Mesh(track(new THREE.SphereGeometry(0.42, 14, 10)), track(phong(0xb98a4a)));
-  sack.position.set(0, 1.2, 0.42); f.body.add(sack);
-  f.root.scale.setScalar(3.1);
+  const mat = track(toon(zone.bossCol, {emissive:0x000000}));
+  const f = buildFigure(mat, {shadows:true, outline:true, mood:"angry"});
+  f.body.add(fitHat(buildHat("crown")));
+  const sack = new THREE.Mesh(track(new THREE.SphereGeometry(0.4, 14, 10)), track(toon(0xb98a4a)));
+  sack.position.set(0, 1.0, 0.36); f.body.add(sack);
+  f.root.scale.setScalar(3.3);
   f.root.rotation.y = Math.PI;
   f.root.position.set(0, 0, z);
   levelGroup.add(f.root);
@@ -1646,6 +1810,7 @@ let value = 100, finishValue = 0, px = 0, targetX = 0, pz = 4, py = 0, runPhase 
 let slowT = 0, shake = 0, flashT = 0, time = 0, stepIdx = -1, celebrateT = 0, failT = 0;
 let shownLayers = 0, towerH = 0, lastLabel = -1, reward = 0, mult = 1, stars = 1;
 let combo = 0, feverT = 0, boostT = 0, shield = 0, invulnT = 0, revived = false;
+let hurtT = 0, landT = 0, bestStreak = 0;
 let jumpY = 0, jumpV = 0, dipT = 0, magnetT = 0, doubleT = 0, timeScale = 1, tutObs = null;
 let throwCd = 0, autoThrowT = 0, bossIntroT = 0;
 let run = {};
@@ -1657,6 +1822,7 @@ function resetPlayer(){
   slowT = 0; shake = 0; flashT = 0; failT = 0; celebrateT = 0;
   combo = 0; feverT = 0; boostT = 0; invulnT = 0; revived = false; shield = U("shield");
   jumpY = 0; jumpV = 0; dipT = 0; magnetT = 0; doubleT = 0; timeScale = 1; tutObs = null;
+  hurtT = 0; landT = 0; bestStreak = 0; setMood(P, "happy"); body.scale.set(1,1,1);
   throwCd = 0; autoThrowT = 0;
   run = {bars:0, good:0, fevers:0, hits:0, dodges:0, keys:0, gems:0, jumps:0, thieves:0, pows:0, peak:value};
   shownLayers = layersFor(value); towerH = shownLayers*LAYER_H;
@@ -1687,9 +1853,10 @@ function popupAt(pos, text, color, size){
 function popup(text, color, yOff, size){
   popupAt(tmpA.set(player.position.x, player.position.y + (yOff||2.4), player.position.z), text, color, size);
 }
-function showBanner(text){
+function showBanner(text, sub){
   const b = $("banner");
   b.textContent = text;
+  if(sub){ const sp = document.createElement("span"); sp.className = "bsub"; sp.textContent = sub; b.appendChild(sp); }
   b.classList.remove("show"); void b.offsetWidth; b.classList.add("show");
 }
 function toast(text, bad){
@@ -1736,7 +1903,14 @@ function resolveMystery(){
   if(good) return Math.random() < 0.5 ? {kind:"mul", n:2} : {kind:"add", n:Math.round(base*2.5/10)*10};
   return Math.random() < 0.5 ? {kind:"div", n:2} : {kind:"sub", n:Math.round(base/10)*10};
 }
-function applyGate(o){
+function evalOpt(o, v){
+  if(o.kind==="add") v += o.n * (doubleT > 0 ? 2 : 1);
+  else if(o.kind==="sub") v -= o.n;
+  else if(o.kind==="mul") v *= o.n;
+  else v = Math.floor(v / o.n);
+  return Math.max(0, Math.round(v));
+}
+function applyGate(o, g){
   const real = o.kind === "mystery" ? resolveMystery() : o;
   const before = value;
   if(real.kind==="add") value += real.n * (doubleT > 0 ? 2 : 1);
@@ -1747,14 +1921,31 @@ function applyGate(o){
   run.peak = Math.max(run.peak, value);
   const delta = value - before;
   const color = isGood(real) ? (o.gold ? "#ffe066" : "#7dff8a") : "#ff6b7a";
-  popup((o.kind==="mystery" ? "? " : "") + (real.kind==="add" && doubleT > 0 ? "+"+fmt(real.n*2) : gateLabel(real)), color, 2.4, o.gold ? "big" : "");
+  popup((o.kind==="mystery" ? "? " : o.slot ? "SLOT " : "") + (real.kind==="add" && doubleT > 0 ? "+"+fmt(real.n*2) : gateLabel(real)), color, 2.4, o.gold || o.slot ? "big" : "");
+  // Best Pick streak: reward choosing the better of two known gates
+  if(g && o.kind !== "mystery" && !o.slot){
+    const other = g.opts[1 - g.chosen];
+    if(other.kind !== "mystery" && other.kind !== "slot"){
+      const alt = evalOpt(other, before);
+      if(value > alt){
+        bestStreak++;
+        popup("BEST PICK!" + (bestStreak > 1 ? " x" + bestStreak : ""), "#ffe066", 3.4, "small");
+        if(bestStreak % 3 === 0){
+          const bonus = Math.max(20, Math.round(value*0.2));
+          value += bonus; run.peak = Math.max(run.peak, value);
+          showBanner("STREAK BONUS!", "+" + fmt(bonus) + " GOLD");
+          SFX.great(); addCombo(3);
+        }
+      } else if(value < alt) bestStreak = 0;
+    }
+  }
   if(delta >= 0){
     run.good++; stat("gates"); mprog("gates");
     addCombo(o.gold ? 6 : 3);
     if(o.gold){ SFX.great(); shake = 0.2; } else SFX.good();
     buzz(15);
   } else {
-    combo = Math.max(0, combo - 8);
+    combo = Math.max(0, combo - 8); hurtT = 0.5;
     SFX.bad(); buzz(40);
     spawnDebris(Math.min(10, 2 + 2*(layersFor(before) - layersFor(value))));
   }
@@ -1780,7 +1971,7 @@ function trapHit(o, pct, label){
   const loss = Math.max(1, Math.ceil(value*pct*armorK()));
   const before = value;
   value = Math.max(0, value - loss);
-  run.hits++; combo = 0;
+  run.hits++; combo = 0; hurtT = 0.7;
   SFX.hit(); buzz(70);
   shake = 0.4; slowT = 0.4; flashT = 0.35;
   spawnDebris(Math.min(12, 3 + 2*(layersFor(before) - layersFor(value))));
@@ -1847,7 +2038,8 @@ function startRun(which){
   $("hudLevel").textContent = mode==="endless" ? "ENDLESS · BEST " + fmt(save.endlessBest) + " m"
     : mode==="daily" ? "DAILY · " + mod.name : (isBoss ? "BOSS " : isBonus ? "BONUS " : "") + "LEVEL " + curLevel;
   if(curLevel <= 2 && mode==="level"){ hint("SWIPE TO STACK GOLD", "side"); hintTimer = 2.5; } else hideHint();
-  showBanner(mode==="endless" ? "ENDLESS RUN" : mode==="daily" ? mod.name : isBoss ? "BOSS LEVEL!" : isBonus ? "BONUS LEVEL!" : "LEVEL " + curLevel);
+  showBanner(mode==="endless" ? "ENDLESS RUN" : mode==="daily" ? mod.name : isBoss ? "BOSS LEVEL!" : isBonus ? "BONUS LEVEL!" : "LEVEL " + curLevel,
+    mode==="endless" ? "HOW FAR CAN YOU GO?" : mode==="daily" ? "DAILY CHALLENGE" : isBoss ? "BEAT " + zoneFor(curLevel).boss : zoneFor(curLevel).name + " ZONE");
   refreshHud();
 }
 function fail(reason){
@@ -1990,6 +2182,7 @@ function update(rawDt){
     }
     if(o.type==="hammer"){ o.angle = Math.sin(time*o.w + o.ph)*1.2; o.pivot.rotation.z = o.angle; }
     else if(o.type==="saw"){ o.x = Math.sin(time*o.w + o.ph)*2.25; o.blade.position.x = o.x; o.blade.rotation.z -= dt*14; }
+    else if(o.type==="sweeper"){ o.arm.rotation.y = time*o.w + o.ph; }
     else if(o.type==="wall" && o.move){ o.x = Math.sin(time*o.w + o.ph)*1.5; o.group.position.x = o.x; }
     else if(o.type==="barrel"){
       if(!o.rolling && pz - o.z < 42 && (state==="playing")) o.rolling = true;
@@ -2003,6 +2196,14 @@ function update(rawDt){
   }
   for(const p of pows){ if(!p.taken){ p.mesh.position.y = 1 + Math.sin(time*3 + p.z)*0.15; p.mesh.children[0].rotation.y += dt; } }
   for(const g of gates){
+    if(g.slot && !g.done){
+      g.slot.t += dt;
+      if(g.slot.t > 0.42){
+        g.slot.t = 0; g.slot.idx = (g.slot.idx + 1) % g.slot.list.length;
+        g.panels[g.slot.i].material.map = g.slot.texes[g.slot.idx];
+        if(state==="playing" && pz - g.z < 14 && pz > g.z) SFX.tick();
+      }
+    }
     if(g.moving && !g.done){
       const c = Math.cos(time*1.7 + g.ph);
       g.panels[0].position.x = -1.5*c; g.panels[1].position.x = 1.5*c;
@@ -2087,7 +2288,7 @@ function playUpdate(dt){
   // jump physics
   if(jumpY > 0 || jumpV > 0){
     jumpY += jumpV*dt; jumpV -= 28*dt;
-    if(jumpY <= 0){ jumpY = 0; jumpV = 0; SFX.land(); }
+    if(jumpY <= 0){ jumpY = 0; jumpV = 0; landT = 0.22; SFX.land(); }
   }
   const prevZ = pz;
   pz -= sp*dt;
@@ -2102,8 +2303,18 @@ function playUpdate(dt){
     if(!g.done && prevZ > g.z && pz <= g.z){
       g.done = true;
       g.chosen = Math.abs(g.panels[0].position.x - px) <= Math.abs(g.panels[1].position.x - px) ? 0 : 1;
-      applyGate(g.opts[g.chosen]);
+      let opt = g.opts[g.chosen];
+      if(opt.kind === "slot") opt = Object.assign({slot:true}, g.slot.list[g.slot.idx]);
+      applyGate(opt, g);
       if(state !== "playing") return;
+    }
+  }
+  for(const r of ramps){
+    if(!r.done && prevZ > r.z - 1.3 && pz <= r.z - 1.3 && Math.abs(px - r.x) < 1.2 && jumpY < 0.4){
+      r.done = true; jumpY = 0.35; jumpV = 13.5;
+      SFX.boost(); buzz(20); addCombo(2);
+      run.jumps++; stat("jumps"); mprog("jumps");
+      popup("WHEEE!", "#7dff8a", 3, "big");
     }
   }
   for(const b of boosts){
@@ -2138,6 +2349,7 @@ function playUpdate(dt){
     const dz = pz - b.z;
     const reach = b.type==="bar" ? mr : (magnetT > 0 ? 3.2 : 0.95);
     const lim = b.type==="bar" || magnetT > 0 ? ahead : 0.9;
+    if(b.air && Math.abs(py + jumpY + 0.75 - b.baseY) > 1.4) continue;
     if(dz < lim && dz > -0.9 && Math.abs(b.x - px) < reach) collect(b);
   }
   checkObstacles(prevZ);
@@ -2161,7 +2373,7 @@ function playUpdate(dt){
 function checkObstacles(prevZ){
   for(const o of obstacles){
     if(o.passed) continue;
-    const band = o.type==="hammer" ? 0.85 : o.type==="saw" ? 0.5 : o.type==="pit" ? 1.3 : o.type==="barrel" ? 0.55 : 0.45;
+    const band = o.type==="hammer" ? 0.85 : o.type==="saw" ? 0.5 : o.type==="pit" ? 1.3 : o.type==="barrel" ? 0.55 : o.type==="sweeper" ? 3.1 : 0.45;
     if(pz < o.z - band){
       o.passed = true;
       if(!o.hit){
@@ -2183,6 +2395,13 @@ function checkObstacles(prevZ){
       if(hitNow && feverT <= 0 && invulnT <= 0 && shield <= 0) targetX = Math.max(-MAXX, Math.min(MAXX, px + (px >= hx ? 1.8 : -1.8)));
     } else if(o.type==="saw"){ dist = Math.abs(o.x - px); if(dist < 1.05){ if(air < 1.3) hitNow = true; else o.jumpedOver = true; } else if(dist < 2) o.near = true; }
     else if(o.type==="hurdle"){ if(air < 0.55) hitNow = true; else o.jumpedOver = true; }
+    else if(o.type==="sweeper"){
+      const a = o.arm.rotation.y, dz = pz - o.z;
+      const r = Math.hypot(px, dz), cross = Math.abs(px*Math.sin(a) + dz*Math.cos(a));
+      if(r < 3.25 && cross < 0.4){ if(air < 0.6) hitNow = true; else o.jumpedOver = true; }
+      else if(r < 3.25 && cross < 1.1) o.near = true;
+      if(Math.abs(px) < 0.38 && Math.abs(dz) < 0.3 && air < 1.2) hitNow = true;
+    }
     else if(o.type==="barrel"){ dist = Math.abs(o.x - px); if(dist < 1.05){ if(air < 0.85) hitNow = true; else o.jumpedOver = true; } else if(dist < 1.9) o.near = true; }
     else if(o.type==="pit"){
       const inside = o.side === 0 || (o.side < 0 ? px < 0.35 : px > -0.35);
@@ -2197,7 +2416,7 @@ function checkObstacles(prevZ){
       continue;
     }
     if(hitNow){
-      const pct = o.type==="wall" ? 0.3 : o.type==="hammer" ? 0.25 : o.type==="hurdle" ? 0.2 : o.type==="barrel" ? 0.2 : 0.2;
+      const pct = o.type==="wall" ? 0.3 : o.type==="hammer" ? 0.25 : 0.2;
       trapHit(o, pct);
       if(o.type==="wall" && !o.smashed && feverT <= 0) targetX = o.x > 0 ? -1.5 : 1.5;
       if(o.type==="barrel"){ o.smashed = true; }
@@ -2224,7 +2443,7 @@ function checkThieves(){
     const alive = e.members.filter(m=>m.state==="idle" || m.state==="run");
     if(feverT > 0 || invulnT > 0 || shield > 0){
       if(shield > 0 && feverT <= 0 && invulnT <= 0){ shield--; bubble.scale.setScalar(1.5); SFX.block(); }
-      alive.forEach(m=>{ m.state = "fly"; m.vx = (Math.random()-0.5)*8; m.vy = 7 + Math.random()*4; m.vz = -4 - Math.random()*4; });
+      alive.forEach(m=>{ m.state = "fly"; setMood(m.f, "ouch"); m.vx = (Math.random()-0.5)*8; m.vy = 7 + Math.random()*4; m.vz = -4 - Math.random()*4; });
       run.thieves += alive.length; stat("thieves", alive.length); mprog("thieves", alive.length);
       SFX.smash(); shake = 0.25; buzz(25); addCombo(3);
       popup("BOOM! x" + alive.length, "#ffe066", 2.9);
@@ -2232,7 +2451,7 @@ function checkThieves(){
       const loss = Math.min(value, stealAmt()*alive.length);
       const before = value;
       value -= loss;
-      run.hits++; combo = 0;
+      run.hits++; combo = 0; hurtT = 0.7;
       alive.forEach(m=>{
         m.state = "steal"; m.vx = (m.off >= 0 ? 1 : -1)*(3 + Math.random()*2); m.vz = 2;
         const bar = new THREE.Mesh(G.bar, G.barMat); bar.position.set(0, 2.3, 0); m.f.body.add(bar);
@@ -2370,6 +2589,8 @@ function updateProjectiles(dt){
 function animateBoss(dt){
   const b = boss, f = b.f;
   b.t += dt;
+  animateFace(f, dt);
+  setMood(f, b.dead || b.hitT > 0 ? "ouch" : b.win ? "wow" : "happy");
   if(b.dead){
     f.root.rotation.x += (-Math.PI/2 - f.root.rotation.x) * Math.min(1, dt*3);
     b.mat.emissive.setHex(0);
@@ -2425,17 +2646,34 @@ function animatePlayer(dt){
     // periodic wave in the menu
     const w = (time % 6);
     armR.rotation.x = w < 1.2 ? Math.PI - 0.4 : 0.08 - s*0.04;
-    armR.rotation.z = w < 1.2 ? -0.35 + Math.sin(time*14)*0.35 : -0.1;
+    armR.rotation.z = w < 1.2 ? -0.35 + Math.sin(time*14)*0.35 : -0.15;
     bob = s*0.02;
     body.rotation.z *= 0.9; body.rotation.x = 0;
   }
   if(state!=="celebrate" && state!=="won"){
     if(state==="menu" && curTab==="Skins") body.rotation.y += dt*0.9;
-    else body.rotation.y *= 0.9;
+    else {
+      // face the camera in the menu, face the track while running
+      const TAU = Math.PI*2, target = state==="menu" ? Math.PI : 0;
+      let y = ((body.rotation.y % TAU) + TAU) % TAU;
+      if(target === 0 && y > Math.PI) y -= TAU;
+      body.rotation.y = y + (target - y)*Math.min(1, dt*6);
+    }
   }
-  if(state!=="menu") armR.rotation.z = -0.1;
+  if(state!=="menu") armR.rotation.z = -0.15;
+  // cartoon squash & stretch
+  let sx = 1, sy = 1;
+  if(landT > 0){ landT -= dt; const k = Math.sin(Math.max(0, landT)/0.22*Math.PI); sy = 1 - 0.22*k; sx = 1 + 0.14*k; }
+  else if(jumpY > 0.05) { sy = jumpV > 0 ? 1.1 : 1.03; sx = jumpV > 0 ? 0.93 : 0.98; }
+  else if(moving) { const c = Math.cos(runPhase*4.8); sy = 1 + 0.035*c; sx = 1 - 0.02*c; }
+  body.scale.x += (sx - body.scale.x)*Math.min(1, dt*18); body.scale.z = body.scale.x;
+  body.scale.y += (sy - body.scale.y)*Math.min(1, dt*18);
+  // expressions
+  if(hurtT > 0) hurtT -= dt;
+  setMood(P, state==="failed" || hurtT > 0 ? "ouch" : (feverT > 0 || state==="celebrate" || state==="won" || jumpY > 1.4) ? "wow" : "happy");
+  animateFace(P, dt);
   const dip = dipT > 0 ? -Math.sin(dipT/0.6*Math.PI)*1.1 : 0;
-  player.position.set(px, py + jumpY + dip + towerH + 0.1 + bob, pz);
+  player.position.set(px, py + jumpY + dip + towerH + 0.01 + bob, pz);
   tower.position.set(px, py + jumpY + dip, pz);
   bubble.visible = shield > 0 && state !== "failed";
   bubble.scale.setScalar(Math.max(1, bubble.scale.x - dt*2));
@@ -2564,7 +2802,7 @@ function bump(el){ el.classList.add("bump"); setTimeout(()=>el.classList.remove(
 function refreshTop(){
   $("topGoldN").textContent = fmt(save.gold);
   $("topGemsN").textContent = fmt(save.gems);
-  $("topKeys").innerHTML = keyPips(save.keys);
+
 }
 function grant(r, silent){
   if(r.g){ save.gold += Math.round(r.g); stat("gold", Math.round(r.g)); }
@@ -2657,6 +2895,7 @@ function refreshSide(){
   show($("mineDot"), ml > 0 && mp >= minePerHour(ml)*0.5);
   $("chestSub").textContent = save.keys + "/3 KEYS";
   show($("chestDot"), save.keys >= 3);
+  for(const id of ["dailyBtn","spinBtn","mineBtn","chestBtn"]) $(id).classList.toggle("ready", !$(id).querySelector(".dot").hidden);
 }
 setInterval(()=>{ if(state==="menu" && !menuEl.hidden) refreshSide(); }, 1000);
 
@@ -2674,7 +2913,7 @@ function renderUpgrades(){
         <div class="udesc">${u.desc}</div>
         <div class="ubar"><i style="width:${(l/u.max*100).toFixed(1)}%"></i></div>
       </div>
-      <button class="ubuy ${maxed ? "max" : ok ? "" : "no"}">
+      <button class="ubuy ${maxed ? "max" : ok ? "can" : "no"}">
         <span class="nx">${maxed ? u.fx(l) : u.fx(l) + " → " + u.fx(l+1)}</span>
         <span class="c">${maxed ? "MAX" : '<span class="coin"></span>' + fmt(cost)}</span>
       </button>`;
@@ -2696,10 +2935,13 @@ let skinSeg = "runners", previewSel = null;
 const hex6 = h => "#" + h.toString(16).padStart(6,"0");
 function figSvg(hex){
   const c = hex6(hex);
-  return `<svg class="fig" viewBox="0 0 38 46"><circle cx="19" cy="8" r="6.5" fill="${c}" stroke="#1d2a4d" stroke-width="1.5"/>
-    <rect x="12" y="15" width="14" height="16" rx="6" fill="${c}" stroke="#1d2a4d" stroke-width="1.5"/>
-    <rect x="12.5" y="29" width="5" height="15" rx="2.5" fill="${c}" stroke="#1d2a4d" stroke-width="1.5"/>
-    <rect x="20.5" y="29" width="5" height="15" rx="2.5" fill="${c}" stroke="#1d2a4d" stroke-width="1.5"/></svg>`;
+  return `<svg class="fig" viewBox="0 0 38 46"><g stroke="#1d2a4d" stroke-width="1.8">
+    <ellipse cx="14" cy="42" rx="4.6" ry="3" fill="#fff"/><ellipse cx="24" cy="42" rx="4.6" ry="3" fill="#fff"/>
+    <ellipse cx="19" cy="31" rx="8" ry="9" fill="${c}"/><circle cx="19" cy="15" r="12.5" fill="${c}"/></g>
+    <ellipse cx="14.8" cy="14" rx="3.1" ry="3.8" fill="#fff" stroke="#1d2a4d" stroke-width="1.2"/><ellipse cx="23.2" cy="14" rx="3.1" ry="3.8" fill="#fff" stroke="#1d2a4d" stroke-width="1.2"/>
+    <circle cx="15.3" cy="14.8" r="1.8" fill="#1d2a4d"/><circle cx="23.7" cy="14.8" r="1.8" fill="#1d2a4d"/>
+    <ellipse cx="10.5" cy="19" rx="2" ry="1.2" fill="#ff7aa2" opacity=".7"/><ellipse cx="27.5" cy="19" rx="2" ry="1.2" fill="#ff7aa2" opacity=".7"/>
+    <path d="M15.8 20.2q3.2 3 6.4 0" fill="none" stroke="#1d2a4d" stroke-width="1.6" stroke-linecap="round"/></svg>`;
 }
 function barSvg(hex){
   const c = hex6(hex);
@@ -2787,7 +3029,7 @@ function renderMissions(){
         <div class="mprog">${fmt(m.prog)}/${fmt(m.goal)}</div>
       </div>
       ${m.claimed ? '<div class="mrew" style="color:#2a9d44">DONE</div>' :
-        `<button class="ubuy ${done ? "" : "no"}"><span class="nx">${done ? "CLAIM" : "REWARD"}</span><span class="c">${rewardHtml(r)}</span></button>`}`;
+        `<button class="ubuy ${done ? "can" : "no"}"><span class="nx">${done ? "CLAIM" : "REWARD"}</span><span class="c">${rewardHtml(r)}</span></button>`}`;
     const btn = row.querySelector("button");
     if(btn) btn.addEventListener("click", ()=>{
       if(!done || m.claimed){ SFX.click(); return; }
@@ -2803,7 +3045,7 @@ function renderMissions(){
   b.className = "mrow" + (save.missions.bonus ? " done" : "");
   b.innerHTML = `<div style="flex:1"><div class="mtext">Complete all 3 missions</div><div class="mprog">Bonus reward</div></div>` +
     (save.missions.bonus ? '<div class="mrew" style="color:#2a9d44">DONE</div>' :
-      `<button class="ubuy ${all ? "" : "no"}"><span class="nx">${all ? "CLAIM" : "BONUS"}</span><span class="c">${rewardHtml(bonus)}</span></button>`);
+      `<button class="ubuy ${all ? "can" : "no"}"><span class="nx">${all ? "CLAIM" : "BONUS"}</span><span class="c">${rewardHtml(bonus)}</span></button>`);
   const bb = b.querySelector("button");
   if(bb) bb.addEventListener("click", ()=>{
     if(!all || save.missions.bonus){ SFX.click(); return; }
@@ -2841,7 +3083,7 @@ function renderTrophies(){
         ${claimed >= 3 ? "" : `<div class="mbar"><i style="width:${Math.min(100, v/goal*100)}%"></i></div><div class="mprog">${fmt(Math.min(v, goal))}/${fmt(goal)}</div>`}
       </div>
       ${claimed >= 3 ? '<div class="mrew" style="color:#2a9d44">MAX</div>' :
-        `<button class="ubuy ${canClaim ? "" : "no"}"><span class="nx">${canClaim ? "CLAIM" : "TIER " + (claimed+1)}</span><span class="c">${rewardHtml(r)}</span></button>`}`;
+        `<button class="ubuy ${canClaim ? "can" : "no"}"><span class="nx">${canClaim ? "CLAIM" : "TIER " + (claimed+1)}</span><span class="c">${rewardHtml(r)}</span></button>`}`;
     const btn = row.querySelector("button");
     if(btn) btn.addEventListener("click", ()=>{
       if(!canClaim){ SFX.click(); return; }
@@ -2872,6 +3114,8 @@ function openDaily(){
   show($("dailyModal"), true);
 }
 $("dailyBtn").addEventListener("click", ()=>{ SFX.click(); openDaily(); });
+$("goldPlus").addEventListener("click", e=>{ e.stopPropagation(); SFX.click(); showTab("Upgrades"); toast("EARN GOLD BY BEATING LEVELS!"); });
+$("gemPlus").addEventListener("click", e=>{ e.stopPropagation(); SFX.click(); showTab("Home"); show($("wheelModal"), true); buildWheel(); syncSpinBtn(); });
 $("dailyClose").addEventListener("click", ()=>{ SFX.click(); show($("dailyModal"), false); });
 $("dailyClaim").addEventListener("click", ()=>{
   if(!dailyAvailable()) return;
