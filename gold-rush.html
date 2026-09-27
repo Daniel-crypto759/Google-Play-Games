@@ -200,6 +200,46 @@
   #tabSkins{--hc:linear-gradient(#ff8ec8,#e0457b)}
   #tabMissions{--hc:linear-gradient(#78b8ff,#347ff0)}
   #tabTrophies{--hc:linear-gradient(#c197ff,#8a47f0)}
+  #tabPass{--hc:linear-gradient(#ffd24d,#ff7a1a)}
+  #tabPass h2{font-size:22px;padding-right:10px}
+  #tabPass h2 .grow{white-space:nowrap}
+  #tabPass h2 small{font-size:10.5px;text-align:right;line-height:1.2}
+  .pclose{width:32px;height:32px;border-radius:50%;border:2.5px solid #1d2a4d;background:#fff;color:#1d2a4d;font-size:15px;font-weight:900;padding:0;box-shadow:0 2px 0 #1d2a4d;text-shadow:none}
+  .phead{display:flex;align-items:center;gap:12px;padding:10px 14px 4px}
+  .ptier{width:58px;height:58px;border-radius:16px;background:linear-gradient(#ffe066,#ffb300);border:3px solid #1d2a4d;box-shadow:0 3px 0 #1d2a4d;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;text-shadow:0 2px 0 #1d2a4d;flex:0 0 auto}
+  .ptier small{font-size:10px;line-height:1}
+  .ptier b{font-weight:400;font-size:26px;line-height:1}
+  .pprog{flex:1;min-width:0}
+  .pprog .progress{width:100%;max-width:none}
+  .pxp{font-weight:900;font-size:13px;margin-top:4px;font-variant-numeric:tabular-nums}
+  .pnote{font-size:11px;font-weight:800;color:#6b7a99}
+  .pbuy-row{display:flex;gap:8px;padding:6px 14px 2px;align-items:center}
+  .pbuy-row .btn{flex:1;font-size:15px;padding:8px 6px 10px}
+  .pbuy-row .btn .gem{width:16px;height:16px}
+  .powned{flex:1;text-align:center;background:linear-gradient(#ffe066,#ffb300);border:2.5px solid #1d2a4d;border-radius:14px;padding:6px;color:#fff;text-shadow:0 1.5px 0 #1d2a4d;box-shadow:0 3px 0 #1d2a4d}
+  .pcols{display:grid;grid-template-columns:1fr 34px 1fr;gap:6px;padding:8px 12px 0;font-family:'Lilita One','Arial Black',sans-serif;font-size:12px;text-align:center;color:#6b7a99}
+  .pcols span:last-child{color:#e08a00}
+  .plist{gap:6px;padding-top:6px}
+  .prow{display:grid;grid-template-columns:1fr 34px 1fr;gap:6px;align-items:center}
+  .pnum{width:34px;height:34px;border-radius:50%;background:#e3e9f4;border:2.5px solid #1d2a4d;display:grid;place-items:center;font-family:'Lilita One','Arial Black',sans-serif;font-size:14px;color:#8995b0}
+  .prow.reached .pnum{background:linear-gradient(#ffe066,#ffb300);color:#fff;text-shadow:0 1.5px 0 #1d2a4d}
+  .prow.next .pnum{background:#fff;color:#1d2a4d;box-shadow:0 0 0 3px #ffc233}
+  .pcell{position:relative;height:66px;border-radius:14px;border:2.5px solid #1d2a4d;box-shadow:0 3px 0 #1d2a4d;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;padding:2px;overflow:hidden}
+  .pcell.prem{background:linear-gradient(#fff6d6,#ffe7a8)}
+  .pcell.item.prem{background:linear-gradient(#ffe38a,#ffb84d)}
+  .pcell.item.free{background:linear-gradient(#e7f1ff,#c9dcff)}
+  .pcell .fig{width:30px;height:36px}
+  .pcell .pbox svg{width:34px;height:34px}
+  .pcell .pl{font-size:10px;font-weight:900;line-height:1;white-space:nowrap}
+  .pcell .pv{display:flex;align-items:center;gap:3px;font-family:'Lilita One','Arial Black',sans-serif;font-size:15px}
+  .pcell .pv .coin,.pcell .pv .gem{width:17px;height:17px}
+  .pcell .pv .keyi{width:19px;height:19px}
+  .pcell.ready{box-shadow:0 0 0 3px #4cd964,0 3px 0 3px #1d2a4d;animation:nudge 1.4s ease-in-out infinite}
+  .pcell.claimed{opacity:.55}
+  .pcell.locked > :not(.plock){filter:grayscale(.6);opacity:.65}
+  .pchk,.plock{position:absolute;right:4px;top:3px;font-style:normal;font-size:13px;font-weight:900;color:#2a9d44}
+  .plock{color:#1d2a4d;font-size:12px}
+  .xp-pill{background:linear-gradient(#ffd24d,#ff8a1f);color:#fff;border:2.5px solid #1d2a4d;border-radius:999px;padding:0 10px;font-size:14px;text-shadow:0 1.5px 0 #1d2a4d;box-shadow:0 2px 0 #1d2a4d}
   .panel h2 .grow{flex:1}
   .panel h2 small{font-family:'Nunito',sans-serif;font-size:12px;font-weight:900;color:#fff;text-shadow:0 1px 0 #1d2a4d}
   .scroll{overflow-y:auto;padding:12px 12px 16px;flex:1;display:flex;flex-direction:column;gap:11px;background:linear-gradient(#f4f8ff,#fff)}
@@ -585,6 +625,7 @@
       <div class="side l">
         <button class="sbtn" id="dailyBtn"><span class="ico" style="--c:linear-gradient(#ff8391,#e5344a)"><svg viewBox="0 0 24 24"><rect x="3" y="9" width="18" height="12" rx="2" fill="#fff"/><rect x="2" y="6.5" width="20" height="4.5" rx="1.5" fill="#ffe2e6"/><rect x="10.5" y="6.5" width="3" height="14.5" fill="#ffc233"/><path d="M12 6.5C10 2.5 6 2.5 6 5s4 1.5 6 1.5zm0 0c2-4 6-4 6-1.5s-4 1.5-6 1.5z" fill="#ffc233"/></svg></span><span class="lab">DAILY</span><span class="sub2" id="dailySub">CLAIM</span><span class="dot" id="dailyDot" hidden></span></button>
         <button class="sbtn" id="spinBtn"><span class="ico" style="--c:linear-gradient(#c197ff,#8a47f0)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#ffc233"/><path d="M12 12V2a10 10 0 0 1 10 10z" fill="#3d8bff"/><path d="M12 12v10A10 10 0 0 1 2 12z" fill="#3d8bff"/><path d="M12 12H2A10 10 0 0 1 12 2z" fill="#ff4d5e"/><path d="M12 12h10a10 10 0 0 1-10 10z" fill="#4cd964"/><circle cx="12" cy="12" r="2.6" fill="#fff"/></svg></span><span class="lab">SPIN</span><span class="sub2" id="spinSub">FREE</span><span class="dot" id="spinDot" hidden></span></button>
+        <button class="sbtn" id="passBtn"><span class="ico" style="--c:linear-gradient(#ffd24d,#ff7a1a)"><svg viewBox="0 0 24 24"><path d="M5 2h14v17l-7 3-7-3z" fill="#fff"/><path d="M12 6l1.6 3.4 3.7.4-2.8 2.5.8 3.7L12 14.1 8.7 16l.8-3.7-2.8-2.5 3.7-.4z" fill="#ff8a1f"/></svg></span><span class="lab">PASS</span><span class="sub2" id="passSub">TIER 0</span><span class="dot" id="passDot" hidden></span></button>
       </div>
       <div class="side r">
         <button class="sbtn" id="boxBtn"><span class="ico" style="--c:linear-gradient(#e0a3ff,#9b5cff)"><svg viewBox="0 0 64 64"><g stroke="#1d2a4d" stroke-width="3.5" stroke-linejoin="round"><path d="M10 28h44v24a4 4 0 0 1-4 4H14a4 4 0 0 1-4-4z" fill="#fff"/><path d="M6 19h52v10H6z" fill="#ffe2f6"/><path d="M32 19c-5-9-15-9-13-2 1 3 7 2 13 2zm0 0c5-9 15-9 13-2-1 3-7 2-13 2z" fill="#ffe066"/></g><text x="32" y="50" text-anchor="middle" font-family="Lilita One,Arial Black,sans-serif" font-size="22" fill="#9b5cff" stroke="#1d2a4d" stroke-width="1.5">?</text></svg></span><span class="lab">BOX</span><span class="sub2" id="boxSub">FREE</span><span class="dot" id="boxDot" hidden></span></button>
@@ -638,6 +679,25 @@
       <div class="panel">
         <h2 class="display outline"><span class="grow">SHOP</span><small id="shopSub">Boxes · Gems · Offers</small></h2>
         <div class="scroll" id="shopList"></div>
+      </div>
+    </div>
+
+    <!-- GOLD PASS -->
+    <div class="tab" id="tabPass" hidden>
+      <div class="panel">
+        <h2 class="display outline"><span class="grow">GOLD PASS</span><small><span id="passSeason">SEASON 1</span> · <span id="passTimer"></span></small><button class="pclose" id="passClose" aria-label="Close">&#10005;</button></h2>
+        <div class="phead">
+          <div class="ptier display"><small>TIER</small><b id="passTierN">0</b></div>
+          <div class="pprog"><div class="progress"><div class="fill" id="passFill"></div></div><div class="pxp" id="passXp">0 / 120 XP</div>
+            <div class="pnote">Earn XP by finishing levels, missions and Endless runs</div></div>
+        </div>
+        <div class="pbuy-row">
+          <button class="btn orange small shine" id="passBuy">UNLOCK €4.99</button>
+          <button class="btn purple small" id="passGemBuy">OR 450</button>
+          <div class="powned display" id="passOwned" hidden>&#9733; GOLD PASS ACTIVE</div>
+        </div>
+        <div class="pcols"><span>FREE</span><span></span><span>GOLD PASS</span></div>
+        <div class="scroll plist" id="passList"></div>
       </div>
     </div>
 
@@ -831,6 +891,16 @@ const SKINS = [
   {id:"black",  name:"Shadow",    color:0x2d3142, cost:10500},
   {id:"white",  name:"Ghost",     color:0xf2f5ff, cost:16000},
   {id:"gold",   name:"Golden",    color:0xffc233, cost:26000},
+  {id:"teal",   name:"Teal",      color:0x18b7a0, cost:3400},
+  {id:"sky",    name:"Sky",       color:0x7fd4ff, cost:5200},
+  {id:"cherry", name:"Cherry",    color:0xd6344a, cost:8000},
+  {id:"lemon",  name:"Lemon",     color:0xffe14d, cost:12500},
+  {id:"navy",   name:"Navy",      color:0x2d4ba8, cost:20000},
+  // Gold Pass exclusives (animated)
+  {id:"neonr",  name:"Neon",      color:0x5ffcff, fx:"glow",    pass:true},
+  {id:"magma",  name:"Magma",     color:0xff5a1f, fx:"lava",    pass:true},
+  {id:"prism",  name:"Prism",     color:0xff4d6d, fx:"rainbow", pass:true},
+  {id:"cosmic", name:"Cosmic",    color:0x6a4dff, fx:"galaxy",  pass:true},
 ];
 const HATS = [
   {id:"none",   name:"No Hat",    cost:0,    cur:"gold"},
@@ -841,6 +911,12 @@ const HATS = [
   {id:"crown",  name:"Crown",     cost:40,   cur:"gems"},
   {id:"viking", name:"Viking",    cost:60,   cur:"gems"},
   {id:"halo",   name:"Halo",      cost:90,   cur:"gems"},
+  {id:"beanie", name:"Beanie",    cost:3500, cur:"gold"},
+  {id:"chef",   name:"Chef",      cost:6500, cur:"gold"},
+  {id:"pirate", name:"Pirate",    cost:70,   cur:"gems"},
+  {id:"headphones", name:"Headphones", pass:true, cur:"gold"},
+  {id:"wizard", name:"Wizard",    pass:true, cur:"gold"},
+  {id:"horns",  name:"Devil Horns", pass:true, cur:"gold"},
 ];
 const RARITY = {
   common:   {name:"COMMON",    col:"#8e9ab5"},
@@ -869,6 +945,16 @@ const BAR_SKINS = [
   {id:"lava",     name:"Lava",      r:"legendary", color:0xff5a1f, em:0x882200, fx:"lava"},
   {id:"galaxy",   name:"Galaxy",    r:"legendary", color:0x7a4dff, em:0x220a66, fx:"galaxy"},
   {id:"sunfire",  name:"Sunfire",   r:"legendary", color:0xffe14d, em:0xb86a00, fx:"sun"},
+  {id:"copper",   name:"Copper",    r:"common",    color:0xc8703a, em:0x4a1e06, cost:20},
+  {id:"honey",    name:"Honey",     r:"common",    color:0xffb31a, em:0x6a3a00},
+  {id:"jade",     name:"Jade",      r:"rare",      color:0x2fbf86, em:0x0a4a30, cost:60},
+  {id:"amethyst", name:"Amethyst",  r:"rare",      color:0xb98cff, em:0x3a1a6a},
+  {id:"sakura",   name:"Sakura",    r:"epic",      color:0xffb3d1, em:0x6a2a44},
+  {id:"void",     name:"Void",      r:"legendary", color:0x1a1030, em:0x3a0a6a, fx:"galaxy"},
+  // Gold Pass exclusives
+  {id:"cyber",    name:"Cyber",     r:"epic",      color:0x39ff88, em:0x006a3a, fx:"pulse", pass:true},
+  {id:"plasma",   name:"Plasma",    r:"legendary", color:0x5ffcff, em:0x2a0a6a, fx:"plasma", pass:true},
+  {id:"phoenix",  name:"Phoenix",   r:"legendary", color:0xff6a1f, em:0x882200, fx:"lava", pass:true},
 ];
 // Aura around the bar tower for each gold-bar skin.
 // tex: particle shape · move: rise | fall | orbit | twinkle · n: particles · cols: particle colors
@@ -892,8 +978,32 @@ const AURAS = {
   rainbow:  {name:"Prism",       tex:"star",  move:"orbit",   n:16, size:0.34, cols:["#ff4d6d","#ffc233","#4cd964","#3d8bff","#9b5cff"], glow:"rainbow", ring:"rainbow", spin:true},
   lava:     {name:"Inferno",     tex:"flame", move:"rise",    n:20, size:0.42, cols:["#ffb01a","#ff6a1a","#ff2a1a"], glow:"#ff5a1f", ring:"#ff7a1a"},
   galaxy:   {name:"Cosmos",      tex:"star",  move:"orbit",   n:18, size:0.3,  cols:["#ffe066","#b69cff","#6fd0ff"], glow:"#7a4dff", ring:"#7a4dff", spin:true},
+  copper:   {name:"Sparks",      tex:"star",  move:"twinkle", n:6,  size:0.26, cols:["#ff9a5a","#ffd0a0"]},
+  honey:    {name:"Honey Drip",  tex:"soft",  move:"fall",    n:9,  size:0.28, cols:["#ffb300","#ffd24d"]},
+  jade:     {name:"Spirit Wisps",tex:"soft",  move:"orbit",   n:9,  size:0.3,  cols:["#3ddc97","#b6ffd8"], glow:"#3ddc97"},
+  amethyst: {name:"Crystals",    tex:"star",  move:"rise",    n:10, size:0.3,  cols:["#b98cff","#e4d4ff"], glow:"#9b5cff"},
+  sakura:   {name:"Blossoms",    tex:"heart", move:"fall",    n:14, size:0.3,  cols:["#ffb3d1","#ff7ab0","#ffe0ee"], glow:"#ff9fcf", ring:"#ff9fcf"},
+  void:     {name:"Black Hole",  tex:"soft",  move:"orbit",   n:18, size:0.42, cols:["#1a0a2e","#6a2ac9","#2a0a4a"], glow:"#6a2ac9", ring:"#6a2ac9", dark:true, spin:true},
+  cyber:    {name:"Data Stream", tex:"soft",  move:"rise",    n:16, size:0.24, cols:["#39ff88","#00d0ff"], glow:"#00d0ff", ring:"#39ff88"},
+  plasma:   {name:"Plasma Storm",tex:"star",  move:"orbit",   n:18, size:0.34, cols:["#5ffcff","#ff5ff2","#b066ff"], glow:"#b066ff", ring:"#5ffcff", spin:true},
+  phoenix:  {name:"Rebirth",     tex:"flame", move:"rise",    n:22, size:0.46, cols:["#ffd24d","#ff8a1f","#ff3a3a"], glow:"#ff6a1f", ring:"#ff3a3a", rays:true},
   sunfire:  {name:"Solar Flare", tex:"flame", move:"rise",    n:16, size:0.36, cols:["#ffd24d","#ffa21f","#ff7a1a"], glow:"#ffc233", ring:"#ffc233", rays:true},
 };
+/* ---------- Gold Pass (battle pass) ---------- */
+const PASS_TIERS = 30, PASS_XP = 120, PASS_GEMS = 450;
+const SEASON_DAYS = 28, SEASON_EPOCH = Date.UTC(2026, 0, 5);
+const seasonId = () => Math.floor((Date.now() - SEASON_EPOCH) / (SEASON_DAYS*864e5)) + 1;
+const seasonEnds = () => SEASON_EPOCH + seasonId()*SEASON_DAYS*864e5;
+const PASS_FREE = {5:{box:"common"}, 10:{hat:"headphones"}, 15:{box:"common"}, 20:{skin:"neonr"}, 25:{box:"epic"}, 30:{bar:"cyber"}};
+const PASS_PREM = {3:{box:"epic"}, 5:{hat:"wizard"}, 8:{box:"epic"}, 10:{skin:"magma"}, 13:{box:"legendary"}, 15:{bar:"plasma"}, 18:{box:"epic"},
+  20:{skin:"prism"}, 23:{box:"legendary"}, 25:{hat:"horns"}, 28:{skin:"cosmic"}, 30:{bar:"phoenix"}};
+function passReward(track, t){
+  const fixed = (track === "free" ? PASS_FREE : PASS_PREM)[t];
+  if(fixed) return fixed;
+  const k = t % 5;
+  if(track === "free") return k === 2 ? {gems:3 + Math.floor(t/10)*2} : k === 4 ? {keys:1} : {g:150 + t*30};
+  return k === 1 || k === 4 ? {gems:10 + Math.floor(t/10)*5} : {g:400 + t*60};
+}
 const BOXES = {
   common:   {name:"BAR BOX",    cost:30,  col:"#3d8bff", odds:{common:70, rare:25, epic:4.5, legendary:0.5}},
   epic:     {name:"EPIC BOX",   cost:90,  col:"#9b5cff", odds:{common:30, rare:48, epic:18, legendary:4}},
@@ -905,6 +1015,7 @@ const FREE_BOX_MS = 6*3600*1000;
 const PRODUCTS = [
   {id:"starter_pack", name:"Starter Pack", desc:"300 gems · 10,000 gold · 1 Legend Box", gems:300, gold:10000, boxes:{legendary:1}, price:"€2.99", once:true, tag:"ONE TIME", kind:"offer", col:"linear-gradient(135deg,#ffae4d,#ff4d6a)"},
   {id:"vip_pass",     name:"Gold VIP",     desc:"Double gold from every level, forever", vip:true, price:"€7.99", once:true, tag:"BEST DEAL", kind:"offer", col:"linear-gradient(135deg,#ffd24d,#e08a00)"},
+  {id:"gold_pass",    name:"Gold Pass",    desc:"Premium pass track for this season: exclusive skins, hats & boxes", pass:true, price:"€4.99", tag:"SEASON", kind:"offer", col:"linear-gradient(135deg,#ffcf3d,#ff7a1a)"},
   {id:"box_bundle",   name:"Box Bundle",   desc:"3 Epic Boxes + 1 Legend Box", boxes:{epic:3, legendary:1}, price:"€4.99", kind:"offer", col:"linear-gradient(135deg,#c197ff,#6d35d1)"},
   {id:"gems_80",   name:"Handful of Gems", gems:80,   price:"€0.99",  kind:"gems", size:1},
   {id:"gems_500",  name:"Bag of Gems",     gems:500,  price:"€4.99",  kind:"gems", size:2, bonus:"+25% BONUS"},
@@ -1016,12 +1127,15 @@ function defSave(){
   return {gold:0, gems:0, keys:0, level:1, up:{}, owned:["red"], skin:"red", bars:["gold"], bar:"gold", hats:["none"], hat:"none",
     sound:true, music:true, vibe:true, gfx:true, stars:{}, daily:{streak:0, last:""}, missions:{date:"", list:[], bonus:false},
     wheelAt:0, mineAt:Date.now(), stats:defStats(), ach:{}, endlessBest:0, chalDone:"", tut:{},
-    boxInv:{common:0, epic:0, legendary:0}, pity:0, freeBoxAt:0, vip:false, bought:[]};
+    boxInv:{common:0, epic:0, legendary:0}, pity:0, freeBoxAt:0, vip:false, bought:[],
+    pass:{season:0, xp:0, free:[], prem:[], premium:false}};
 }
 let save = defSave();
 function normalize(){
   const d = defSave();
-  for(const k of ["up","stars","daily","missions","ach","tut","boxInv"]) save[k] = Object.assign({}, d[k], save[k]||{});
+  for(const k of ["up","stars","daily","missions","ach","tut","boxInv","pass"]) save[k] = Object.assign({}, d[k], save[k]||{});
+  if(!Array.isArray(save.pass.free)) save.pass.free = [];
+  if(!Array.isArray(save.pass.prem)) save.pass.prem = [];
   if(!Array.isArray(save.bought)) save.bought = [];
   save.stats = Object.assign(defStats(), save.stats||{});
   if(!Array.isArray(save.missions.list)) save.missions.list = [];
@@ -1521,6 +1635,34 @@ function buildHat(id){
     add(new THREE.SphereGeometry(0.345, 16, 8, 0, Math.PI*2, 0, Math.PI/2), phong(0xb9c3d3, {shininess:90}), 0, 1.93, 0);
     const horn = phong(0xfff1d6);
     for(const s of [-1,1]){ const h = add(new THREE.ConeGeometry(0.07, 0.4, 8), horn, s*0.36, 2.12, 0); h.rotation.z = -s*0.7; }
+  } else if(id==="beanie"){
+    const m = phong(0x3d8bff);
+    add(new THREE.SphereGeometry(0.35, 16, 10, 0, Math.PI*2, 0, Math.PI/2), m, 0, 1.92, 0);
+    add(new THREE.CylinderGeometry(0.355, 0.355, 0.1, 18), phong(0xffffff), 0, 1.95, 0);
+    add(new THREE.SphereGeometry(0.1, 10, 8), phong(0xffffff), 0, 2.29, 0);
+  } else if(id==="chef"){
+    const m = phong(0xffffff, {shininess:10});
+    add(new THREE.CylinderGeometry(0.27, 0.27, 0.3, 16), m, 0, 2.12, 0);
+    for(let i=0;i<5;i++){ const a = i/5*Math.PI*2; add(new THREE.SphereGeometry(0.16, 10, 8), m, Math.sin(a)*0.14, 2.35, Math.cos(a)*0.14); }
+    add(new THREE.SphereGeometry(0.17, 10, 8), m, 0, 2.42, 0);
+  } else if(id==="pirate"){
+    const m = phong(0x2d3142);
+    const b = add(new THREE.CylinderGeometry(0.5, 0.5, 0.06, 3), m, 0, 2.06, 0); b.rotation.y = Math.PI/2;
+    add(new THREE.SphereGeometry(0.3, 14, 8, 0, Math.PI*2, 0, Math.PI/2), m, 0, 2.02, 0);
+    add(new THREE.SphereGeometry(0.07, 10, 8), phong(0xffffff), 0, 2.2, -0.26);
+    add(new THREE.CylinderGeometry(0.305, 0.305, 0.05, 16), phong(0xffc233), 0, 2.07, 0);
+  } else if(id==="headphones"){
+    const m = phong(0xff4d5e, {shininess:80});
+    add(new THREE.TorusGeometry(0.4, 0.045, 8, 24, Math.PI), phong(0x2d3142), 0, 1.86, 0);
+    for(const s of [-1,1]){ const c = add(new THREE.CylinderGeometry(0.14, 0.14, 0.12, 14), m, s*0.4, 1.84, 0); c.rotation.z = Math.PI/2; }
+  } else if(id==="wizard"){
+    const m = phong(0x3a4ad6);
+    add(new THREE.CylinderGeometry(0.52, 0.52, 0.04, 22), m, 0, 2.05, 0);
+    const c = add(new THREE.ConeGeometry(0.3, 0.8, 16), m, 0, 2.45, 0.03); c.rotation.x = -0.15;
+    add(new THREE.OctahedronGeometry(0.08, 0), new THREE.MeshPhongMaterial({color:0xffe066, emissive:0x886600}), 0.12, 2.4, -0.26);
+  } else if(id==="horns"){
+    const m = new THREE.MeshPhongMaterial({color:0xe5344a, emissive:0x440008, shininess:80});
+    for(const s of [-1,1]){ const h = add(new THREE.ConeGeometry(0.09, 0.42, 10), m, s*0.24, 2.12, -0.05); h.rotation.z = -s*0.45; }
   } else if(id==="halo"){
     const t = add(new THREE.TorusGeometry(0.28, 0.05, 8, 24), new THREE.MeshPhongMaterial({color:0xfff3a0, emissive:0xb89a20}), 0, 2.5, 0);
     t.rotation.x = Math.PI/2; t.castShadow = false; g.userData.halo = t;
@@ -1582,7 +1724,7 @@ function drawLabel(v){
 }
 function applyLook(skin, bar, hat){
   const s = SKINS.find(k=>k.id===skin) || SKINS[0];
-  skinMat.color.setHex(s.color);
+  skinMat.color.setHex(s.color); skinMat.emissive.setHex(0); skinMat.userData.fx = s.fx || null;
   const b = BAR_SKINS.find(k=>k.id===bar) || BAR_SKINS[0];
   G.barMat.color.setHex(b.color); G.barMat.emissive.setHex(b.em);
   G.barMat.userData.em = b.em; G.barMat.userData.fx = b.fx || null;
@@ -1604,6 +1746,17 @@ function barFx(){
   else if(fx==="galaxy"){ const h = 0.68 + 0.1*Math.sin(time*0.8); M.color.setHSL(h, 0.75, 0.5); M.emissive.setHSL(h + 0.05, 0.9, 0.12 + 0.1*k); }
   else if(fx==="sun") M.emissive.setRGB(0.55 + 0.3*k, 0.35 + 0.2*k, 0.02);
   else if(fx==="pulse") M.emissive.setRGB(0.1*k, 0.35 + 0.35*k, 0);
+  else if(fx==="plasma"){ const h = 0.5 + 0.18*(0.5 + 0.5*Math.sin(time*1.6)); M.color.setHSL(h, 0.95, 0.6); M.emissive.setHSL(h, 0.9, 0.12 + 0.12*k); }
+}
+// animated runner skins
+function runnerFx(){
+  const fx = skinMat.userData.fx;
+  if(!fx || feverT > 0 || flashT > 0) return;
+  const k = 0.5 + 0.5*Math.sin(time*4);
+  if(fx==="rainbow") skinMat.color.setHSL((time*0.2) % 1, 0.85, 0.58);
+  else if(fx==="glow") skinMat.emissive.setRGB(0.05, 0.3 + 0.25*k, 0.35 + 0.25*k);
+  else if(fx==="lava") skinMat.emissive.setRGB(0.35 + 0.3*k, 0.08 + 0.1*k, 0);
+  else if(fx==="galaxy"){ skinMat.color.setHSL(0.7 + 0.08*Math.sin(time*0.9), 0.75, 0.55); skinMat.emissive.setRGB(0.08*k, 0.02, 0.2*k); }
 }
 
 /* ---------- bar auras ---------- */
@@ -2321,6 +2474,7 @@ function buildBoss(z){
 }
 
 /* ---------- endless ---------- */
+let endXpGiven = false;
 let endDist = 0, endBank = 0, genZ = 0, genLen = 0, nextBankGen = 350, endLvBase = 2, endRow = 0, endLast = "";
 function buildEndless(){
   clearLevel();
@@ -2330,7 +2484,7 @@ function buildEndless(){
   rng = Math.random;
   applyZone(zoneFor(save.level));
   speed = 9.5;
-  endDist = 0; endBank = 0; genLen = 0; nextBankGen = 350; endRow = 0; endLast = "";
+  endDist = 0; endBank = 0; genLen = 0; endXpGiven = false; nextBankGen = 350; endRow = 0; endLast = "";
   addRoadChunk(10, 130);
   genZ = -18;
   resetPlayer();
@@ -2736,6 +2890,8 @@ function finishLevel(kind){
   if(mode === "daily" && save.chalDone !== todayKey()){ chalBonus = true; extraGems += 15; reward += goldBase()*2; rows.push(["Daily challenge", "+" + fmt(goldBase()*2)]); save.chalDone = todayKey(); }
   mprog("levels"); stat("levels");
   if(run.hits === 0) mprog("nohit");
+  const xpGain = 40 + stars*20 + (kind === "boss" ? 40 : 0) + (goalOk ? 20 : 0) + (chalBonus ? 60 : 0);
+  passXP(xpGain);
   if(mode === "level") save.stars[curLevel] = Math.max(save.stars[curLevel]||0, stars);
   save.gems += extraGems + run.gems;
   save.keys = Math.min(3, save.keys + run.keys + extraKeys);
@@ -2749,7 +2905,7 @@ function finishLevel(kind){
     $("winMult").textContent = kind==="boss" ? boss.name + " DOWN" : "x" + mult + " MULTIPLIER";
     $("winStars").innerHTML = [0,1,2].map(i=>`<svg viewBox="0 0 24 24" class="${i<stars?"on":""}" style="animation-delay:${i*0.18}s"><path d="M12 2l3 6.5 7 .8-5.2 4.8 1.5 7L12 17.6 5.7 21.1l1.5-7L2 9.3l7-.8z"/></svg>`).join("");
     const gemTotal = extraGems + run.gems, keyTotal = run.keys + extraKeys;
-    $("winExtra").innerHTML = (gemTotal ? `<span><span class="gem"></span>+${gemTotal}</span>` : "") + (keyTotal ? `<span>${keySvg(true)}+${keyTotal}</span>` : "") + (chalBonus ? `<span style="color:#ff6a1f">DAILY BONUS!</span>` : "");
+    $("winExtra").innerHTML = `<span class="xp-pill">+${xpGain} XP</span>` + (gemTotal ? `<span><span class="gem"></span>+${gemTotal}</span>` : "") + (keyTotal ? `<span>${keySvg(true)}+${keyTotal}</span>` : "") + (chalBonus ? `<span style="color:#ff6a1f">DAILY BONUS!</span>` : "");
     $("winStats").innerHTML = breakdownHtml(rows, reward);
     show($("winModal"), true);
     countUp($("winReward"), reward);
@@ -2764,6 +2920,7 @@ function showEndModal(){
   const best = d > save.endlessBest;
   if(best) save.endlessBest = d;
   reward = Math.round((endBank*BANK_RATE + d*0.35) * incomeMult());
+  if(!endXpGiven){ endXpGiven = true; passXP(Math.min(150, Math.floor(d/15))); }
   persist();
   $("endDist").textContent = fmt(d) + " m";
   show($("endBest"), best);
@@ -2879,6 +3036,7 @@ function update(rawDt){
 
   animatePlayer(dt);
   barFx();
+  runnerFx();
   updateAura(dt);
   updateVfx(dt);
   updateStack(dt);
@@ -3515,13 +3673,14 @@ let curTab = "Home";
 function showTab(name){
   if(curTab === "Skins" && name !== "Skins" && previewSel){ previewSel = null; applySkins(); }
   curTab = name;
-  ["Home","Shop","Upgrades","Skins","Missions","Trophies"].forEach(t=>show($("tab"+t), t===name));
+  ["Home","Shop","Upgrades","Skins","Missions","Trophies","Pass"].forEach(t=>show($("tab"+t), t===name));
   document.querySelectorAll(".tabbar button").forEach(b=>b.classList.toggle("on", b.dataset.tab===name));
   if(name==="Upgrades") renderUpgrades();
   if(name==="Skins") renderSkins();
   if(name==="Missions") renderMissions();
   if(name==="Trophies") renderTrophies();
   if(name==="Shop") renderShop();
+  if(name==="Pass") renderPass();
 }
 document.querySelectorAll(".tabbar button").forEach(b=>b.addEventListener("click", ()=>{ SFX.click(); showTab(b.dataset.tab); }));
 
@@ -3627,7 +3786,10 @@ function refreshSide(){
   const fb = freeBoxReady(), inv = save.boxInv.common + save.boxInv.epic + save.boxInv.legendary;
   $("boxSub").textContent = inv > 0 ? inv + " READY" : fb ? "FREE" : hms(save.freeBoxAt - Date.now());
   show($("boxDot"), fb || inv > 0); show($("shopDot"), fb || inv > 0);
-  for(const id of ["dailyBtn","spinBtn","mineBtn","chestBtn","boxBtn"]) $(id).classList.toggle("ready", !$(id).querySelector(".dot").hidden);
+  const pc = passClaimable();
+  show($("passDot"), pc);
+  $("passSub").textContent = "TIER " + passTier();
+  for(const id of ["dailyBtn","spinBtn","passBtn","mineBtn","chestBtn","boxBtn"]) $(id).classList.toggle("ready", !$(id).querySelector(".dot").hidden);
 }
 setInterval(()=>{ if(state==="menu" && !menuEl.hidden) refreshSide(); }, 1000);
 
@@ -3665,9 +3827,14 @@ function renderUpgrades(){
 /* ---------- wardrobe ---------- */
 let skinSeg = "runners", previewSel = null;
 const hex6 = h => "#" + h.toString(16).padStart(6,"0");
-function figSvg(hex){
-  const c = hex6(hex);
-  return `<svg class="fig" viewBox="0 0 38 46"><g stroke="#1d2a4d" stroke-width="1.8">
+function figSvg(hex, fx){
+  let c = hex6(hex), defs = "";
+  if(fx && RUN_GRADS[fx]){
+    const id = "rg" + (++svgUid), st = RUN_GRADS[fx];
+    defs = `<defs><linearGradient id="${id}" x1="0" y1="0" x2="1" y2="1">${st.map((q,i)=>`<stop offset="${i/(st.length-1)}" stop-color="${q}"/>`).join("")}</linearGradient></defs>`;
+    c = `url(#${id})`;
+  }
+  return `<svg class="fig" viewBox="0 0 38 46">${defs}<g stroke="#1d2a4d" stroke-width="1.8">
     <ellipse cx="14" cy="42" rx="4.6" ry="3" fill="#fff"/><ellipse cx="24" cy="42" rx="4.6" ry="3" fill="#fff"/>
     <ellipse cx="19" cy="31" rx="8" ry="9" fill="${c}"/><circle cx="19" cy="15" r="12.5" fill="${c}"/></g>
     <ellipse cx="14.8" cy="14" rx="3.1" ry="3.8" fill="#fff" stroke="#1d2a4d" stroke-width="1.2"/><ellipse cx="23.2" cy="14" rx="3.1" ry="3.8" fill="#fff" stroke="#1d2a4d" stroke-width="1.2"/>
@@ -3682,7 +3849,9 @@ const BAR_GRADS = {
   galaxy:["#2a1466","#7a4dff","#3db8ff"],
   sun:["#fff6b0","#ffc233","#ff8a1f"],
   pulse:["#e6ff9e","#9dff3a","#3aa000"],
+  plasma:["#5ffcff","#b066ff","#ff5ff2"],
 };
+const RUN_GRADS = {glow:["#c8ffff","#5ffcff","#1aa8c8"], lava:["#ffe066","#ff5a1f","#a81a0a"], rainbow:BAR_GRADS.rainbow, galaxy:BAR_GRADS.galaxy};
 function barSvg(s){
   let defs = "", fill = hex6(s.color);
   if(s.fx && BAR_GRADS[s.fx]){
@@ -3731,13 +3900,19 @@ function hatSvg(id){
     crown:`<path d="M9 26l-1-13 6 5 5-9 5 9 6-5-1 13z" fill="#ffc233" ${s}/>`,
     viking:`<path d="M9 27a10 10 0 0 1 20 0z" fill="#b9c3d3" ${s}/><path d="M9 23c-5-2-6-8-4-12 1 5 4 7 6 8zM29 23c5-2 6-8 4-12-1 5-4 7-6 8z" fill="#fff1d6" ${s}/>`,
     halo:`<ellipse cx="19" cy="12" rx="11" ry="4" fill="none" stroke="#e8c200" stroke-width="3.5"/>`,
+    beanie:`<path d="M9 27a10 10 0 0 1 20 0z" fill="#3d8bff" ${s}/><path d="M8.5 25h21v4h-21z" fill="#fff" ${s}/><circle cx="19" cy="15" r="3" fill="#fff" ${s}/>`,
+    chef:`<path d="M12 26v-6h14v6z" fill="#fff" ${s}/><path d="M12 20c-5 0-5-8 0-7 1-5 13-5 14 0 5-1 5 7 0 7z" fill="#fff" ${s}/>`,
+    pirate:`<path d="M4 26c5-3 25-3 30 0-3-9-9-12-15-12S7 17 4 26z" fill="#2d3142" ${s}/><circle cx="19" cy="20" r="2.4" fill="#fff"/>`,
+    headphones:`<path d="M9 33v-6a10 10 0 0 1 20 0v6" fill="none" stroke="#2d3142" stroke-width="3"/><rect x="6" y="29" width="5" height="8" rx="2" fill="#ff4d5e" ${s}/><rect x="27" y="29" width="5" height="8" rx="2" fill="#ff4d5e" ${s}/>`,
+    wizard:`<path d="M5 26h28v3H5z" fill="#3a4ad6" ${s}/><path d="M11 26 20 3l7 23z" fill="#3a4ad6" ${s}/><path d="M18 14l1 2 2 .3-1.5 1.4.4 2-1.9-1-1.9 1 .4-2L15 16.3l2-.3z" fill="#ffe066"/>`,
+    horns:`<path d="M11 26c-4-3-5-9-3-13 1 5 3 8 6 10zM27 26c4-3 5-9 3-13-1 5-3 8-6 10z" fill="#e5344a" ${s}/>`,
   };
   return `<svg class="fig" viewBox="0 0 38 46">${id==="none" ? "" : head}${hats[id]}</svg>`;
 }
 function wardrobeItems(){
-  if(skinSeg==="runners") return {list:SKINS, owned:save.owned, cur:save.skin, key:"skin", svg:s=>figSvg(s.color), cost:s=>({cur:"gold", n:s.cost})};
-  if(skinSeg==="bars") return {list:BAR_SKINS, owned:save.bars, cur:save.bar, key:"bar", svg:s=>barSvg(s), cost:s=>({cur:"gems", n:s.cost})};
-  return {list:HATS, owned:save.hats, cur:save.hat, key:"hat", svg:s=>hatSvg(s.id), cost:s=>({cur:s.cur, n:s.cost})};
+  if(skinSeg==="runners") return {list:SKINS, owned:save.owned, cur:save.skin, key:"skin", svg:s=>figSvg(s.color, s.fx), cost:s=>({cur:"gold", n:s.cost, pass:s.pass})};
+  if(skinSeg==="bars") return {list:BAR_SKINS, owned:save.bars, cur:save.bar, key:"bar", svg:s=>barSvg(s), cost:s=>({cur:"gems", n:s.cost, pass:s.pass})};
+  return {list:HATS, owned:save.hats, cur:save.hat, key:"hat", svg:s=>hatSvg(s.id), cost:s=>({cur:s.cur, n:s.cost, pass:s.pass})};
 }
 function previewLook(id){
   const W = {skin:save.skin, bar:save.bar, hat:save.hat};
@@ -3751,7 +3926,7 @@ function renderSkins(){
   $("skinNote").textContent = skinSeg==="bars" ? "Gems or Mystery Boxes" : "Tap to try on";
   W.list.forEach(s=>{
     const has = W.owned.includes(s.id), on = W.cur === s.id, sel = previewSel === s.id;
-    const c = W.cost(s), wallet = c.cur === "gems" ? "gems" : "gold", boxOnly = c.n == null, afford = !boxOnly && save[wallet] >= c.n;
+    const c = W.cost(s), wallet = c.cur === "gems" ? "gems" : "gold", passOnly = !!c.pass, boxOnly = !passOnly && c.n == null, afford = !boxOnly && !passOnly && save[wallet] >= c.n;
     const b = document.createElement("button");
     b.className = "skin" + (on ? " on" : "") + (sel ? " sel" : "") + (!has ? " locked" : "");
     const price = `<span class="${wallet==="gems" ? "gem" : "coin"}"></span>${fmt(c.n)}`;
@@ -3760,6 +3935,7 @@ function renderSkins(){
     b.innerHTML = W.svg(s) + `<div class="nm">${s.name}</div>` + rar + aur +
       (on ? `<div class="pr" style="color:#2a9d44">ON</div>` :
        has ? `<div class="pr">EQUIP</div>` :
+       passOnly ? `<div class="pr" style="color:#e0a100">${sel ? "GOLD PASS" : "PASS"}</div>` :
        boxOnly ? `<div class="pr" style="color:#8a47f0">${sel ? "GET IN BOX" : "BOX"}</div>` :
        sel ? `<div class="pr${afford ? "" : " bad"}">${afford ? "BUY " : ""}${price}</div>` :
        `<div class="pr">${price}</div>`);
@@ -3768,6 +3944,8 @@ function renderSkins(){
         save[W.key] = s.id; previewSel = null; SFX.click(); persist(); applySkins();
       } else if(previewSel !== s.id){
         previewSel = s.id; previewLook(s.id); SFX.click();
+      } else if(passOnly){
+        SFX.click(); toast("UNLOCK IT IN THE GOLD PASS!"); showTab("Pass"); return;
       } else if(boxOnly){
         SFX.click(); toast("WIN IT FROM MYSTERY BOXES!"); showTab("Shop"); return;
       } else if(afford){
@@ -3784,6 +3962,103 @@ document.querySelectorAll(".seg button").forEach(b=>b.addEventListener("click", 
   if(previewSel){ previewSel = null; applySkins(); }
   renderSkins();
 }));
+
+/* ---------- Gold Pass ---------- */
+function ensurePass(){
+  const sid = seasonId();
+  if(save.pass.season !== sid) save.pass = {season:sid, xp:0, free:[], prem:[], premium:false};
+}
+const passTier = () => Math.min(PASS_TIERS, Math.floor(save.pass.xp / PASS_XP));
+function passXP(n){
+  ensurePass();
+  const before = passTier();
+  save.pass.xp += n;
+  const after = passTier();
+  if(after > before) setTimeout(()=>toast("GOLD PASS TIER " + after + "!"), 600);
+  persist();
+}
+function passClaimable(){
+  ensurePass();
+  const t = passTier();
+  for(let i=1;i<=t;i++){
+    if(!save.pass.free.includes(i)) return true;
+    if(save.pass.premium && !save.pass.prem.includes(i)) return true;
+  }
+  return false;
+}
+function passItem(r){
+  if(r.skin) return SKINS.find(x=>x.id===r.skin);
+  if(r.hat) return HATS.find(x=>x.id===r.hat);
+  if(r.bar) return BAR_SKINS.find(x=>x.id===r.bar);
+  return null;
+}
+function passRewardHtml(r){
+  if(r.skin){ const it = passItem(r); return figSvg(it.color, it.fx) + `<span class="pl">${it.name}</span>`; }
+  if(r.hat){ const it = passItem(r); return hatSvg(it.id) + `<span class="pl">${it.name}</span>`; }
+  if(r.bar){ const it = passItem(r); return barSvg(it) + `<span class="pl">${it.name}</span>`; }
+  if(r.box) return `<div class="pbox">${boxSvg(BOXES[r.box].col)}</div><span class="pl">${BOXES[r.box].name}</span>`;
+  return `<span class="pv">${rewardHtml(r)}</span>`;
+}
+function grantPass(r, el){
+  if(r.skin){ if(!save.owned.includes(r.skin)) save.owned.push(r.skin); save.skin = r.skin; }
+  else if(r.hat){ if(!save.hats.includes(r.hat)) save.hats.push(r.hat); save.hat = r.hat; }
+  else if(r.bar){ if(!save.bars.includes(r.bar)) save.bars.push(r.bar); save.bar = r.bar; }
+  else if(r.box) save.boxInv[r.box]++;
+  else { grant(r, true); if(r.g) flyIcons("coin", 8, centerOf(el)); if(r.gems) flyIcons("gem", 5, centerOf(el)); }
+  const it = passItem(r);
+  if(it){ applySkins(); SFX.great(); burst(); toast("UNLOCKED " + it.name.toUpperCase() + "!"); }
+  else if(r.box){ SFX.buy(); toast(BOXES[r.box].name + " ADDED TO THE SHOP"); }
+  else SFX.buy();
+  buzz(15);
+  persist();
+}
+function renderPass(){
+  ensurePass();
+  const P = save.pass, t = passTier(), L = $("passList");
+  $("passSeason").textContent = "SEASON " + P.season;
+  $("passTimer").textContent = "Ends in " + Math.ceil((seasonEnds() - Date.now())/864e5) + " days";
+  const into = t >= PASS_TIERS ? PASS_XP : P.xp - t*PASS_XP;
+  $("passTierN").textContent = t;
+  $("passXp").textContent = t >= PASS_TIERS ? "MAX TIER" : fmt(into) + " / " + PASS_XP + " XP";
+  setFill($("passFill"), into/PASS_XP);
+  const pb = $("passBuy");
+  pb.hidden = P.premium; $("passGemBuy").hidden = P.premium; $("passOwned").hidden = !P.premium;
+  pb.textContent = "UNLOCK " + IAP.price(PRODUCTS.find(x=>x.id==="gold_pass"));
+  $("passGemBuy").innerHTML = `OR <span class="gem"></span> ${PASS_GEMS}`;
+  $("passGemBuy").disabled = save.gems < PASS_GEMS;
+  L.innerHTML = "";
+  for(let i=1;i<=PASS_TIERS;i++){
+    const row = document.createElement("div");
+    row.className = "prow" + (i <= t ? " reached" : "") + (i === t + 1 ? " next" : "");
+    const cell = (track, r) => {
+      const claimed = (track === "free" ? P.free : P.prem).includes(i);
+      const locked = track === "prem" && !P.premium;
+      const ready = i <= t && !claimed && !locked;
+      const b = document.createElement("button");
+      b.className = "pcell " + track + (claimed ? " claimed" : "") + (ready ? " ready" : "") + (locked ? " locked" : "") + (passItem(r) ? " item" : "");
+      b.innerHTML = passRewardHtml(r) + (claimed ? '<i class="pchk">&#10003;</i>' : locked ? '<i class="plock">&#128274;</i>' : "");
+      b.addEventListener("click", ()=>{
+        if(ready){ (track === "free" ? P.free : P.prem).push(i); grantPass(r, b); renderPass(); refreshMenu(); }
+        else if(locked){ SFX.click(); toast("UNLOCK THE GOLD PASS FOR THIS REWARD"); }
+        else { SFX.click(); if(!claimed) toast("REACH TIER " + i + " TO CLAIM"); }
+      });
+      return b;
+    };
+    const num = document.createElement("div"); num.className = "pnum"; num.textContent = i;
+    row.append(cell("free", passReward("free", i)), num, cell("prem", passReward("prem", i)));
+    L.appendChild(row);
+  }
+  const next = L.children[Math.max(0, t - 1)];
+  if(next) requestAnimationFrame(()=>{ L.scrollTop = Math.max(0, next.offsetTop - 70); });
+}
+$("passBtn").addEventListener("click", ()=>{ SFX.click(); showTab("Pass"); });
+$("passBuy").addEventListener("click", ()=>{ SFX.click(); IAP.buy(PRODUCTS.find(x=>x.id==="gold_pass")); });
+$("passGemBuy").addEventListener("click", ()=>{
+  if(save.gems < PASS_GEMS){ SFX.click(); toast("NOT ENOUGH GEMS", true); return; }
+  save.gems -= PASS_GEMS; ensurePass(); save.pass.premium = true; persist();
+  SFX.great(); burst(); toast("GOLD PASS UNLOCKED!"); refreshTop(); renderPass(); refreshMenu();
+});
+$("passClose").addEventListener("click", ()=>{ SFX.click(); showTab("Home"); });
 
 /* ---------- missions ---------- */
 function rewardHtml(r){
@@ -3808,7 +4083,7 @@ function renderMissions(){
     const btn = row.querySelector("button");
     if(btn) btn.addEventListener("click", ()=>{
       if(!done || m.claimed){ SFX.click(); return; }
-      m.claimed = true; grant(r, true); SFX.buy(); buzz(15);
+      m.claimed = true; grant(r, true); passXP(50); SFX.buy(); buzz(15);
       flyIcons("coin", 10, centerOf(btn)); if(r.gems) flyIcons("gem", 4, centerOf(btn));
       renderMissions(); refreshMenu();
     });
@@ -4071,8 +4346,9 @@ function boxSvg(col){
     <path d="M32 19c-5-9-15-9-13-2 1 3 7 2 13 2zm0 0c5-9 15-9 13-2-1 3-7 2-13 2z" fill="#ffe066"/></g>
     <text x="32" y="50" text-anchor="middle" font-family="Lilita One,Arial Black,sans-serif" font-size="22" fill="#fff" stroke="#1d2a4d" stroke-width="1.6">?</text></svg>`;
 }
+const PASS_ART = '<svg viewBox="0 0 64 64"><path d="M14 6h36v44L32 60 14 50z" fill="#ffcf3d" stroke="#1d2a4d" stroke-width="3.5" stroke-linejoin="round"/><path d="M32 16l4 9 10 1-7.5 6.8 2 9.7L32 37.5l-8.5 5 2-9.7L18 26l10-1z" fill="#fff" stroke="#1d2a4d" stroke-width="2.5" stroke-linejoin="round"/></svg>';
 const CROWN_ART = '<svg viewBox="0 0 64 64"><path d="M8 50 5 18l15 12 12-18 12 18 15-12-3 32z" fill="#ffe066" stroke="#1d2a4d" stroke-width="3.5" stroke-linejoin="round"/><circle cx="32" cy="38" r="5" fill="#ff4d6a" stroke="#1d2a4d" stroke-width="2.5"/></svg>';
-function offerArt(p){ return p.vip ? CROWN_ART : p.kind==="gems" ? gemPile(p.size) : p.boxes && p.boxes.epic ? boxSvg(BOXES.epic.col) : boxSvg(BOXES.legendary.col); }
+function offerArt(p){ return p.pass ? PASS_ART : p.vip ? CROWN_ART : p.kind==="gems" ? gemPile(p.size) : p.boxes && p.boxes.epic ? boxSvg(BOXES.epic.col) : boxSvg(BOXES.legendary.col); }
 function boxLabel(type){
   const B = BOXES[type];
   if(save.boxInv[type] > 0) return {txt:"OPEN", sub:"x" + save.boxInv[type] + " OWNED", ok:true};
@@ -4110,7 +4386,7 @@ function renderShop(){
   const offers = PRODUCTS.filter(p=>p.kind==="offer");
   sec("offerSec", "SPECIAL OFFERS");
   offers.forEach(p=>{
-    const owned = p.once && save.bought.includes(p.id);
+    const owned = (p.once && save.bought.includes(p.id)) || (p.pass && (ensurePass(), save.pass.premium));
     const o = document.createElement("div"); o.className = "offer" + (owned ? " owned" : ""); o.style.setProperty("--oc", p.col);
     o.innerHTML = (p.tag && !owned ? `<i class="tag">${p.tag}</i>` : "") +
       `<div class="o-art">${offerArt(p)}</div><div class="o-info"><b>${p.name}</b><span>${p.desc}</span></div>
@@ -4157,7 +4433,7 @@ function rollBox(type){
   for(const k of ["common","rare","epic","legendary"]){ r -= odds[k]; if(r < 0){ rar = k; break; } }
   if(save.pity >= PITY - 1 && (rar === "common" || rar === "rare")) rar = "epic";
   save.pity = rar === "epic" || rar === "legendary" ? 0 : save.pity + 1;
-  const pool = BAR_SKINS.filter(s=>s.r === rar && s.id !== "gold");
+  const pool = BAR_SKINS.filter(s=>s.r === rar && s.id !== "gold" && !s.pass);
   const skin = pool[(Math.random()*pool.length)|0];
   const dup = save.bars.includes(skin.id);
   let refund = null;
@@ -4171,7 +4447,7 @@ function randomFiller(type){
   let r = Math.random()*100, rar = "common";
   for(const k of ["common","rare","epic","legendary"]){ r -= odds[k]; if(r < 0){ rar = k; break; } }
   if(Math.random() < 0.12) rar = "legendary";           // show some shiny ones rolling by
-  const pool = BAR_SKINS.filter(s=>s.r === rar && s.id !== "gold");
+  const pool = BAR_SKINS.filter(s=>s.r === rar && s.id !== "gold" && !s.pass);
   return pool[(Math.random()*pool.length)|0] || BAR_SKINS[1];
 }
 let boxRes = null, boxType = null, reelBusy = false;
@@ -4258,6 +4534,7 @@ function grantProduct(id){
   if(p.gold){ save.gold += p.gold; stat("gold", p.gold); }
   if(p.boxes) for(const k in p.boxes) save.boxInv[k] += p.boxes[k];
   if(p.vip) save.vip = true;
+  if(p.pass){ ensurePass(); save.pass.premium = true; }
   persist();
   SFX.great(); burst(); buzz([30,40,30]);
   toast("THANK YOU! " + p.name.toUpperCase() + " ADDED");

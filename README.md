@@ -136,6 +136,19 @@ where your gold came from.
   upgrades (costs grow faster per level) and cosmetics.
   Missions, achievements, daily rewards, the wheel and the gold mine all pay
   less than before.
+- **Gold Pass (battle pass)** — 28-day seasons with 30 tiers. Earn pass XP
+  from every level (more for stars, bosses, bonus goals and the daily
+  challenge), mission claims and Endless runs; 120 XP per tier. The free
+  track gives gold, gems, keys, boxes, the Headphones hat, the Neon runner
+  and the Cyber bars. The premium track (in-app product `gold_pass`, or 450
+  gems) adds more gems and gold, Epic and Legend boxes, and exclusives: the
+  Wizard hat, Devil Horns, and the Magma, Prism and Cosmic runners (animated
+  glow, lava, rainbow and galaxy looks), plus the Plasma and Phoenix bars.
+  Progress resets each season.
+- **More skins** — 5 new runner colors, Beanie, Chef and Pirate hats, and
+  the Copper, Honey, Jade, Amethyst, Sakura and Void bars (each with its own
+  aura). Pass exclusives show a PASS tag in the wardrobe and never drop from
+  boxes.
 - **Daily reward** (7-day streak), **Lucky Wheel** (free every 3 hours),
   **Treasure Room** (3 keys open chests; the jackpot is a free skin or hat).
 - **Settings** — sound, music, vibration, high/low graphics, reset.
@@ -210,8 +223,8 @@ To go live on Google Play:
 1. `npm install cordova-plugin-purchase && npx cap sync` in the Capacitor
    project.
 2. In the Play Console, create in-app products with exactly these IDs:
-   `gems_80`, `gems_500`, `gems_1200`, `gems_3000`, `box_bundle`
-   (consumable) and `starter_pack`, `vip_pass` (non-consumable). Set prices
+   `gems_80`, `gems_500`, `gems_1200`, `gems_3000`, `box_bundle`,
+   `gold_pass` (consumable; the game unlocks the pass for the current season) and `starter_pack`, `vip_pass` (non-consumable). Set prices
    there — the game shows the store's localized price automatically.
 3. Test with a license-tester account before release.
 4. For production, verify purchases on a server (the plugin supports a
