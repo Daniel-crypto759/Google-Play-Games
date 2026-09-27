@@ -202,6 +202,7 @@
   .panel h2 .grow{flex:1}
   .panel h2 small{font-family:'Nunito',sans-serif;font-size:12px;font-weight:900;color:#fff;text-shadow:0 1px 0 #1d2a4d}
   .scroll{overflow-y:auto;padding:12px 12px 16px;flex:1;display:flex;flex-direction:column;gap:11px;background:linear-gradient(#f4f8ff,#fff)}
+  .scroll > *{flex-shrink:0}
   .urow{display:flex;align-items:center;gap:10px;background:#fff;border:2.5px solid #1d2a4d;border-radius:16px;padding:9px;box-shadow:0 3px 0 #1d2a4d}
   .uicon{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;flex:0 0 auto;border:2.5px solid #1d2a4d;box-shadow:inset 0 -4px 0 rgba(0,0,0,.18),inset 0 3px 0 rgba(255,255,255,.4)}
   .uicon svg{width:27px;height:27px;filter:drop-shadow(0 2px 0 rgba(0,0,0,.25))}
@@ -407,6 +408,74 @@
   .tog.on{background:linear-gradient(#8ef59c,#2fc653)}
   .tog.on::after{left:27px}
   #loadErr{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:30px;text-align:center;font-weight:900;z-index:80;background:#bfe6ff}
+
+  /* ---------- shop ---------- */
+  #tabShop{--hc:linear-gradient(#5fe3c4,#14a88f)}
+  .shop-sec{font-family:'Lilita One','Arial Black',sans-serif;font-size:17px;color:#1d2a4d;margin:4px 2px -3px;display:flex;align-items:center;gap:6px}
+  .shop-sec .coin,.shop-sec .gem{width:18px;height:18px}
+  .box-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .box-card{position:relative;background:#fff;border:2.5px solid #1d2a4d;border-radius:16px;box-shadow:0 3px 0 #1d2a4d;padding:8px 5px;display:flex;flex-direction:column;align-items:center;gap:4px;overflow:hidden}
+  .box-card::before{content:"";position:absolute;left:0;right:0;top:0;height:62%;background:radial-gradient(circle at 50% 62%,var(--bc),transparent 72%);opacity:.4}
+  .box-art{position:relative;width:62px;height:62px;animation:wiggle 2.8s ease-in-out infinite}
+  .box-card:nth-child(2) .box-art{animation-delay:.5s}
+  .box-card:nth-child(3) .box-art{animation-delay:1s}
+  .box-card .bname{position:relative;font-family:'Lilita One','Arial Black',sans-serif;font-size:13px;text-align:center}
+  .box-card .ubuy{min-width:0;width:100%;position:relative}
+  .box-card .inv{position:absolute;top:5px;left:5px;background:#ff3b4e;color:#fff;border:2px solid #1d2a4d;border-radius:999px;font-family:'Lilita One','Arial Black',sans-serif;font-size:11px;padding:0 6px;z-index:1}
+  .odds{width:100%;border-collapse:separate;border-spacing:0;font-size:11px;font-weight:800;color:#56627e;background:#fff;border:2.5px solid #1d2a4d;border-radius:12px;overflow:hidden}
+  .odds th,.odds td{padding:3px 4px;text-align:center;font-variant-numeric:tabular-nums}
+  .odds th{font-family:'Lilita One','Arial Black',sans-serif;font-weight:400;color:#1d2a4d;background:#eef3fb;font-size:11px}
+  .odds td:first-child{text-align:left;font-weight:900}
+  .pity{font-size:12px;font-weight:900;color:#8a47f0;text-align:center;margin-top:-3px}
+  .offer{position:relative;display:flex;align-items:center;gap:10px;border:2.5px solid #1d2a4d;border-radius:16px;box-shadow:0 3px 0 #1d2a4d;padding:11px 10px;background:var(--oc);color:#fff;overflow:hidden}
+  .offer .o-art{width:54px;height:54px;flex:0 0 auto;filter:drop-shadow(0 3px 0 rgba(0,0,0,.25))}
+  .offer .o-info{flex:1;min-width:0}
+  .offer b{display:block;font-family:'Lilita One','Arial Black',sans-serif;font-weight:400;font-size:18px;text-shadow:0 2px 0 #1d2a4d,1.5px 0 0 #1d2a4d,-1.5px 0 0 #1d2a4d,0 -1.5px 0 #1d2a4d}
+  .offer span{font-size:12px;font-weight:900;line-height:1.3;display:block;text-shadow:0 1px 0 rgba(0,0,0,.4)}
+  .offer.owned{filter:grayscale(.5);opacity:.8}
+  .tag{position:absolute;top:0;right:0;background:#ff3b4e;color:#fff;font-family:'Lilita One','Arial Black',sans-serif;font-size:11px;padding:2px 10px 3px;border-left:2.5px solid #1d2a4d;border-bottom:2.5px solid #1d2a4d;border-bottom-left-radius:12px;font-style:normal;letter-spacing:.4px;z-index:1}
+  .price-btn{flex:0 0 auto;min-width:80px;border:2.5px solid #1d2a4d;border-radius:13px;background:linear-gradient(#86f394,#2bc452);box-shadow:inset 0 3px 0 rgba(255,255,255,.45),0 3px 0 #1d2a4d;color:#fff;font-family:'Lilita One','Arial Black',sans-serif;font-size:17px;padding:7px 8px;text-shadow:0 2px 0 #1d2a4d,1.5px 0 0 #1d2a4d,-1.5px 0 0 #1d2a4d,0 -1.5px 0 #1d2a4d;position:relative;z-index:1}
+  .price-btn:active{transform:translateY(2px);box-shadow:0 1px 0 #1d2a4d}
+  .price-btn[disabled]{background:#c9d3e3;cursor:default}
+  .gem-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}
+  .gem-card{position:relative;background:linear-gradient(#e2f6ff,#fff);border:2.5px solid #1d2a4d;border-radius:16px;box-shadow:0 3px 0 #1d2a4d;padding:10px 7px 8px;display:flex;flex-direction:column;align-items:center;gap:3px;overflow:hidden}
+  .gem-card svg{width:70px;height:50px;filter:drop-shadow(0 3px 0 rgba(29,42,77,.3))}
+  .gem-card .amt{font-family:'Lilita One','Arial Black',sans-serif;font-size:21px;color:#1a8fd6;text-shadow:0 1.5px 0 #1d2a4d}
+  .gem-card .bonus{font-size:11px;font-weight:900;color:#2a9d44;min-height:14px}
+  .gem-card .price-btn{width:100%}
+  .gold-card{background:linear-gradient(#fff6d6,#fff)}
+  .gold-card .amt{color:#e0a100}
+  .gold-card .ubuy{width:100%;min-width:0}
+  .shop-note{font-size:11px;font-weight:800;color:#8995b0;text-align:center;line-height:1.45}
+  /* box opening */
+  .reel-wrap{position:relative;height:116px;overflow:hidden;border:3px solid #1d2a4d;border-radius:16px;background:linear-gradient(#2c3c6c,#1d2a4d);box-shadow:inset 0 0 20px rgba(0,0,0,.55)}
+  .reel{position:absolute;left:0;top:11px;display:flex;will-change:transform}
+  .rc{flex:0 0 80px;height:88px;margin-right:6px;border-radius:12px;background:#fff;border:3px solid var(--rc);display:flex;flex-direction:column;align-items:center;padding-top:4px;font-size:10px;font-weight:900;overflow:hidden;color:#1d2a4d}
+  .rc .fig{width:34px;height:42px}
+  .rc .rb{align-self:stretch;height:8px;background:var(--rc);margin-top:auto}
+  .reel-mark{position:absolute;left:50%;top:0;bottom:0;width:4px;margin-left:-2px;background:#ffe066;box-shadow:0 0 12px #ffe066;z-index:2}
+  .reel-mark::before,.reel-mark::after{content:"";position:absolute;left:50%;margin-left:-10px;border:10px solid transparent}
+  .reel-mark::before{top:-1px;border-top-color:#ffe066}
+  .reel-mark::after{bottom:-1px;border-bottom-color:#ffe066}
+  .box-win{position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;padding:4px 0 2px}
+  .box-win .fig{width:112px;height:134px;position:relative;animation:popin .6s cubic-bezier(.2,1.6,.4,1);filter:drop-shadow(0 6px 0 rgba(29,42,77,.25))}
+  .box-win .wname{font-size:28px;position:relative}
+  .box-win .dupl{font-weight:900;color:#6b7a99;font-size:14px;position:relative;display:flex;align-items:center;gap:5px}
+  .box-win .dupl .gem,.box-win .dupl .coin{width:18px;height:18px}
+  .newtag{background:linear-gradient(#ff6d7e,#d6344a);color:#fff;border:2.5px solid #1d2a4d;border-radius:999px;padding:1px 12px;font-family:'Lilita One','Arial Black',sans-serif;font-size:16px;text-shadow:0 1.5px 0 #1d2a4d;position:relative;animation:nudge 1s ease-in-out infinite}
+  .wrays{position:absolute;width:330px;height:330px;left:50%;top:40%;transform:translate(-50%,-50%);animation:spinc 9s linear infinite;pointer-events:none;
+    background:repeating-conic-gradient(var(--rc) 0 10deg,rgba(255,255,255,0) 10deg 20deg);opacity:.5;
+    -webkit-mask:radial-gradient(circle,#000 8%,transparent 64%);mask:radial-gradient(circle,#000 8%,transparent 64%)}
+  .rar{display:inline-block;background:var(--rc);color:#fff;border:2px solid #1d2a4d;border-radius:999px;padding:0 10px;font-family:'Lilita One','Arial Black',sans-serif;font-size:13px;letter-spacing:.5px;text-shadow:0 1px 0 #1d2a4d;position:relative;white-space:nowrap}
+  .skin .rar{font-size:8.5px;padding:0 5px;border-width:1.5px;letter-spacing:.2px}
+  .box-btns{display:flex;gap:8px}
+  .box-btns .btn{flex:1;font-size:17px;padding:10px 8px 12px}
+  .pay-item{display:flex;align-items:center;gap:12px;background:#f4f8ff;border:2.5px solid #1d2a4d;border-radius:14px;padding:10px;text-align:left}
+  .pay-item .o-art{width:48px;height:48px;flex:0 0 auto}
+  .pay-item b{font-family:'Lilita One','Arial Black',sans-serif;font-weight:400;font-size:18px;display:block}
+  .pay-item span{font-size:12px;font-weight:800;color:#6b7a99;display:block}
+  .pay-item .pp{margin-left:auto;font-family:'Lilita One','Arial Black',sans-serif;font-size:20px;color:#2a9d44;white-space:nowrap}
+  .testchip{align-self:center;background:#fff4d6;border:2px dashed #e0a100;color:#8a5a00;border-radius:10px;padding:4px 10px;font-size:12px;font-weight:900}
   @media (prefers-reduced-motion: reduce){ *{animation:none!important;transition:none!important} }
 </style>
 
@@ -482,6 +551,7 @@
         <button class="sbtn" id="spinBtn"><span class="ico" style="--c:linear-gradient(#c197ff,#8a47f0)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#ffc233"/><path d="M12 12V2a10 10 0 0 1 10 10z" fill="#3d8bff"/><path d="M12 12v10A10 10 0 0 1 2 12z" fill="#3d8bff"/><path d="M12 12H2A10 10 0 0 1 12 2z" fill="#ff4d5e"/><path d="M12 12h10a10 10 0 0 1-10 10z" fill="#4cd964"/><circle cx="12" cy="12" r="2.6" fill="#fff"/></svg></span><span class="lab">SPIN</span><span class="sub2" id="spinSub">FREE</span><span class="dot" id="spinDot" hidden></span></button>
       </div>
       <div class="side r">
+        <button class="sbtn" id="boxBtn"><span class="ico" style="--c:linear-gradient(#e0a3ff,#9b5cff)"><svg viewBox="0 0 64 64"><g stroke="#1d2a4d" stroke-width="3.5" stroke-linejoin="round"><path d="M10 28h44v24a4 4 0 0 1-4 4H14a4 4 0 0 1-4-4z" fill="#fff"/><path d="M6 19h52v10H6z" fill="#ffe2f6"/><path d="M32 19c-5-9-15-9-13-2 1 3 7 2 13 2zm0 0c5-9 15-9 13-2-1 3-7 2-13 2z" fill="#ffe066"/></g><text x="32" y="50" text-anchor="middle" font-family="Lilita One,Arial Black,sans-serif" font-size="22" fill="#9b5cff" stroke="#1d2a4d" stroke-width="1.5">?</text></svg></span><span class="lab">BOX</span><span class="sub2" id="boxSub">FREE</span><span class="dot" id="boxDot" hidden></span></button>
         <button class="sbtn" id="mineBtn"><span class="ico" style="--c:linear-gradient(#d9a066,#9a6a3a)"><svg viewBox="0 0 24 24"><path d="M3 9c5-5 13-5 18 0-5-2-13-2-18 0z" fill="#8a96ad"/><rect x="11" y="6" width="2.6" height="16" rx="1.2" fill="#a0662e" transform="rotate(20 12 12)"/><circle cx="6" cy="19" r="3" fill="#ffc233"/></svg></span><span class="lab">MINE</span><span class="sub2" id="mineSub">LOCKED</span><span class="dot" id="mineDot" hidden></span></button>
         <button class="sbtn" id="chestBtn"><span class="ico" style="--c:linear-gradient(#ffd24d,#ff9f1a)"><svg viewBox="0 0 48 40"><rect x="4" y="14" width="40" height="22" rx="3" fill="#b9722e"/><path d="M4 16c0-8 6-12 20-12s20 4 20 12z" fill="#d28b3c"/><rect x="4" y="14" width="40" height="4" fill="#ffc233"/><rect x="21" y="12" width="6" height="9" rx="1.5" fill="#ffc233"/></svg></span><span class="lab">CHESTS</span><span class="sub2" id="chestSub">0/3 KEYS</span><span class="dot" id="chestDot" hidden></span></button>
       </div>
@@ -527,6 +597,14 @@
       </div>
     </div>
 
+    <!-- SHOP -->
+    <div class="tab" id="tabShop" hidden>
+      <div class="panel">
+        <h2 class="display outline"><span class="grow">SHOP</span><small id="shopSub">Boxes · Gems · Offers</small></h2>
+        <div class="scroll" id="shopList"></div>
+      </div>
+    </div>
+
     <!-- TROPHIES -->
     <div class="tab" id="tabTrophies" hidden>
       <div class="panel">
@@ -537,6 +615,7 @@
 
     <nav class="tabbar">
       <button class="on" data-tab="Home" style="--tc:linear-gradient(#86f394,#2bc452)"><svg viewBox="0 0 24 24"><path d="M3 11 12 3l9 8v10h-6v-6H9v6H3z" fill="currentColor"/></svg>HOME</button>
+      <button data-tab="Shop" style="--tc:linear-gradient(#5fe3c4,#14a88f)"><svg viewBox="0 0 24 24"><path d="M4 9h16l-1.5 11a2 2 0 0 1-2 1.7h-9a2 2 0 0 1-2-1.7z" fill="currentColor"/><path d="M8 9V7a4 4 0 0 1 8 0v2" fill="none" stroke="currentColor" stroke-width="2.2"/></svg>SHOP<span class="dot" id="shopDot" hidden></span></button>
       <button data-tab="Upgrades" style="--tc:linear-gradient(#ffd24d,#ff9f1a)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M12 6l5 6h-3v6h-4v-6H7z" fill="#fff"/></svg>UPGRADES<span class="dot" id="upDot" hidden></span></button>
       <button data-tab="Skins" style="--tc:linear-gradient(#ff8ec8,#e0457b)"><svg viewBox="0 0 24 24"><path d="M8 3 3 6l2 5 3-1v11h8V10l3 1 2-5-5-3c-1 2-2.4 3-4 3S9 5 8 3z" fill="currentColor"/></svg>SKINS</button>
       <button data-tab="Missions" style="--tc:linear-gradient(#78b8ff,#347ff0)"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="3" fill="currentColor"/><path d="M8 9l2 2 4-4M8 15h8" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>MISSIONS<span class="dot" id="misDot" hidden></span></button>
@@ -641,6 +720,40 @@
     </div>
   </div>
 
+  <div class="modal" id="boxModal" hidden>
+    <div class="sheet"><div class="ribbon purple display" id="boxTitle">EPIC BOX</div>
+      <div class="sheet-body">
+        <div class="reel-wrap" id="reelWrap"><div class="reel" id="reel"></div><div class="reel-mark"></div></div>
+        <div class="box-win" id="boxResult" hidden>
+          <div class="wrays" id="boxRays"></div>
+          <div id="boxFig"></div>
+          <div class="wname display outline" id="boxName">Rainbow</div>
+          <span class="rar" id="boxRar">LEGENDARY</span>
+          <div class="newtag" id="boxNew">NEW!</div>
+          <div class="dupl" id="boxDup"></div>
+        </div>
+        <p class="sub" id="boxHint">Spinning...</p>
+        <div class="box-btns" id="boxBtns" hidden>
+          <button class="btn green" id="boxEquip">EQUIP</button>
+          <button class="btn purple" id="boxAgain">AGAIN</button>
+        </div>
+        <button class="btn ghost small" id="boxClose" hidden>CLOSE</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="payModal" hidden>
+    <div class="sheet"><div class="ribbon green display">CHECKOUT</div>
+      <div class="sheet-body">
+        <div class="pay-item" id="payItem"></div>
+        <div class="testchip">TEST MODE · no real money is charged</div>
+        <p class="sub">This preview can't take payments. In the Google Play version this button opens Google Play's secure checkout.</p>
+        <button class="btn green" id="payOk">GET IT (TEST, FREE)</button>
+        <button class="btn ghost small" id="payCancel">CANCEL</button>
+      </div>
+    </div>
+  </div>
+
   <div class="modal" id="settingsModal" hidden>
     <div class="sheet"><div class="ribbon display">SETTINGS</div>
       <div class="sheet-body">
@@ -648,6 +761,7 @@
         <div class="srow"><span>Music</span><button class="tog" id="tMusic" aria-label="Music"></button></div>
         <div class="srow"><span>Vibration</span><button class="tog" id="tVibe" aria-label="Vibration"></button></div>
         <div class="srow"><span>High graphics</span><button class="tog" id="tGfx" aria-label="High graphics"></button></div>
+        <button class="btn blue small" id="restoreBtn">RESTORE PURCHASES</button>
         <button class="btn red small" id="resetBtn">RESET PROGRESS</button>
         <button class="btn blue" id="settingsClose">DONE</button>
       </div>
@@ -692,14 +806,52 @@ const HATS = [
   {id:"viking", name:"Viking",    cost:60,   cur:"gems"},
   {id:"halo",   name:"Halo",      cost:90,   cur:"gems"},
 ];
+const RARITY = {
+  common:   {name:"COMMON",    col:"#8e9ab5"},
+  rare:     {name:"RARE",      col:"#3d8bff"},
+  epic:     {name:"EPIC",      col:"#9b5cff"},
+  legendary:{name:"LEGENDARY", col:"#ffb300"},
+};
+// Skins without a cost can only be won from mystery boxes.
 const BAR_SKINS = [
-  {id:"gold",    name:"Gold",      color:0xffc233, em:0x6a4200, cost:0},
-  {id:"silver",  name:"Silver",    color:0xdfe7f2, em:0x3a4452, cost:15},
-  {id:"rose",    name:"Rose Gold", color:0xffa38a, em:0x5a2a1a, cost:30},
-  {id:"emerald", name:"Emerald",   color:0x3ddc84, em:0x0d4a2a, cost:50},
-  {id:"ruby",    name:"Ruby",      color:0xff4d6d, em:0x5a0a1a, cost:75},
-  {id:"diamond", name:"Diamond",   color:0x9fe8ff, em:0x2a5a70, cost:120},
+  {id:"gold",     name:"Gold",      r:"common",    color:0xffc233, em:0x6a4200, cost:0},
+  {id:"silver",   name:"Silver",    r:"common",    color:0xdfe7f2, em:0x3a4452, cost:15},
+  {id:"rose",     name:"Rose Gold", r:"common",    color:0xffa38a, em:0x5a2a1a, cost:30},
+  {id:"bronze",   name:"Bronze",    r:"common",    color:0xd08a4a, em:0x4a2208},
+  {id:"choco",    name:"Chocolate", r:"common",    color:0x8a5530, em:0x2a1206},
+  {id:"emerald",  name:"Emerald",   r:"rare",      color:0x3ddc84, em:0x0d4a2a, cost:50},
+  {id:"ruby",     name:"Ruby",      r:"rare",      color:0xff4d6d, em:0x5a0a1a, cost:75},
+  {id:"mint",     name:"Mint",      r:"rare",      color:0x8fffd2, em:0x1a5a44},
+  {id:"sapphire", name:"Sapphire",  r:"rare",      color:0x3a7bff, em:0x0a2266},
+  {id:"candy",    name:"Bubblegum", r:"rare",      color:0xff8fd1, em:0x5a1a44},
+  {id:"diamond",  name:"Diamond",   r:"epic",      color:0x9fe8ff, em:0x2a5a70, cost:120},
+  {id:"neon",     name:"Neon",      r:"epic",      color:0x5ffcff, em:0x00a8c8},
+  {id:"toxic",    name:"Toxic",     r:"epic",      color:0x9dff3a, em:0x2a8000, fx:"pulse"},
+  {id:"ice",      name:"Ice",       r:"epic",      color:0xd8f6ff, em:0x3a7a9a, opacity:0.7},
+  {id:"obsidian", name:"Obsidian",  r:"epic",      color:0x2a2a3a, em:0x2a0a4a},
+  {id:"rainbow",  name:"Rainbow",   r:"legendary", color:0xff4d6d, em:0x440000, fx:"rainbow"},
+  {id:"lava",     name:"Lava",      r:"legendary", color:0xff5a1f, em:0x882200, fx:"lava"},
+  {id:"galaxy",   name:"Galaxy",    r:"legendary", color:0x7a4dff, em:0x220a66, fx:"galaxy"},
+  {id:"sunfire",  name:"Sunfire",   r:"legendary", color:0xffe14d, em:0xb86a00, fx:"sun"},
 ];
+const BOXES = {
+  common:   {name:"BAR BOX",    cost:30,  col:"#3d8bff", odds:{common:70, rare:25, epic:4.5, legendary:0.5}},
+  epic:     {name:"EPIC BOX",   cost:90,  col:"#9b5cff", odds:{common:30, rare:48, epic:18, legendary:4}},
+  legendary:{name:"LEGEND BOX", cost:220, col:"#ffb300", odds:{common:0, rare:35, epic:47, legendary:18}},
+};
+const PITY = 10;                       // an Epic or better is guaranteed within this many boxes
+const FREE_BOX_MS = 6*3600*1000;
+// Real-money products. Prices here are only a fallback: on Google Play the store's localized price is shown.
+const PRODUCTS = [
+  {id:"starter_pack", name:"Starter Pack", desc:"300 gems · 10,000 gold · 1 Legend Box", gems:300, gold:10000, boxes:{legendary:1}, price:"€2.99", once:true, tag:"ONE TIME", kind:"offer", col:"linear-gradient(135deg,#ffae4d,#ff4d6a)"},
+  {id:"vip_pass",     name:"Gold VIP",     desc:"Double gold from every level, forever", vip:true, price:"€7.99", once:true, tag:"BEST DEAL", kind:"offer", col:"linear-gradient(135deg,#ffd24d,#e08a00)"},
+  {id:"box_bundle",   name:"Box Bundle",   desc:"3 Epic Boxes + 1 Legend Box", boxes:{epic:3, legendary:1}, price:"€4.99", kind:"offer", col:"linear-gradient(135deg,#c197ff,#6d35d1)"},
+  {id:"gems_80",   name:"Handful of Gems", gems:80,   price:"€0.99",  kind:"gems", size:1},
+  {id:"gems_500",  name:"Bag of Gems",     gems:500,  price:"€4.99",  kind:"gems", size:2, bonus:"+25% BONUS"},
+  {id:"gems_1200", name:"Chest of Gems",   gems:1200, price:"€9.99",  kind:"gems", size:3, bonus:"+50% BONUS", tag:"POPULAR"},
+  {id:"gems_3000", name:"Vault of Gems",   gems:3000, price:"€19.99", kind:"gems", size:4, bonus:"+90% BONUS", tag:"BEST VALUE"},
+];
+const GOLD_OFFERS = [{gems:40, mult:10}, {gems:100, mult:30}, {gems:250, mult:90}];
 const ICONS = {
   start:'<svg viewBox="0 0 24 24"><ellipse cx="12" cy="17" rx="7" ry="3" fill="#fff"/><ellipse cx="12" cy="12.5" rx="7" ry="3" fill="#fff" opacity=".85"/><ellipse cx="12" cy="8" rx="7" ry="3" fill="#fff"/></svg>',
   income:'<svg viewBox="0 0 24 24"><path d="M12 3l7 8h-4v9H9v-9H5z" fill="#fff"/></svg>',
@@ -746,6 +898,7 @@ const MISSION_POOL = [
   {id:"thieves", text:n=>`Knock out ${n} thieves`,             goals:[4,10,20]},
   {id:"endless", text:n=>`Run ${n} m in one Endless run`,      goals:[300,600,1000]},
   {id:"powers",  text:n=>`Grab ${n} power-ups`,                goals:[3,6,10]},
+  {id:"boxes",   text:n=>`Open ${n} mystery box${n>1?"es":""}`, goals:[1,2,3]},
 ];
 const ACH = [
   {id:"bars",   name:"Gold Hoarder", desc:"Collect gold bars",         stat:()=>save.stats.bars,    tiers:[200,1000,5000]},
@@ -787,12 +940,14 @@ function defStats(){ return {bars:0, gates:0, fevers:0, bosses:0, dodges:0, thie
 function defSave(){
   return {gold:0, gems:0, keys:0, level:1, up:{}, owned:["red"], skin:"red", bars:["gold"], bar:"gold", hats:["none"], hat:"none",
     sound:true, music:true, vibe:true, gfx:true, stars:{}, daily:{streak:0, last:""}, missions:{date:"", list:[], bonus:false},
-    wheelAt:0, mineAt:Date.now(), stats:defStats(), ach:{}, endlessBest:0, chalDone:"", tut:{}};
+    wheelAt:0, mineAt:Date.now(), stats:defStats(), ach:{}, endlessBest:0, chalDone:"", tut:{},
+    boxInv:{common:0, epic:0, legendary:0}, pity:0, freeBoxAt:0, vip:false, bought:[]};
 }
 let save = defSave();
 function normalize(){
   const d = defSave();
-  for(const k of ["up","stars","daily","missions","ach","tut"]) save[k] = Object.assign({}, d[k], save[k]||{});
+  for(const k of ["up","stars","daily","missions","ach","tut","boxInv"]) save[k] = Object.assign({}, d[k], save[k]||{});
+  if(!Array.isArray(save.bought)) save.bought = [];
   save.stats = Object.assign(defStats(), save.stats||{});
   if(!Array.isArray(save.missions.list)) save.missions.list = [];
   for(const k of ["owned","bars","hats"]) if(!Array.isArray(save[k]) || !save[k].length) save[k] = d[k].slice();
@@ -815,7 +970,7 @@ function persist(){ try{ localStorage.setItem(SAVE_KEY, JSON.stringify(save)); }
 const U = id => save.up[id] || 0;
 const upCost = u => Math.round(u.base*Math.pow(u.grow, U(u.id))/10)*10;
 const startValue = () => 100 + U("start")*25;
-const incomeMult = () => 1 + U("income")*0.1;
+const incomeMult = () => (1 + U("income")*0.1) * (save.vip ? 2 : 1);
 const magnetR = () => 0.95 + U("magnet")*0.26;
 const armorK = () => 1 - U("armor")*0.05;
 const feverDur = () => 4 + U("fever")*0.4;
@@ -1334,11 +1489,25 @@ function applyLook(skin, bar, hat){
   skinMat.color.setHex(s.color);
   const b = BAR_SKINS.find(k=>k.id===bar) || BAR_SKINS[0];
   G.barMat.color.setHex(b.color); G.barMat.emissive.setHex(b.em);
-  G.barMat.userData.em = b.em;
+  G.barMat.userData.em = b.em; G.barMat.userData.fx = b.fx || null;
+  const tr = !!b.opacity;
+  if(G.barMat.transparent !== tr){ G.barMat.transparent = tr; G.barMat.needsUpdate = true; }
+  G.barMat.opacity = b.opacity || 1;
   if(hat !== appliedHat){ setHat(hat); appliedHat = hat; }
 }
 let appliedHat = null;
 const applySkins = () => applyLook(save.skin, save.bar, save.hat);
+// animated gold-bar skins (rainbow, lava, galaxy, ...)
+function barFx(){
+  const fx = G.barMat.userData.fx;
+  if(!fx || feverT > 0) return;
+  const k = 0.5 + 0.5*Math.sin(time*4), M = G.barMat;
+  if(fx==="rainbow"){ const h = (time*0.18) % 1; M.color.setHSL(h, 0.9, 0.58); M.emissive.setHSL(h, 0.9, 0.16); }
+  else if(fx==="lava") M.emissive.setRGB(0.45 + 0.4*k, 0.1 + 0.12*k, 0);
+  else if(fx==="galaxy"){ const h = 0.68 + 0.1*Math.sin(time*0.8); M.color.setHSL(h, 0.75, 0.5); M.emissive.setHSL(h + 0.05, 0.9, 0.12 + 0.1*k); }
+  else if(fx==="sun") M.emissive.setRGB(0.55 + 0.3*k, 0.35 + 0.2*k, 0.02);
+  else if(fx==="pulse") M.emissive.setRGB(0.1*k, 0.35 + 0.35*k, 0);
+}
 
 /* =============================== LEVEL OBJECTS =============================== */
 const ROAD_W = 6, HALF = 3, MAXX = HALF - 0.5;
@@ -2009,7 +2178,7 @@ const achClaimable = () => ACH.some(a=>achTier(a) > (save.ach[a.id]||0));
 /* =============================== FLOW =============================== */
 const menuEl = $("menu"), hudEl = $("hud");
 const show = (el, on) => { el.hidden = !on; };
-const MODAL_IDS = ["settingsModal","pauseModal","winModal","failModal","endModal","dailyModal","wheelModal","chestModal","chalModal"];
+const MODAL_IDS = ["boxModal","payModal","settingsModal","pauseModal","winModal","failModal","endModal","dailyModal","wheelModal","chestModal","chalModal"];
 const anyModalOpen = () => MODAL_IDS.some(id=>!$(id).hidden);
 
 function toMenu(){
@@ -2241,6 +2410,7 @@ function update(rawDt){
   if(cullT > 0.5){ cullT = 0; if(state==="playing") cullBehind(); }
 
   animatePlayer(dt);
+  barFx();
   updateStack(dt);
   updateDebris(dt);
   updateCamera(dt);
@@ -2789,12 +2959,13 @@ let curTab = "Home";
 function showTab(name){
   if(curTab === "Skins" && name !== "Skins" && previewSel){ previewSel = null; applySkins(); }
   curTab = name;
-  ["Home","Upgrades","Skins","Missions","Trophies"].forEach(t=>show($("tab"+t), t===name));
+  ["Home","Shop","Upgrades","Skins","Missions","Trophies"].forEach(t=>show($("tab"+t), t===name));
   document.querySelectorAll(".tabbar button").forEach(b=>b.classList.toggle("on", b.dataset.tab===name));
   if(name==="Upgrades") renderUpgrades();
   if(name==="Skins") renderSkins();
   if(name==="Missions") renderMissions();
   if(name==="Trophies") renderTrophies();
+  if(name==="Shop") renderShop();
 }
 document.querySelectorAll(".tabbar button").forEach(b=>b.addEventListener("click", ()=>{ SFX.click(); showTab(b.dataset.tab); }));
 
@@ -2895,7 +3066,10 @@ function refreshSide(){
   show($("mineDot"), ml > 0 && mp >= minePerHour(ml)*0.5);
   $("chestSub").textContent = save.keys + "/3 KEYS";
   show($("chestDot"), save.keys >= 3);
-  for(const id of ["dailyBtn","spinBtn","mineBtn","chestBtn"]) $(id).classList.toggle("ready", !$(id).querySelector(".dot").hidden);
+  const fb = freeBoxReady(), inv = save.boxInv.common + save.boxInv.epic + save.boxInv.legendary;
+  $("boxSub").textContent = inv > 0 ? inv + " READY" : fb ? "FREE" : hms(save.freeBoxAt - Date.now());
+  show($("boxDot"), fb || inv > 0); show($("shopDot"), fb || inv > 0);
+  for(const id of ["dailyBtn","spinBtn","mineBtn","chestBtn","boxBtn"]) $(id).classList.toggle("ready", !$(id).querySelector(".dot").hidden);
 }
 setInterval(()=>{ if(state==="menu" && !menuEl.hidden) refreshSide(); }, 1000);
 
@@ -2943,10 +3117,24 @@ function figSvg(hex){
     <ellipse cx="10.5" cy="19" rx="2" ry="1.2" fill="#ff7aa2" opacity=".7"/><ellipse cx="27.5" cy="19" rx="2" ry="1.2" fill="#ff7aa2" opacity=".7"/>
     <path d="M15.8 20.2q3.2 3 6.4 0" fill="none" stroke="#1d2a4d" stroke-width="1.6" stroke-linecap="round"/></svg>`;
 }
-function barSvg(hex){
-  const c = hex6(hex);
-  return `<svg class="fig" viewBox="0 0 38 46"><g stroke="#1d2a4d" stroke-width="1.5" stroke-linejoin="round">
-    <path d="M6 38h26l-4-8H10z" fill="${c}"/><path d="M9 28h20l-4-8H13z" fill="${c}"/><path d="M12 18h14l-3-7h-8z" fill="${c}"/></g>
+let svgUid = 0;
+const BAR_GRADS = {
+  rainbow:["#ff4d6d","#ffc233","#4cd964","#3d8bff","#9b5cff"],
+  lava:["#ffe066","#ff7a1a","#c2200a"],
+  galaxy:["#2a1466","#7a4dff","#3db8ff"],
+  sun:["#fff6b0","#ffc233","#ff8a1f"],
+  pulse:["#e6ff9e","#9dff3a","#3aa000"],
+};
+function barSvg(s){
+  let defs = "", fill = hex6(s.color);
+  if(s.fx && BAR_GRADS[s.fx]){
+    const id = "bg" + (++svgUid), st = BAR_GRADS[s.fx];
+    defs = `<defs><linearGradient id="${id}" x1="0" y1="0" x2="1" y2="1">${st.map((c,i)=>`<stop offset="${i/(st.length-1)}" stop-color="${c}"/>`).join("")}</linearGradient></defs>`;
+    fill = `url(#${id})`;
+  }
+  const glow = s.r==="legendary" || s.r==="epic" ? `<circle cx="19" cy="26" r="17" fill="${RARITY[s.r].col}" opacity=".18"/>` : "";
+  return `<svg class="fig" viewBox="0 0 38 46">${defs}${glow}<g stroke="#1d2a4d" stroke-width="1.5" stroke-linejoin="round" fill="${fill}"${s.opacity ? ' fill-opacity=".72"' : ""}>
+    <path d="M6 38h26l-4-8H10z"/><path d="M9 28h20l-4-8H13z"/><path d="M12 18h14l-3-7h-8z"/></g>
     <path d="M13 36l2-4M16 26l2-4" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".7"/></svg>`;
 }
 function hatSvg(id){
@@ -2966,7 +3154,7 @@ function hatSvg(id){
 }
 function wardrobeItems(){
   if(skinSeg==="runners") return {list:SKINS, owned:save.owned, cur:save.skin, key:"skin", svg:s=>figSvg(s.color), cost:s=>({cur:"gold", n:s.cost})};
-  if(skinSeg==="bars") return {list:BAR_SKINS, owned:save.bars, cur:save.bar, key:"bar", svg:s=>barSvg(s.color), cost:s=>({cur:"gems", n:s.cost})};
+  if(skinSeg==="bars") return {list:BAR_SKINS, owned:save.bars, cur:save.bar, key:"bar", svg:s=>barSvg(s), cost:s=>({cur:"gems", n:s.cost})};
   return {list:HATS, owned:save.hats, cur:save.hat, key:"hat", svg:s=>hatSvg(s.id), cost:s=>({cur:s.cur, n:s.cost})};
 }
 function previewLook(id){
@@ -2978,16 +3166,18 @@ function renderSkins(){
   document.querySelectorAll(".seg button").forEach(b=>b.classList.toggle("on", b.dataset.seg===skinSeg));
   const W = wardrobeItems();
   const grid = $("skinGrid"); grid.innerHTML = "";
-  $("skinNote").textContent = skinSeg==="bars" ? "Bought with gems" : "Tap to try on";
+  $("skinNote").textContent = skinSeg==="bars" ? "Gems or Mystery Boxes" : "Tap to try on";
   W.list.forEach(s=>{
     const has = W.owned.includes(s.id), on = W.cur === s.id, sel = previewSel === s.id;
-    const c = W.cost(s), wallet = c.cur === "gems" ? "gems" : "gold", afford = save[wallet] >= c.n;
+    const c = W.cost(s), wallet = c.cur === "gems" ? "gems" : "gold", boxOnly = c.n == null, afford = !boxOnly && save[wallet] >= c.n;
     const b = document.createElement("button");
     b.className = "skin" + (on ? " on" : "") + (sel ? " sel" : "") + (!has ? " locked" : "");
     const price = `<span class="${wallet==="gems" ? "gem" : "coin"}"></span>${fmt(c.n)}`;
-    b.innerHTML = W.svg(s) + `<div class="nm">${s.name}</div>` +
+    const rar = s.r ? `<span class="rar" style="--rc:${RARITY[s.r].col}">${RARITY[s.r].name}</span>` : "";
+    b.innerHTML = W.svg(s) + `<div class="nm">${s.name}</div>` + rar +
       (on ? `<div class="pr" style="color:#2a9d44">ON</div>` :
        has ? `<div class="pr">EQUIP</div>` :
+       boxOnly ? `<div class="pr" style="color:#8a47f0">${sel ? "GET IN BOX" : "BOX"}</div>` :
        sel ? `<div class="pr${afford ? "" : " bad"}">${afford ? "BUY " : ""}${price}</div>` :
        `<div class="pr">${price}</div>`);
     b.addEventListener("click", ()=>{
@@ -2995,6 +3185,8 @@ function renderSkins(){
         save[W.key] = s.id; previewSel = null; SFX.click(); persist(); applySkins();
       } else if(previewSel !== s.id){
         previewSel = s.id; previewLook(s.id); SFX.click();
+      } else if(boxOnly){
+        SFX.click(); toast("WIN IT FROM MYSTERY BOXES!"); showTab("Shop"); return;
       } else if(afford){
         save[wallet] -= c.n; W.owned.push(s.id); save[W.key] = s.id; previewSel = null;
         persist(); applySkins(); SFX.buy(); buzz(15); toast("UNLOCKED " + s.name.toUpperCase() + "!");
@@ -3114,8 +3306,9 @@ function openDaily(){
   show($("dailyModal"), true);
 }
 $("dailyBtn").addEventListener("click", ()=>{ SFX.click(); openDaily(); });
-$("goldPlus").addEventListener("click", e=>{ e.stopPropagation(); SFX.click(); showTab("Upgrades"); toast("EARN GOLD BY BEATING LEVELS!"); });
-$("gemPlus").addEventListener("click", e=>{ e.stopPropagation(); SFX.click(); showTab("Home"); show($("wheelModal"), true); buildWheel(); syncSpinBtn(); });
+$("goldPlus").addEventListener("click", e=>{ e.stopPropagation(); SFX.click(); showShop("goldSec"); });
+$("gemPlus").addEventListener("click", e=>{ e.stopPropagation(); SFX.click(); showShop("gemSec"); });
+$("boxBtn").addEventListener("click", ()=>{ SFX.click(); showShop("boxSec"); });
 $("dailyClose").addEventListener("click", ()=>{ SFX.click(); show($("dailyModal"), false); });
 $("dailyClaim").addEventListener("click", ()=>{
   if(!dailyAvailable()) return;
@@ -3280,6 +3473,252 @@ $("chestBtn").addEventListener("click", ()=>{
   openChestRoom();
 });
 
+
+/* =============================== SHOP · MYSTERY BOXES · PURCHASES =============================== */
+const freeBoxReady = () => Date.now() >= save.freeBoxAt;
+function gemPile(size){
+  const gem = (x, y, sc) => `<g transform="translate(${x} ${y}) scale(${sc})"><path d="M0-12 12-3 0 14-12-3z" fill="#5fd6ff" stroke="#1d2a4d" stroke-width="2.4" stroke-linejoin="round"/><path d="M0-12 12-3H-12z" fill="#c9f4ff" stroke="#1d2a4d" stroke-width="2.4" stroke-linejoin="round"/></g>`;
+  const spots = [[35,26,1.1],[20,32,.9],[50,32,.9],[27,18,.75],[44,17,.8],[12,38,.7],[58,38,.7],[35,38,.85]];
+  return `<svg viewBox="0 0 70 50">${spots.slice(0, [1,3,5,8][size-1]).reverse().map(p=>gem(...p)).join("")}</svg>`;
+}
+function boxSvg(col){
+  return `<svg viewBox="0 0 64 64"><g stroke="#1d2a4d" stroke-width="3.5" stroke-linejoin="round">
+    <path d="M10 28h44v24a4 4 0 0 1-4 4H14a4 4 0 0 1-4-4z" fill="${col}"/>
+    <path d="M6 19h52v10H6z" fill="${col}"/><path d="M6 19h52v4H6z" fill="#fff" opacity=".35" stroke="none"/>
+    <path d="M32 19c-5-9-15-9-13-2 1 3 7 2 13 2zm0 0c5-9 15-9 13-2-1 3-7 2-13 2z" fill="#ffe066"/></g>
+    <text x="32" y="50" text-anchor="middle" font-family="Lilita One,Arial Black,sans-serif" font-size="22" fill="#fff" stroke="#1d2a4d" stroke-width="1.6">?</text></svg>`;
+}
+const CROWN_ART = '<svg viewBox="0 0 64 64"><path d="M8 50 5 18l15 12 12-18 12 18 15-12-3 32z" fill="#ffe066" stroke="#1d2a4d" stroke-width="3.5" stroke-linejoin="round"/><circle cx="32" cy="38" r="5" fill="#ff4d6a" stroke="#1d2a4d" stroke-width="2.5"/></svg>';
+function offerArt(p){ return p.vip ? CROWN_ART : p.kind==="gems" ? gemPile(p.size) : p.boxes && p.boxes.epic ? boxSvg(BOXES.epic.col) : boxSvg(BOXES.legendary.col); }
+function boxLabel(type){
+  const B = BOXES[type];
+  if(save.boxInv[type] > 0) return {txt:"OPEN", sub:"x" + save.boxInv[type] + " OWNED", ok:true};
+  if(type==="common" && freeBoxReady()) return {txt:"FREE", sub:"FREE BOX", ok:true};
+  return {txt:`<span class="gem"></span>${B.cost}`, sub:type==="common" ? "FREE IN " + hms(save.freeBoxAt - Date.now()) : "OPEN", ok:save.gems >= B.cost};
+}
+function showShop(sec){
+  showTab("Shop");
+  if(sec){ const el = $(sec); if(el) el.scrollIntoView({block:"start", behavior:"smooth"}); }
+}
+function renderShop(){
+  const L = $("shopList"); L.innerHTML = "";
+  const sec = (id, html) => { const d = document.createElement("div"); d.className = "shop-sec"; d.id = id; d.innerHTML = html; L.appendChild(d); };
+  // mystery boxes
+  sec("boxSec", "MYSTERY BOXES");
+  const row = document.createElement("div"); row.className = "box-row";
+  for(const type of ["common","epic","legendary"]){
+    const B = BOXES[type], lab = boxLabel(type);
+    const c = document.createElement("div"); c.className = "box-card"; c.style.setProperty("--bc", B.col);
+    c.innerHTML = (save.boxInv[type] > 0 ? `<span class="inv">x${save.boxInv[type]}</span>` : "") +
+      `<div class="box-art">${boxSvg(B.col)}</div><div class="bname">${B.name}</div>
+       <button class="ubuy ${lab.ok ? "can" : "no"}"><span class="nx">${lab.sub}</span><span class="c">${lab.txt}</span></button>`;
+    c.querySelector("button").addEventListener("click", ()=>openBox(type));
+    row.appendChild(c);
+  }
+  L.appendChild(row);
+  const t = document.createElement("table"); t.className = "odds";
+  t.innerHTML = `<tr><th>DROP RATES</th>${["common","epic","legendary"].map(k=>`<th>${BOXES[k].name}</th>`).join("")}</tr>` +
+    ["common","rare","epic","legendary"].map(r=>`<tr><td style="color:${RARITY[r].col}">${RARITY[r].name}</td>${["common","epic","legendary"].map(k=>`<td>${BOXES[k].odds[r]}%</td>`).join("")}</tr>`).join("");
+  L.appendChild(t);
+  const pity = document.createElement("div"); pity.className = "pity";
+  pity.textContent = "Epic or better guaranteed within " + (PITY - save.pity) + " box" + (PITY - save.pity === 1 ? "" : "es") + " · duplicates turn into gems";
+  L.appendChild(pity);
+  // offers
+  const offers = PRODUCTS.filter(p=>p.kind==="offer");
+  sec("offerSec", "SPECIAL OFFERS");
+  offers.forEach(p=>{
+    const owned = p.once && save.bought.includes(p.id);
+    const o = document.createElement("div"); o.className = "offer" + (owned ? " owned" : ""); o.style.setProperty("--oc", p.col);
+    o.innerHTML = (p.tag && !owned ? `<i class="tag">${p.tag}</i>` : "") +
+      `<div class="o-art">${offerArt(p)}</div><div class="o-info"><b>${p.name}</b><span>${p.desc}</span></div>
+       <button class="price-btn"${owned ? " disabled" : ""}>${owned ? "OWNED" : IAP.price(p)}</button>`;
+    if(!owned) o.querySelector("button").addEventListener("click", ()=>{ SFX.click(); IAP.buy(p); });
+    L.appendChild(o);
+  });
+  // gems
+  sec("gemSec", '<span class="gem"></span> GEMS');
+  const gg = document.createElement("div"); gg.className = "gem-grid";
+  PRODUCTS.filter(p=>p.kind==="gems").forEach(p=>{
+    const c = document.createElement("div"); c.className = "gem-card";
+    c.innerHTML = (p.tag ? `<i class="tag">${p.tag}</i>` : "") + gemPile(p.size) +
+      `<div class="amt">${fmt(p.gems)}</div><div class="bonus">${p.bonus || ""}</div><button class="price-btn">${IAP.price(p)}</button>`;
+    c.querySelector("button").addEventListener("click", ()=>{ SFX.click(); IAP.buy(p); });
+    gg.appendChild(c);
+  });
+  L.appendChild(gg);
+  // gold for gems
+  sec("goldSec", '<span class="coin"></span> GOLD');
+  const gd = document.createElement("div"); gd.className = "gem-grid"; gd.style.gridTemplateColumns = "repeat(3,1fr)";
+  GOLD_OFFERS.forEach((g, i)=>{
+    const amount = Math.round(goldBase()*g.mult/10)*10, ok = save.gems >= g.gems;
+    const c = document.createElement("div"); c.className = "gem-card gold-card";
+    c.innerHTML = `<svg viewBox="0 0 70 50">${[[35,30],[22,36],[48,36],[30,22],[42,22],[35,14]].slice(0, 2 + i*2).map(([x,y])=>`<ellipse cx="${x}" cy="${y}" rx="11" ry="7" fill="#ffd84d" stroke="#1d2a4d" stroke-width="2.4"/>`).reverse().join("")}</svg>
+      <div class="amt">${fmt(amount)}</div><button class="ubuy ${ok ? "" : "no"}"><span class="c"><span class="gem"></span>${g.gems}</span></button>`;
+    c.querySelector("button").addEventListener("click", ()=>{
+      if(save.gems < g.gems){ SFX.click(); toast("NOT ENOUGH GEMS", true); showShop("gemSec"); return; }
+      save.gems -= g.gems; grant({g:amount}, true); SFX.buy(); buzz(15);
+      flyIcons("coin", 10, centerOf(c)); renderShop(); refreshMenu();
+    });
+    gd.appendChild(c);
+  });
+  L.appendChild(gd);
+  const note = document.createElement("div"); note.className = "shop-note";
+  note.innerHTML = IAP.native ? "Payments are handled securely by Google Play." : "Preview build: purchases here are test purchases and no real money is charged.<br>Gems are also earned from missions, trophies, bosses and the lucky wheel.";
+  L.appendChild(note);
+}
+
+/* ---------- mystery boxes ---------- */
+function rollBox(type){
+  const odds = BOXES[type].odds;
+  let r = Math.random()*100, rar = "rare";
+  for(const k of ["common","rare","epic","legendary"]){ r -= odds[k]; if(r < 0){ rar = k; break; } }
+  if(save.pity >= PITY - 1 && (rar === "common" || rar === "rare")) rar = "epic";
+  save.pity = rar === "epic" || rar === "legendary" ? 0 : save.pity + 1;
+  const pool = BAR_SKINS.filter(s=>s.r === rar && s.id !== "gold");
+  const skin = pool[(Math.random()*pool.length)|0];
+  const dup = save.bars.includes(skin.id);
+  let refund = null;
+  if(dup){ refund = rar === "common" ? {g:goldBase()} : {gems:{rare:5, epic:15, legendary:40}[rar]}; grant(refund, true); }
+  else save.bars.push(skin.id);
+  persist();
+  return {skin, rar, dup, refund};
+}
+function randomFiller(type){
+  const odds = BOXES[type].odds;
+  let r = Math.random()*100, rar = "common";
+  for(const k of ["common","rare","epic","legendary"]){ r -= odds[k]; if(r < 0){ rar = k; break; } }
+  if(Math.random() < 0.12) rar = "legendary";           // show some shiny ones rolling by
+  const pool = BAR_SKINS.filter(s=>s.r === rar && s.id !== "gold");
+  return pool[(Math.random()*pool.length)|0] || BAR_SKINS[1];
+}
+let boxRes = null, boxType = null, reelBusy = false;
+function openBox(type){
+  if(reelBusy) return;
+  const B = BOXES[type];
+  if(save.boxInv[type] > 0) save.boxInv[type]--;
+  else if(type === "common" && freeBoxReady()) save.freeBoxAt = Date.now() + FREE_BOX_MS;
+  else if(save.gems >= B.cost) save.gems -= B.cost;
+  else { SFX.click(); toast("NOT ENOUGH GEMS", true); showShop("gemSec"); return; }
+  ac();
+  persist(); refreshTop();
+  boxType = type; boxRes = rollBox(type);
+  mprog("boxes");
+  spinReel();
+}
+function spinReel(){
+  const B = BOXES[boxType], res = boxRes;
+  reelBusy = true;
+  const t = $("boxTitle"); t.textContent = B.name; t.style.background = `linear-gradient(${B.col},${B.col})`;
+  show($("reelWrap"), true); show($("boxResult"), false); show($("boxBtns"), false); show($("boxClose"), false);
+  $("boxHint").textContent = "Spinning...";
+  const reel = $("reel"); reel.innerHTML = ""; reel.style.transition = "none"; reel.style.transform = "translateX(0px)";
+  const N = 44, WIN = 38, CW = 86;
+  for(let i=0;i<N;i++){
+    const sk = i === WIN ? res.skin : randomFiller(boxType);
+    const d = document.createElement("div"); d.className = "rc"; d.style.setProperty("--rc", RARITY[sk.r].col);
+    d.innerHTML = barSvg(sk) + `<span>${sk.name}</span><i class="rb"></i>`;
+    reel.appendChild(d);
+  }
+  show($("boxModal"), true);
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    const w = $("reelWrap").clientWidth;
+    const target = WIN*CW + 40 - w/2 + (Math.random()-0.5)*50;
+    reel.style.transition = "transform 4.8s cubic-bezier(.06,.62,.12,1)";
+    reel.style.transform = `translateX(${-target}px)`;
+    let last = -1;
+    (function tick(){
+      if(!reelBusy) return;
+      const m = new DOMMatrixReadOnly(getComputedStyle(reel).transform);
+      const idx = Math.floor((-m.m41 + w/2)/CW);
+      if(idx !== last){ last = idx; SFX.tick(); }
+      requestAnimationFrame(tick);
+    })();
+  }));
+  setTimeout(revealBox, 5000);
+}
+function revealBox(){
+  reelBusy = false;
+  const res = boxRes, R = RARITY[res.rar];
+  show($("reelWrap"), false); show($("boxResult"), true); show($("boxBtns"), true); show($("boxClose"), true);
+  $("boxResult").style.setProperty("--rc", R.col);
+  $("boxFig").innerHTML = barSvg(res.skin);
+  $("boxName").textContent = res.skin.name;
+  const rr = $("boxRar"); rr.textContent = R.name; rr.style.setProperty("--rc", R.col);
+  show($("boxNew"), !res.dup);
+  $("boxDup").innerHTML = res.dup ? "Already owned → " + (res.refund.g ? `<span class="coin"></span>+${fmt(res.refund.g)}` : `<span class="gem"></span>+${res.refund.gems}`) : "";
+  $("boxHint").textContent = res.rar === "legendary" ? "LEGENDARY! Incredible luck!" : res.rar === "epic" ? "Epic pull!" : "Added to your gold bar skins.";
+  const lab = boxLabel(boxType);
+  $("boxAgain").innerHTML = "AGAIN " + (lab.txt === "OPEN" || lab.txt === "FREE" ? "" : lab.txt);
+  $("boxAgain").disabled = !lab.ok;
+  $("boxEquip").textContent = save.bar === res.skin.id ? "EQUIPPED" : "EQUIP";
+  if(res.rar === "legendary"){ SFX.great(); SFX.fever(); burst(); buzz([40,40,80]); }
+  else if(res.rar === "epic"){ SFX.great(); burst(); buzz([30,30]); }
+  else { SFX.buy(); buzz(15); }
+  refreshTop();
+}
+$("boxEquip").addEventListener("click", ()=>{
+  save.bar = boxRes.skin.id; persist(); applySkins(); SFX.click();
+  $("boxEquip").textContent = "EQUIPPED"; toast(boxRes.skin.name.toUpperCase() + " BARS EQUIPPED!");
+});
+$("boxAgain").addEventListener("click", ()=>{ SFX.click(); openBox(boxType); });
+$("boxClose").addEventListener("click", ()=>{ if(reelBusy) return; SFX.click(); show($("boxModal"), false); refreshMenu(); if(curTab==="Shop") renderShop(); });
+
+/* ---------- real-money purchases ----------
+   On Android (Capacitor + cordova-plugin-purchase) this talks to Google Play Billing.
+   In a browser there is no store, so a clearly-labelled test checkout grants the item for free. */
+function grantProduct(id){
+  const p = PRODUCTS.find(x=>x.id === id);
+  if(!p) return;
+  if(p.once && save.bought.includes(p.id)) return;
+  if(p.once) save.bought.push(p.id);
+  if(p.gems) save.gems += p.gems;
+  if(p.gold){ save.gold += p.gold; stat("gold", p.gold); }
+  if(p.boxes) for(const k in p.boxes) save.boxInv[k] += p.boxes[k];
+  if(p.vip) save.vip = true;
+  persist();
+  SFX.great(); burst(); buzz([30,40,30]);
+  toast("THANK YOU! " + p.name.toUpperCase() + " ADDED");
+  if(p.gems) flyIcons("gem", 10);
+  if(p.gold) flyIcons("coin", 10);
+  refreshMenu(); if(curTab === "Shop") renderShop();
+}
+let payPending = null;
+function openPayTest(p){
+  payPending = p;
+  $("payItem").innerHTML = `<div class="o-art">${offerArt(p)}</div><div><b>${p.name}</b><span>${p.desc || fmt(p.gems) + " gems"}</span></div><div class="pp">${p.price}</div>`;
+  show($("payModal"), true);
+}
+$("payOk").addEventListener("click", ()=>{ show($("payModal"), false); if(payPending) grantProduct(payPending.id); payPending = null; });
+$("payCancel").addEventListener("click", ()=>{ SFX.click(); show($("payModal"), false); payPending = null; });
+const IAP = {
+  native:false, store:null,
+  init(){
+    const CP = window.CdvPurchase;
+    if(!CP || !CP.store) return;
+    const {store, ProductType, Platform} = CP;
+    this.native = true; this.store = store;
+    PRODUCTS.forEach(p=>store.register({id:p.id, type:p.once ? ProductType.NON_CONSUMABLE : ProductType.CONSUMABLE, platform:Platform.GOOGLE_PLAY}));
+    store.when()
+      .approved(tx=>{ tx.products.forEach(pr=>grantProduct(pr.id)); tx.finish(); })
+      .productUpdated(()=>{ if(curTab === "Shop" && state === "menu") renderShop(); });
+    store.initialize([Platform.GOOGLE_PLAY]);
+  },
+  price(p){
+    if(this.native){ const pr = this.store.get(p.id); if(pr && pr.pricing && pr.pricing.price) return pr.pricing.price; }
+    return p.price;
+  },
+  buy(p){
+    if(!this.native){ openPayTest(p); return; }
+    const pr = this.store.get(p.id), offer = pr && pr.getOffer();
+    if(offer) offer.order(); else toast("STORE NOT READY, TRY AGAIN", true);
+  },
+  restore(){
+    if(this.native){ this.store.restorePurchases(); toast("RESTORING PURCHASES..."); }
+    else toast("NOTHING TO RESTORE IN THE PREVIEW");
+  },
+};
+$("restoreBtn").addEventListener("click", ()=>{ SFX.click(); IAP.restore(); });
+
 /* =============================== CONFETTI =============================== */
 const fx = $("fx"), fctx = fx.getContext("2d");
 let confetti = [], fxDpr = 1, fxDirty = false;
@@ -3423,6 +3862,7 @@ function boot(data){
   renderer.shadowMap.enabled = save.gfx; sun.castShadow = save.gfx;
   applySkins();
   resize();
+  IAP.init();
   toMenu();
   requestAnimationFrame(loop);
   if(dailyAvailable()) setTimeout(()=>{ if(state==="menu" && !anyModalOpen()) openDaily(); }, 600);

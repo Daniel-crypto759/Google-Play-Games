@@ -85,6 +85,16 @@ wiggling notification icons.
 - **Missions** — 3 daily missions plus an all-clear bonus.
 - **Trophies** — lifetime stats and 11 three-tier achievements that pay
   gold and gems.
+- **Shop** — mystery boxes (Bar Box, Epic Box, Legend Box) that spin a
+  reel and land on a gold-bar skin, special offers (Starter Pack, Gold VIP
+  for double gold, Box Bundle), gem packs, and gold-for-gems trades. Drop
+  rates are always shown next to the boxes, an Epic-or-better is
+  guaranteed within 10 boxes, duplicates turn into gems, and the Bar Box is
+  free every 6 hours.
+- **19 gold-bar skins** in four rarities (Common, Rare, Epic, Legendary),
+  including animated ones: Rainbow, Lava, Galaxy, Sunfire, Toxic, plus
+  see-through Ice and glowing Neon. Some can be bought with gems; the rest
+  only come from mystery boxes.
 - **Daily reward** (7-day streak), **Lucky Wheel** (free every 3 hours),
   **Treasure Room** (3 keys open chests; the jackpot is a free skin or hat).
 - **Settings** — sound, music, vibration, high/low graphics, reset.
@@ -145,6 +155,33 @@ will be rejected). Upload the resulting `.aab` in the
 
 (An alternative to Capacitor is a Trusted Web Activity if you'd rather host
 the page online and wrap the live URL instead of bundling the file.)
+
+## In-app purchases (Bar Rush)
+
+Real-money items (`PRODUCTS` in `gold-rush.html`) use Google Play Billing
+through [cordova-plugin-purchase](https://github.com/j3k0/cordova-plugin-purchase)
+(works with Capacitor). In a normal browser there is no store, so the buy
+buttons open a clearly labelled **test checkout** that grants the item for
+free and never asks for payment details.
+
+To go live on Google Play:
+
+1. `npm install cordova-plugin-purchase && npx cap sync` in the Capacitor
+   project.
+2. In the Play Console, create in-app products with exactly these IDs:
+   `gems_80`, `gems_500`, `gems_1200`, `gems_3000`, `box_bundle`
+   (consumable) and `starter_pack`, `vip_pass` (non-consumable). Set prices
+   there — the game shows the store's localized price automatically.
+3. Test with a license-tester account before release.
+4. For production, verify purchases on a server (the plugin supports a
+   validator URL) instead of trusting the device, and move saves off
+   `localStorage` so purchases survive a reinstall ("Restore purchases" in
+   Settings covers the non-consumables).
+
+Mystery boxes are randomized items that can be bought (indirectly, via
+gems) with real money. Google Play requires the odds to be shown before
+purchase, which the shop does. Some countries (for example Belgium) restrict
+paid loot boxes, so check the rules for each market you publish in.
 
 ## Notes / next steps
 
