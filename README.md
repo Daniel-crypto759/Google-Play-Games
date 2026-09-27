@@ -104,7 +104,14 @@ where your gold came from.
   free every 6 hours.
 - **19 gold-bar skins** in four rarities (Common, Rare, Epic, Legendary),
   including animated ones: Rainbow, Lava, Galaxy, Sunfire, Toxic, plus
-  see-through Ice and glowing Neon. Some can be bought with gems; the rest
+  see-through Ice and glowing Neon. Every bar skin also has its own
+  **aura** around your tower: sparkles, rising embers and flames, falling
+  snowflakes or sprinkles, bubbles, hearts, orbiting stars and shadow mist.
+  Rarer skins add a colored glow and a spinning ground ring, Rainbow cycles
+  through the colors, and Sunfire shines rotating sun rays. Particles trail
+  behind you while you run. The wardrobe and mystery-box cards show each
+  aura's name with a small animated preview, and low graphics halves the
+  particle count. Some can be bought with gems; the rest
   only come from mystery boxes.
 - **Economy** — gold is deliberately scarce: 30% bank payout, Income
   +5% per level, steeper stair costs, and pricier upgrades and cosmetics.

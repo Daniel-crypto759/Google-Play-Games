@@ -240,6 +240,8 @@
   .skin.sel{background:#fff7dc;box-shadow:0 0 0 3px #ffc233,0 3px 0 3px #1d2a4d;animation:nudge 1.4s ease-in-out infinite}
   .skin .fig{width:34px;height:40px}
   .skin .nm{font-weight:900;font-size:11px;line-height:1.1;text-align:center}
+  .skin .aur{font-size:9px;font-weight:900;color:#8a47f0;line-height:1;text-align:center;white-space:nowrap}
+  .skin .fig,.box-win .fig,.rc .fig{overflow:visible}
   .skin .pr{font-family:'Lilita One','Arial Black',sans-serif;font-size:13px;display:flex;gap:3px;align-items:center}
   .skin .pr .coin,.skin .pr .gem{width:14px;height:14px}
   .skin .pr.bad{color:#d6344a}
@@ -861,6 +863,30 @@ const BAR_SKINS = [
   {id:"galaxy",   name:"Galaxy",    r:"legendary", color:0x7a4dff, em:0x220a66, fx:"galaxy"},
   {id:"sunfire",  name:"Sunfire",   r:"legendary", color:0xffe14d, em:0xb86a00, fx:"sun"},
 ];
+// Aura around the bar tower for each gold-bar skin.
+// tex: particle shape · move: rise | fall | orbit | twinkle · n: particles · cols: particle colors
+// glow: halo color · ring: spinning ground ring · rays: rotating sun rays · spin: second orbit layer
+const AURAS = {
+  gold:     {name:"Glint",       tex:"star",  move:"twinkle", n:5,  size:0.26, cols:["#ffe066"]},
+  silver:   {name:"Shine",       tex:"star",  move:"twinkle", n:6,  size:0.26, cols:["#b8d4ff","#e6f0ff"]},
+  rose:     {name:"Petals",      tex:"heart", move:"rise",    n:7,  size:0.24, cols:["#ffb3c7","#ff8aa8"]},
+  bronze:   {name:"Dust",        tex:"soft",  move:"rise",    n:8,  size:0.28, cols:["#e8a766","#c9803e"]},
+  choco:    {name:"Sprinkles",   tex:"soft",  move:"fall",    n:10, size:0.16, cols:["#ff5a8a","#5ad1ff","#ffe066","#8aff7a"]},
+  emerald:  {name:"Leaf Swirl",  tex:"star",  move:"orbit",   n:9,  size:0.3,  cols:["#3ddc84","#b6ff8a"], glow:"#3ddc84"},
+  ruby:     {name:"Embers",      tex:"flame", move:"rise",    n:12, size:0.3,  cols:["#ff4d6d","#ff9a5a"], glow:"#ff4d6d"},
+  mint:     {name:"Bubbles",     tex:"bubble",move:"rise",    n:10, size:0.32, cols:["#8fffd2","#c9fff0"], glow:"#8fffd2"},
+  sapphire: {name:"Frost",       tex:"flake", move:"fall",    n:12, size:0.3,  cols:["#8fc3ff","#3a7bff"], glow:"#3a7bff"},
+  candy:    {name:"Love",        tex:"heart", move:"rise",    n:12, size:0.3,  cols:["#ff8fd1","#c58bff","#ff5aa0"], glow:"#ff8fd1"},
+  diamond:  {name:"Brilliance",  tex:"star",  move:"twinkle", n:14, size:0.36, cols:["#6fd8ff","#c6f2ff"], glow:"#6fd8ff", ring:"#9fe8ff"},
+  neon:     {name:"Voltage",     tex:"soft",  move:"orbit",   n:14, size:0.24, cols:["#5ffcff","#ff5ff2"], glow:"#5ffcff", ring:"#ff5ff2", spin:true},
+  toxic:    {name:"Toxic Fumes", tex:"bubble",move:"rise",    n:14, size:0.34, cols:["#9dff3a","#d4ff7a"], glow:"#9dff3a", ring:"#9dff3a"},
+  ice:      {name:"Blizzard",    tex:"flake", move:"fall",    n:16, size:0.34, cols:["#8fdcff","#4fb8ff"], glow:"#8fdcff", ring:"#4fb8ff"},
+  obsidian: {name:"Shadow Mist", tex:"soft",  move:"rise",    n:14, size:0.5,  cols:["#3a1466","#1a0a2e","#6a2ac9"], glow:"#6a2ac9", ring:"#6a2ac9", dark:true},
+  rainbow:  {name:"Prism",       tex:"star",  move:"orbit",   n:16, size:0.34, cols:["#ff4d6d","#ffc233","#4cd964","#3d8bff","#9b5cff"], glow:"rainbow", ring:"rainbow", spin:true},
+  lava:     {name:"Inferno",     tex:"flame", move:"rise",    n:20, size:0.42, cols:["#ffb01a","#ff6a1a","#ff2a1a"], glow:"#ff5a1f", ring:"#ff7a1a"},
+  galaxy:   {name:"Cosmos",      tex:"star",  move:"orbit",   n:18, size:0.3,  cols:["#ffe066","#b69cff","#6fd0ff"], glow:"#7a4dff", ring:"#7a4dff", spin:true},
+  sunfire:  {name:"Solar Flare", tex:"flame", move:"rise",    n:16, size:0.36, cols:["#ffd24d","#ffa21f","#ff7a1a"], glow:"#ffc233", ring:"#ffc233", rays:true},
+};
 const BOXES = {
   common:   {name:"BAR BOX",    cost:30,  col:"#3d8bff", odds:{common:70, rare:25, epic:4.5, legendary:0.5}},
   epic:     {name:"EPIC BOX",   cost:90,  col:"#9b5cff", odds:{common:30, rare:48, epic:18, legendary:4}},
@@ -1254,6 +1280,7 @@ G.vaultMat = phong(0x46557a, {shininess:60});
 G.vaultDoorGeo = new THREE.CylinderGeometry(1.05, 1.05, 0.14, 28); G.vaultDoorGeo.rotateX(Math.PI/2);
 G.vaultDoorMat = new THREE.MeshPhongMaterial({color:0xffc233, emissive:0x5a3400, specular:0xffffff, shininess:90});
 G.vaultWheel = new THREE.TorusGeometry(0.45, 0.07, 8, 20);
+G.auraRingGeo = new THREE.PlaneGeometry(2.4, 2.4); G.auraRingGeo.rotateX(-Math.PI/2);
 G.ringMat = new THREE.MeshBasicMaterial({color:0xff3b4e, transparent:true, opacity:0.8, depthWrite:false});
 G.boostMat = new THREE.MeshBasicMaterial({map:G.boostTex, transparent:true, opacity:0.95});
 G.shieldGeo = new THREE.SphereGeometry(1.05, 24, 16);
@@ -1550,6 +1577,7 @@ function applyLook(skin, bar, hat){
   const tr = !!b.opacity;
   if(G.barMat.transparent !== tr){ G.barMat.transparent = tr; G.barMat.needsUpdate = true; }
   G.barMat.opacity = b.opacity || 1;
+  setAura(b.id);
   if(hat !== appliedHat){ setHat(hat); appliedHat = hat; }
 }
 let appliedHat = null;
@@ -1564,6 +1592,136 @@ function barFx(){
   else if(fx==="galaxy"){ const h = 0.68 + 0.1*Math.sin(time*0.8); M.color.setHSL(h, 0.75, 0.5); M.emissive.setHSL(h + 0.05, 0.9, 0.12 + 0.1*k); }
   else if(fx==="sun") M.emissive.setRGB(0.55 + 0.3*k, 0.35 + 0.2*k, 0.02);
   else if(fx==="pulse") M.emissive.setRGB(0.1*k, 0.35 + 0.35*k, 0);
+}
+
+/* ---------- bar auras ---------- */
+const AURA_TEX = {};
+function auraTex(kind){
+  if(AURA_TEX[kind]) return AURA_TEX[kind];
+  const t = canvasTex(64, 64, (x,w,h)=>{
+    const c = w/2;
+    x.fillStyle = "#fff"; x.strokeStyle = "#fff";
+    if(kind==="soft"){
+      const g = x.createRadialGradient(c,c,0,c,c,c); g.addColorStop(0,"rgba(255,255,255,1)"); g.addColorStop(0.45,"rgba(255,255,255,.7)"); g.addColorStop(1,"rgba(255,255,255,0)");
+      x.fillStyle = g; x.fillRect(0,0,w,h);
+    } else if(kind==="star"){
+      const g = x.createRadialGradient(c,c,0,c,c,c); g.addColorStop(0,"rgba(255,255,255,.9)"); g.addColorStop(0.3,"rgba(255,255,255,.25)"); g.addColorStop(1,"rgba(255,255,255,0)");
+      x.fillStyle = g; x.fillRect(0,0,w,h); x.fillStyle = "#fff";
+      x.beginPath(); for(let i=0;i<8;i++){ const a = i*Math.PI/4, r = i%2 ? 7 : 30; x.lineTo(c + Math.cos(a)*r, c + Math.sin(a)*r); } x.closePath(); x.fill();
+    } else if(kind==="flake"){
+      x.lineWidth = 5; x.lineCap = "round";
+      for(let i=0;i<3;i++){ const a = i*Math.PI/3; x.beginPath(); x.moveTo(c - Math.cos(a)*26, c - Math.sin(a)*26); x.lineTo(c + Math.cos(a)*26, c + Math.sin(a)*26); x.stroke(); }
+      x.beginPath(); x.arc(c, c, 6, 0, 7); x.fill();
+    } else if(kind==="heart"){
+      x.beginPath(); x.moveTo(c, 54); x.bezierCurveTo(4, 30, 10, 6, c, 20); x.bezierCurveTo(54, 6, 60, 30, c, 54); x.fill();
+    } else if(kind==="bubble"){
+      x.lineWidth = 5; x.beginPath(); x.arc(c, c, 24, 0, 7); x.stroke();
+      x.globalAlpha = 0.25; x.beginPath(); x.arc(c, c, 22, 0, 7); x.fill();
+      x.globalAlpha = 1; x.beginPath(); x.arc(c - 9, c - 9, 5, 0, 7); x.fill();
+    } else if(kind==="flame"){
+      const g = x.createRadialGradient(c, 40, 2, c, 36, 28); g.addColorStop(0,"rgba(255,255,255,1)"); g.addColorStop(0.5,"rgba(255,255,255,.75)"); g.addColorStop(1,"rgba(255,255,255,0)");
+      x.fillStyle = g; x.beginPath(); x.moveTo(c, 2); x.bezierCurveTo(c + 30, 30, c + 22, 62, c, 62); x.bezierCurveTo(c - 22, 62, c - 30, 30, c, 2); x.fill();
+    } else if(kind==="glow"){
+      const g = x.createRadialGradient(c,c,0,c,c,c); g.addColorStop(0,"rgba(255,255,255,.85)"); g.addColorStop(0.4,"rgba(255,255,255,.35)"); g.addColorStop(1,"rgba(255,255,255,0)");
+      x.fillStyle = g; x.fillRect(0,0,w,h);
+    } else if(kind==="ring"){
+      x.lineWidth = 4; x.beginPath(); x.arc(c, c, 27, 0, 7); x.stroke();
+      for(let i=0;i<12;i++){ const a = i*Math.PI/6; x.beginPath(); x.arc(c + Math.cos(a)*21, c + Math.sin(a)*21, 2.6, 0, 7); x.fill(); }
+      x.lineWidth = 2; x.setLineDash([6,5]); x.beginPath(); x.arc(c, c, 16, 0, 7); x.stroke();
+    } else if(kind==="rays"){
+      for(let i=0;i<12;i++){
+        const a = i*Math.PI/6, g = x.createLinearGradient(c, c, c + Math.cos(a)*32, c + Math.sin(a)*32);
+        g.addColorStop(0,"rgba(255,255,255,.9)"); g.addColorStop(1,"rgba(255,255,255,0)");
+        x.fillStyle = g; x.beginPath(); x.moveTo(c, c); x.arc(c, c, 32, a - 0.12, a + 0.12); x.closePath(); x.fill();
+      }
+    }
+  });
+  AURA_TEX[kind] = t;
+  return t;
+}
+const aura = {id:null, group:new THREE.Group(), parts:[], mats:[], glow:null, ring:null, rays:null, def:null};
+tower.add(aura.group);
+function auraMat(tex, col, dark){
+  const m = new THREE.SpriteMaterial({map:auraTex(tex), color:new THREE.Color(col), transparent:true, depthWrite:false, opacity:dark ? 0.75 : 0.95});
+  aura.mats.push(m); return m;
+}
+function setAura(barId){
+  if(aura.id === barId) return;
+  aura.id = barId;
+  aura.group.clear(); aura.mats.forEach(m=>m.dispose()); aura.mats = []; aura.parts = [];
+  aura.glow = aura.ring = aura.rays = null;
+  const d = aura.def = AURAS[barId];
+  if(!d) return;
+  const n = Math.round(d.n * (save.gfx ? 1 : 0.5));
+  const mats = d.cols.map(c=>auraMat(d.tex, c, d.dark));
+  for(let i=0;i<n;i++){
+    const sp = new THREE.Sprite(mats[i % mats.length]);
+    sp.renderOrder = 3;
+    aura.group.add(sp);
+    aura.parts.push({sp, life:Math.random(), rate:0.35 + Math.random()*0.4, a:Math.random()*6.28, r:0.45 + Math.random()*0.45, y:Math.random(), sz:d.size*1.25*(0.7 + Math.random()*0.6), sw:Math.random()*6.28, band:i%2});
+  }
+  if(d.glow){
+    aura.glow = new THREE.Sprite(auraMat("glow", d.glow === "rainbow" ? "#ffffff" : d.glow, false));
+    aura.glow.material.opacity = 0.42; aura.glow.renderOrder = 1; aura.group.add(aura.glow);
+  }
+  if(d.ring){
+    const m = new THREE.MeshBasicMaterial({map:auraTex("ring"), color:new THREE.Color(d.ring === "rainbow" ? "#ffffff" : d.ring), transparent:true, opacity:0.9, depthWrite:false, side:THREE.DoubleSide});
+    aura.mats.push(m);
+    aura.ring = new THREE.Mesh(G.auraRingGeo, m); aura.ring.position.y = 0.03; aura.group.add(aura.ring);
+  }
+  if(d.rays){
+    aura.rays = new THREE.Sprite(auraMat("rays", "#ffd24d", false));
+    aura.rays.material.opacity = 0.5; aura.rays.renderOrder = 0; aura.group.add(aura.rays);
+  }
+}
+function updateAura(dt){
+  const d = aura.def;
+  aura.group.visible = !!d && state !== "failed";
+  if(!d) return;
+  const H = towerH + 1.7, running = state === "playing" || state === "finish";
+  const hueNow = (time*0.2) % 1;
+  for(const p of aura.parts){
+    p.life += dt*p.rate;
+    if(p.life >= 1){ p.life -= 1; p.a = Math.random()*6.28; p.r = 0.45 + Math.random()*0.45; p.y = Math.random(); p.sw = Math.random()*6.28; }
+    const L = p.life, sp = p.sp;
+    let x, y, z, k;
+    if(d.move === "rise"){
+      y = L*H*1.05; x = Math.cos(p.a)*p.r + Math.sin(time*2 + p.sw)*0.12; z = Math.sin(p.a)*p.r*0.8 + (running ? L*1.6 : 0);
+      k = Math.sin(L*Math.PI);
+    } else if(d.move === "fall"){
+      y = (1 - L)*(H + 0.6); x = Math.cos(p.a)*p.r*1.1 + Math.sin(time*1.5 + p.sw)*0.2; z = Math.sin(p.a)*p.r*0.8 + (running ? L*1.2 : 0);
+      k = Math.sin(L*Math.PI);
+    } else if(d.move === "orbit"){
+      const dir = d.spin && p.band ? -1 : 1, rr = 0.75 + p.r*0.5;
+      const a = p.a + time*(1.8 + p.rate)*dir;
+      y = (0.15 + p.y*0.85)*H + Math.sin(time*2 + p.sw)*0.12; x = Math.cos(a)*rr; z = Math.sin(a)*rr*0.9;
+      k = 0.65 + 0.35*Math.sin(time*5 + p.sw);
+      p.life = Math.min(p.life, 0.999);
+    } else {
+      y = p.y*H; x = Math.cos(p.a)*p.r*1.1; z = Math.sin(p.a)*p.r;
+      k = Math.max(0, Math.sin(L*Math.PI*2 - Math.PI/2)*0.5 + 0.5); k = k*k;
+    }
+    sp.position.set(x, y, z);
+    sp.scale.setScalar(Math.max(0.001, p.sz*k*(d.tex === "flame" ? 1.2 : 1)));
+    if(d.tex === "flame") sp.scale.y *= 1.5;
+  }
+  if(d.cols.length > 1 && d.glow === "rainbow") aura.mats.forEach((m,i)=>{ if(i < d.cols.length) m.color.setHSL((hueNow + i/d.cols.length) % 1, 0.9, 0.6); });
+  if(aura.glow){
+    const pulse = 1 + 0.08*Math.sin(time*3);
+    aura.glow.position.set(0, H*0.45, -0.15);
+    aura.glow.scale.set(2.2*pulse, (H + 1.2)*pulse, 1);
+    if(d.glow === "rainbow") aura.glow.material.color.setHSL(hueNow, 0.9, 0.6);
+  }
+  if(aura.ring){
+    aura.ring.rotation.y -= dt*1.6;
+    aura.ring.scale.setScalar(1 + 0.06*Math.sin(time*4));
+    if(d.ring === "rainbow") aura.ring.material.color.setHSL((hueNow + 0.5) % 1, 0.9, 0.6);
+  }
+  if(aura.rays){
+    aura.rays.position.set(0, H*0.5, -0.3);
+    aura.rays.scale.setScalar(H*1.3 + 1);
+    aura.rays.material.rotation += dt*0.5;
+  }
 }
 
 /* =============================== LEVEL OBJECTS =============================== */
@@ -2579,6 +2737,7 @@ function update(rawDt){
 
   animatePlayer(dt);
   barFx();
+  updateAura(dt);
   updateStack(dt);
   updateDebris(dt);
   updateCamera(dt);
@@ -3357,10 +3516,34 @@ function barSvg(s){
     defs = `<defs><linearGradient id="${id}" x1="0" y1="0" x2="1" y2="1">${st.map((c,i)=>`<stop offset="${i/(st.length-1)}" stop-color="${c}"/>`).join("")}</linearGradient></defs>`;
     fill = `url(#${id})`;
   }
-  const glow = s.r==="legendary" || s.r==="epic" ? `<circle cx="19" cy="26" r="17" fill="${RARITY[s.r].col}" opacity=".18"/>` : "";
-  return `<svg class="fig" viewBox="0 0 38 46">${defs}${glow}<g stroke="#1d2a4d" stroke-width="1.5" stroke-linejoin="round" fill="${fill}"${s.opacity ? ' fill-opacity=".72"' : ""}>
+  const A = AURAS[s.id];
+  const gcol = A && A.glow ? (A.glow === "rainbow" ? "#ff8ad8" : A.glow) : s.r==="legendary" || s.r==="epic" ? RARITY[s.r].col : null;
+  const glow = gcol ? `<circle cx="19" cy="26" r="17" fill="${gcol}" opacity=".22"><animate attributeName="r" values="15;18;15" dur="2s" repeatCount="indefinite"/></circle>` : "";
+  return `<svg class="fig" viewBox="0 0 38 46">${defs}${glow}${auraSvg(A)}<g stroke="#1d2a4d" stroke-width="1.5" stroke-linejoin="round" fill="${fill}"${s.opacity ? ' fill-opacity=".72"' : ""}>
     <path d="M6 38h26l-4-8H10z"/><path d="M9 28h20l-4-8H13z"/><path d="M12 18h14l-3-7h-8z"/></g>
     <path d="M13 36l2-4M16 26l2-4" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".7"/></svg>`;
+}
+// Little animated particles on wardrobe / box cards, matching the 3D aura.
+const AURA_SHAPES = {
+  star:"M0-4 1-1 4 0 1 1 0 4-1 1-4 0-1-1z",
+  soft:"M0-2.6a2.6 2.6 0 1 0 .01 0z",
+  flame:"M0-4c2 2 2.6 3.6 2.6 5A2.6 2.6 0 0 1-2.6 1C-2.6-.4-2-2 0-4z",
+  flake:"M-3.5 0h7M-1.8-3 1.8 3M1.8-3-1.8 3",
+  heart:"M0 3.4C-4 .6-3.6-3 0-1.4 3.6-3 4 .6 0 3.4z",
+  bubble:"M0-3a3 3 0 1 0 .01 0z",
+};
+function auraSvg(A){
+  if(!A) return "";
+  const pts = [[5,34],[33,30],[8,16],[30,12],[19,6]].slice(0, A.n >= 12 ? 5 : A.n >= 8 ? 4 : 3);
+  const stroke = A.tex === "flake" || A.tex === "bubble";
+  const dy = A.move === "rise" ? -8 : A.move === "fall" ? 8 : 0;
+  return pts.map(([x,y],i)=>{
+    const col = A.cols[i % A.cols.length], dur = (1.4 + i*0.23).toFixed(2), beg = (i*0.37).toFixed(2);
+    const paint = stroke ? `fill="none" stroke="${col}" stroke-width="1.4" stroke-linecap="round"` : `fill="${col}" stroke="#1d2a4d" stroke-width=".5"`;
+    const move = A.move === "orbit" ? `<animateTransform attributeName="transform" type="rotate" from="0 19 26" to="${i%2 ? -360 : 360} 19 26" dur="${(3 + i*0.4).toFixed(1)}s" repeatCount="indefinite"/>`
+      : dy ? `<animateTransform attributeName="transform" type="translate" values="0 0;0 ${dy}" dur="${dur}s" begin="${beg}s" repeatCount="indefinite" additive="sum"/>` : "";
+    return `<g>${move}<path transform="translate(${x} ${y})" d="${AURA_SHAPES[A.tex]}" ${paint}><animate attributeName="opacity" values="0;1;0" dur="${dur}s" begin="${beg}s" repeatCount="indefinite"/></path></g>`;
+  }).join("");
 }
 function hatSvg(id){
   const s = 'stroke="#1d2a4d" stroke-width="1.5" stroke-linejoin="round"';
@@ -3399,7 +3582,8 @@ function renderSkins(){
     b.className = "skin" + (on ? " on" : "") + (sel ? " sel" : "") + (!has ? " locked" : "");
     const price = `<span class="${wallet==="gems" ? "gem" : "coin"}"></span>${fmt(c.n)}`;
     const rar = s.r ? `<span class="rar" style="--rc:${RARITY[s.r].col}">${RARITY[s.r].name}</span>` : "";
-    b.innerHTML = W.svg(s) + `<div class="nm">${s.name}</div>` + rar +
+    const aur = skinSeg === "bars" && AURAS[s.id] ? `<div class="aur">&#10022; ${AURAS[s.id].name}</div>` : "";
+    b.innerHTML = W.svg(s) + `<div class="nm">${s.name}</div>` + rar + aur +
       (on ? `<div class="pr" style="color:#2a9d44">ON</div>` :
        has ? `<div class="pr">EQUIP</div>` :
        boxOnly ? `<div class="pr" style="color:#8a47f0">${sel ? "GET IN BOX" : "BOX"}</div>` :
@@ -3868,7 +4052,7 @@ function revealBox(){
   $("boxResult").style.setProperty("--rc", R.col);
   $("boxFig").innerHTML = barSvg(res.skin);
   $("boxName").textContent = res.skin.name;
-  const rr = $("boxRar"); rr.textContent = R.name; rr.style.setProperty("--rc", R.col);
+  const rr = $("boxRar"); rr.textContent = R.name + (AURAS[res.skin.id] ? " · " + AURAS[res.skin.id].name.toUpperCase() + " AURA" : ""); rr.style.setProperty("--rc", R.col);
   show($("boxNew"), !res.dup);
   $("boxDup").innerHTML = res.dup ? "Already owned → " + (res.refund.g ? `<span class="coin"></span>+${fmt(res.refund.g)}` : `<span class="gem"></span>+${res.refund.gems}`) : "";
   $("boxHint").textContent = res.rar === "legendary" ? "LEGENDARY! Incredible luck!" : res.rar === "epic" ? "Epic pull!" : "Added to your gold bar skins.";
@@ -4044,6 +4228,7 @@ function applyGfx(){
   renderer.setPixelRatio(dprCur);
   renderer.shadowMap.enabled = save.gfx; sun.castShadow = save.gfx;
   scene.traverse(o=>{ if(o.material){ (Array.isArray(o.material) ? o.material : [o.material]).forEach(m=>{ m.needsUpdate = true; }); } });
+  aura.id = null; applySkins();
   resize();
 }
 $("settingsBtn").addEventListener("click", ()=>{ SFX.click(); resetArmed = false; syncToggles(); show($("settingsModal"), true); });
