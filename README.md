@@ -191,5 +191,10 @@ paid loot boxes, so check the rules for each market you publish in.
   files by adding `<audio>` elements gated on `save.music` / `save.sfx`.
 - Skin colors/costs live in each file's `SKINS` object near the top of the
   `<script>` — add more there to expand the shop.
+- Bar Rush adapts to the device: it lowers its render resolution when
+  frames get slow and raises it again when there is headroom, batches
+  hills, trees and clouds into a few instanced draw calls, pre-compiles
+  shaders before a level starts, and uses frame-rate independent smoothing
+  for movement and camera.
 - Bar Rush's level tuning (track length, speed, step cost, gate values,
   trap mix) lives in `buildLevel()` and `genGateOpts()`.

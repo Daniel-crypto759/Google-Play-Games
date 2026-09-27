@@ -476,6 +476,22 @@
   .pay-item span{font-size:12px;font-weight:800;color:#6b7a99;display:block}
   .pay-item .pp{margin-left:auto;font-family:'Lilita One','Arial Black',sans-serif;font-size:20px;color:#2a9d44;white-space:nowrap}
   .testchip{align-self:center;background:#fff4d6;border:2px dashed #e0a100;color:#8a5a00;border-radius:10px;padding:4px 10px;font-size:12px;font-weight:900}
+  /* ---------- smoothness ---------- */
+  button{touch-action:manipulation}
+  .scroll{overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+  .progress .fill,.combo .f,.bbar i{width:100%!important;transform-origin:left center;transform:scaleX(0);will-change:transform;transition:transform .18s ease-out}
+  .combo.fever .f{transition:none}
+  .rays,.logo span span,.btn.play,.pop,#feverGlow,#slowmo{will-change:transform,opacity}
+  #menu{transition:opacity .22s ease-out}
+  #menu.out{opacity:0;pointer-events:none}
+  #menu.out *{pointer-events:none!important}
+  #menu:not([hidden]):not(.out){animation:fade .3s ease-out}
+  #hud:not([hidden]){animation:fade .3s ease-out}
+  .modal.closing{animation:fadeout .19s ease-in forwards;pointer-events:none}
+  .modal.closing .sheet{animation:sinkout .19s ease-in forwards}
+  @keyframes fadeout{to{opacity:0}}
+  @keyframes sinkout{to{transform:translateY(24px) scale(.9);opacity:0}}
+  .tab:not([hidden]) .panel{animation:popin .32s cubic-bezier(.2,1.4,.4,1)}
   @media (prefers-reduced-motion: reduce){ *{animation:none!important;transition:none!important} }
 </style>
 
@@ -1065,10 +1081,13 @@ function startMusic(){
 function stopMusic(){ clearInterval(musicTimer); musicTimer = null; }
 function buzz(ms){ if(save.vibe && navigator.vibrate){ try{ navigator.vibrate(ms); }catch(e){} } }
 
+// Exponential smoothing factor that behaves the same at 30, 60 or 120 fps.
+function damp(k, dt){ return 1 - Math.exp(-k*dt); }
+
 /* =============================== THREE SETUP =============================== */
 const renderer = new THREE.WebGLRenderer({antialias:true, powerPreference:"high-performance"});
 renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.shadowMap.type = THREE.PCFShadowMap;
 renderer.domElement.className = "gl";
 app.insertBefore(renderer.domElement, app.firstChild);
 
@@ -1253,22 +1272,26 @@ const env = {};
   env.hillMats = [0,1,2,3].map(()=>new THREE.MeshLambertMaterial({color:0x93d86b}));
   let seed = 11;
   const rnd = () => { seed = (seed*16807) % 2147483647; return (seed-1)/2147483646; };
+  // hills are batched: one instanced draw call per hill colour instead of ~140 meshes
+  const hillBuckets = [[],[],[],[]], hd = new THREE.Object3D();
+  const pushHill = (mi, x, y, z, sx, sy, sz) => { hd.position.set(x, y, z); hd.scale.set(sx, sy, sz); hd.updateMatrix(); hillBuckets[mi].push(hd.matrix.clone()); };
   for(let z=40; z>ENV_FAR; z-=13){
     for(const s of [-1,1]){
-      const r = 12 + rnd()*26;
-      const m = new THREE.Mesh(hillGeo, env.hillMats[(rnd()*4)|0]);
-      m.scale.set(r, r*(0.3+rnd()*0.3), r*(0.8+rnd()*0.5));
-      m.position.set(s*(20 + rnd()*55 + r*0.4), GROUND_Y - r*0.05, z - rnd()*8);
-      scene.add(m);
+      const r = 12 + rnd()*26, mi = (rnd()*4)|0;
+      const sy = r*(0.3+rnd()*0.3), sz = r*(0.8+rnd()*0.5);
+      pushHill(mi, s*(20 + rnd()*55 + r*0.4), GROUND_Y - r*0.05, z - rnd()*8, r, sy, sz);
     }
   }
   for(let i=0;i<14;i++){
     const r = 60 + rnd()*50;
-    const m = new THREE.Mesh(hillGeo, env.hillMats[i%4]);
-    m.scale.set(r, r*0.35, r*0.6);
-    m.position.set((rnd()-0.5)*420, GROUND_Y - 4, ENV_FAR - 40 - rnd()*60);
-    scene.add(m);
+    pushHill(i%4, (rnd()-0.5)*420, GROUND_Y - 4, ENV_FAR - 40 - rnd()*60, r, r*0.35, r*0.6);
   }
+  hillBuckets.forEach((list, mi)=>{
+    const im = new THREE.InstancedMesh(hillGeo, env.hillMats[mi], list.length);
+    list.forEach((mat, i)=>im.setMatrixAt(i, mat));
+    im.instanceMatrix.needsUpdate = true; im.frustumCulled = false;
+    scene.add(im);
+  });
   const spots = [];
   for(let z=30; z>ENV_FAR; z-=5.2){
     for(const s of [-1,1]){
@@ -1296,19 +1319,19 @@ const env = {};
     env.leaves.forEach(m=>{ m.setMatrixAt(i, dummy.matrix); m.setColorAt(i, col); });
     env.leafIdx.push((rnd()*4)|0);
   });
-  [trunks].concat(env.leaves).forEach(m=>{ m.instanceMatrix.needsUpdate = true; scene.add(m); });
+  [trunks].concat(env.leaves).forEach(m=>{ m.instanceMatrix.needsUpdate = true; m.frustumCulled = false; scene.add(m); });
   const cloudMat = new THREE.MeshLambertMaterial({color:0xffffff, emissive:0x8899aa});
+  const clouds = new THREE.InstancedMesh(new THREE.SphereGeometry(1, 14, 8), cloudMat, 64);
   for(let i=0;i<16;i++){
-    const g = new THREE.Group();
+    const cx = (rnd()<0.5?-1:1)*(30 + rnd()*60), cy = 26 + rnd()*14, cz = 20 - i*48;
     for(let k=0;k<4;k++){
-      const p = new THREE.Mesh(hillGeo, cloudMat);
       const r = 3 + rnd()*3;
-      p.scale.set(r, r*0.6, r*0.8); p.position.set(k*3.8 - 6, rnd()*1.5, rnd()*2);
-      g.add(p);
+      hd.position.set(cx + k*3.8 - 6, cy + rnd()*1.5, cz + rnd()*2); hd.scale.set(r, r*0.6, r*0.8); hd.updateMatrix();
+      clouds.setMatrixAt(i*4 + k, hd.matrix);
     }
-    g.position.set((rnd()<0.5?-1:1)*(30 + rnd()*60), 26 + rnd()*14, 20 - i*48);
-    scene.add(g);
   }
+  clouds.instanceMatrix.needsUpdate = true; clouds.frustumCulled = false;
+  scene.add(clouds);
 })();
 function applyZone(z){
   if(env.zone === z) return;
@@ -1458,7 +1481,7 @@ for(let i=0;i<LAYERS_MAX;i++){
   for(const s of [-1,1]){
     const m = new THREE.Mesh(G.bar, G.barMat);
     if(i%2===0) m.position.z = s*0.19; else { m.rotation.y = Math.PI/2; m.position.x = s*0.19; }
-    m.castShadow = true; layer.add(m);
+    m.castShadow = i % 3 === 0; layer.add(m);
   }
   layer.rotation.y = (Math.random()-0.5)*0.12;
   layer.visible = false; layer.userData.s = 1;
@@ -1636,7 +1659,7 @@ function addPickup(type, x, z){
     m.position.y = 0.95; m.scale.setScalar(1.3);
   }
   m.position.x = x; m.position.z = z;
-  m.traverse(o=>{ o.castShadow = true; });
+  m.traverse(o=>{ o.castShadow = type !== "bar"; });
   const e = {type, x, z, baseY:m.position.y, taken:false};
   e.mesh = addTo(e, m);
   pickups.push(e);
@@ -2177,18 +2200,29 @@ const achClaimable = () => ACH.some(a=>achTier(a) > (save.ach[a.id]||0));
 
 /* =============================== FLOW =============================== */
 const menuEl = $("menu"), hudEl = $("hud");
-const show = (el, on) => { el.hidden = !on; };
+const show = (el, on) => {
+  if(el.classList.contains("modal")){
+    if(on){ clearTimeout(el._closeT); el.classList.remove("closing"); el.hidden = false; }
+    else if(!el.hidden && !el.classList.contains("closing")){
+      el.classList.add("closing");
+      el._closeT = setTimeout(()=>{ el.hidden = true; el.classList.remove("closing"); }, 190);
+    }
+    return;
+  }
+  el.hidden = !on;
+};
 const MODAL_IDS = ["boxModal","payModal","settingsModal","pauseModal","winModal","failModal","endModal","dailyModal","wheelModal","chestModal","chalModal"];
-const anyModalOpen = () => MODAL_IDS.some(id=>!$(id).hidden);
+const anyModalOpen = () => MODAL_IDS.some(id=>{ const m = $(id); return !m.hidden && !m.classList.contains("closing"); });
 
 function toMenu(){
   state = "menu";
   ["pauseModal","winModal","failModal","endModal"].forEach(id=>show($(id), false));
-  show(hudEl, false); show(menuEl, true); show($("bossBar"), false);
+  show(hudEl, false); menuEl.classList.remove("out"); clearTimeout(menuEl._outT); show(menuEl, true); show($("bossBar"), false);
   hideHint();
   buildLevel(save.level);
   showTab("Home");
   refreshMenu();
+  warmUp();
   camPos.set(0, 4.8 + towerH*0.7, pz + 7.6 + towerH*0.35);
   camLook.set(0, 1.1 + towerH*0.5, pz - 5);
 }
@@ -2200,9 +2234,13 @@ function startRun(which){
   else if(which==="daily") buildLevel(Math.max(3, save.level), {daily:true});
   else if(mode !== "level" || curLevel !== save.level) buildLevel(save.level);
   if(previewSel){ previewSel = null; applySkins(); }
+  if(which === "endless" || which === "daily") warmUp();
   state = "playing";
   stat("runs");
-  show(menuEl, false); show(hudEl, true);
+  menuEl.classList.add("out");
+  clearTimeout(menuEl._outT);
+  menuEl._outT = setTimeout(()=>{ if(state !== "menu") show(menuEl, false); menuEl.classList.remove("out"); }, 220);
+  show(hudEl, true);
   show($("hudProgWrap"), mode !== "endless"); show($("hudDist"), mode === "endless");
   $("hudLevel").textContent = mode==="endless" ? "ENDLESS · BEST " + fmt(save.endlessBest) + " m"
     : mode==="daily" ? "DAILY · " + mod.name : (isBoss ? "BOSS " : isBonus ? "BONUS " : "") + "LEVEL " + curLevel;
@@ -2264,7 +2302,7 @@ function startFinish(){
   } else state = "finish";
 }
 function updateBossBar(){
-  $("bossFill").style.width = Math.max(0, boss.hp/boss.max*100) + "%";
+  setFill($("bossFill"), boss.hp/boss.max);
   $("bossHp").textContent = fmt(Math.max(0, boss.hp)) + " / " + fmt(boss.max);
 }
 function finishLevel(kind){
@@ -2454,7 +2492,7 @@ function playUpdate(dt){
   if(keys.left) targetX -= 8*dt;
   if(keys.right) targetX += 8*dt;
   targetX = Math.max(-MAXX, Math.min(MAXX, targetX));
-  px += (targetX - px) * Math.min(1, dt*14);
+  px += (targetX - px) * damp(14, dt);
   // jump physics
   if(jumpY > 0 || jumpV > 0){
     jumpY += jumpV*dt; jumpV -= 28*dt;
@@ -2535,7 +2573,7 @@ function playUpdate(dt){
   if(tutObs && (tutObs.passed || tutObs.hit)){ tutObs = null; timeScale = 1; $("slowmo").style.opacity = "0"; hideHint(); }
 
   if(mode !== "endless"){
-    $("hudProg").style.width = (Math.max(0, Math.min(1, (4 - pz)/(L + 4)))*100) + "%";
+    setFill($("hudProg"), (4 - pz)/(L + 4));
     if(pz <= -L) startFinish();
   } else $("hudDist").textContent = fmt(Math.floor(endDist)) + " m";
 }
@@ -2668,7 +2706,7 @@ function updateThieves(dt){
 
 /* ---------- finish: stairs ---------- */
 function finishUpdate(dt){
-  px += (0 - px) * Math.min(1, dt*6);
+  px += (0 - px) * damp(6, dt);
   pz -= 7*dt;
   runPhase += 7*dt*1.3;
   const next = steps[stepIdx+1];
@@ -2691,14 +2729,14 @@ function finishUpdate(dt){
   }
   if(!next && pz <= steps[9].zFront - 3){ pz = steps[9].zFront - 3; finishLevel("stairs"); }
   const ty = stepIdx >= 0 ? steps[stepIdx].top : 0;
-  py += (ty - py) * Math.min(1, dt*16);
-  $("hudProg").style.width = "100%";
+  py += (ty - py) * damp(16, dt);
+  setFill($("hudProg"), 1);
 }
 
 /* ---------- finish: boss fight ---------- */
 const bossStopZ = () => boss.z + 11;
 function bossUpdate(dt){
-  px += (0 - px) * Math.min(1, dt*6);
+  px += (0 - px) * damp(6, dt);
   if(state === "bossIntro"){
     bossIntroT += dt;
     if(pz > bossStopZ()){ pz = Math.max(bossStopZ(), pz - 8*dt); runPhase += 8*dt*1.3; }
@@ -2762,7 +2800,7 @@ function animateBoss(dt){
   animateFace(f, dt);
   setMood(f, b.dead || b.hitT > 0 ? "ouch" : b.win ? "wow" : "happy");
   if(b.dead){
-    f.root.rotation.x += (-Math.PI/2 - f.root.rotation.x) * Math.min(1, dt*3);
+    f.root.rotation.x += (-Math.PI/2 - f.root.rotation.x) * damp(3, dt);
     b.mat.emissive.setHex(0);
     return;
   }
@@ -2791,12 +2829,12 @@ function animatePlayer(dt){
     legL.rotation.x = air ? -0.9 : s*0.85; legR.rotation.x = air ? 0.4 : -s*0.85;
     armL.rotation.x = air ? -2.2 : -s*0.75; armR.rotation.x = air ? -2.2 : s*0.75;
     bob = air ? 0 : Math.abs(Math.cos(runPhase*2.4))*0.08;
-    body.rotation.z += (-(targetX - px)*0.12 - body.rotation.z) * Math.min(1, dt*8);
+    body.rotation.z += (-(targetX - px)*0.12 - body.rotation.z) * damp(8, dt);
     body.rotation.x = 0;
   } else if(state==="boss" || state==="bossIntro"){
     legL.rotation.x = legR.rotation.x = 0;
     armL.rotation.x = -0.6;
-    armR.rotation.x += (-0.3 - armR.rotation.x) * Math.min(1, dt*10);
+    armR.rotation.x += (-0.3 - armR.rotation.x) * damp(10, dt);
     body.rotation.z *= 0.9;
   } else if(state==="celebrate" || state==="won"){
     const s = Math.sin(celebrateT*9);
@@ -2806,7 +2844,7 @@ function animatePlayer(dt){
     body.rotation.y += dt*3;
     body.rotation.z *= 0.9;
   } else if(state==="failed"){
-    body.rotation.x += (-Math.PI/2 - body.rotation.x) * Math.min(1, dt*6);
+    body.rotation.x += (-Math.PI/2 - body.rotation.x) * damp(6, dt);
     legL.rotation.x = legR.rotation.x = 0;
     armL.rotation.x = armR.rotation.x = 2.6;
   } else if(state!=="paused"){
@@ -2827,7 +2865,7 @@ function animatePlayer(dt){
       const TAU = Math.PI*2, target = state==="menu" ? Math.PI : 0;
       let y = ((body.rotation.y % TAU) + TAU) % TAU;
       if(target === 0 && y > Math.PI) y -= TAU;
-      body.rotation.y = y + (target - y)*Math.min(1, dt*6);
+      body.rotation.y = y + (target - y)*damp(6, dt);
     }
   }
   if(state!=="menu") armR.rotation.z = -0.15;
@@ -2836,8 +2874,8 @@ function animatePlayer(dt){
   if(landT > 0){ landT -= dt; const k = Math.sin(Math.max(0, landT)/0.22*Math.PI); sy = 1 - 0.22*k; sx = 1 + 0.14*k; }
   else if(jumpY > 0.05) { sy = jumpV > 0 ? 1.1 : 1.03; sx = jumpV > 0 ? 0.93 : 0.98; }
   else if(moving) { const c = Math.cos(runPhase*4.8); sy = 1 + 0.035*c; sx = 1 - 0.02*c; }
-  body.scale.x += (sx - body.scale.x)*Math.min(1, dt*18); body.scale.z = body.scale.x;
-  body.scale.y += (sy - body.scale.y)*Math.min(1, dt*18);
+  body.scale.x += (sx - body.scale.x)*damp(18, dt); body.scale.z = body.scale.x;
+  body.scale.y += (sy - body.scale.y)*damp(18, dt);
   // expressions
   if(hurtT > 0) hurtT -= dt;
   setMood(P, state==="failed" || hurtT > 0 ? "ouch" : (feverT > 0 || state==="celebrate" || state==="won" || jumpY > 1.4) ? "wow" : "happy");
@@ -2875,12 +2913,12 @@ function updateStack(dt){
     if(vis && !l.visible){ l.visible = true; l.userData.s = 0.3; }
     if(!vis) l.visible = false;
     if(l.visible){
-      l.userData.s += (1 - l.userData.s) * Math.min(1, dt*14);
+      l.userData.s += (1 - l.userData.s) * damp(14, dt);
       l.scale.setScalar(l.userData.s);
       l.position.x = sway * (n - i) * 0.006;
     }
   });
-  towerH += (n*LAYER_H - towerH) * Math.min(1, dt*14);
+  towerH += (n*LAYER_H - towerH) * damp(14, dt);
   const lv = Math.round(value);
   if(lv !== lastLabel){ drawLabel(lv); lastLabel = lv; }
   label.visible = state !== "failed" && !(state==="menu" && curTab==="Skins");
@@ -2909,10 +2947,10 @@ function updateCamera(dt){
   const skinsView = state==="menu" && curTab==="Skins";
   if(skinsView) tmpT.set(0, py + towerH + 1.6, pz + 8.5);
   else tmpT.set(ox, py + oy + towerH*0.7 + jumpY*0.3, pz + oz + towerH*0.35);
-  camPos.lerp(tmpT, Math.min(1, dt*5));
+  camPos.lerp(tmpT, damp(5, dt));
   if(skinsView) tmpT.set(0, py + towerH - 1.26, pz);
   else tmpT.set(lx, py + ly + jumpY*0.3, pz - look);
-  camLook.lerp(tmpT, Math.min(1, dt*6));
+  camLook.lerp(tmpT, damp(6, dt));
   camera.position.copy(camPos);
   if(shake > 0){
     shake = Math.max(0, shake - dt);
@@ -2921,12 +2959,20 @@ function updateCamera(dt){
   }
   camera.lookAt(camLook);
   const wantFov = baseFov + ((boostT > 0 || feverT > 0) && state==="playing" ? 9 : 0);
-  if(Math.abs(camera.fov - wantFov) > 0.05){ camera.fov += (wantFov - camera.fov)*Math.min(1, dt*4); camera.updateProjectionMatrix(); }
+  if(Math.abs(camera.fov - wantFov) > 0.05){ camera.fov += (wantFov - camera.fov)*damp(4, dt); camera.updateProjectionMatrix(); }
   sun.position.set(px + 6, py + 16, pz + 8);
   sun.target.position.set(px, py, pz - 4);
 }
 
 /* =============================== HUD =============================== */
+// Bars are scaled on the GPU (transform) and only touched when the value really changes.
+function setFill(el, f){
+  f = Math.max(0, Math.min(1, f));
+  const q = Math.round(f*400)/400;
+  if(el._f === q) return;
+  el._f = q;
+  el.style.transform = "scaleX(" + q + ")";
+}
 function keySvg(on){ return `<svg class="keyi" viewBox="0 0 24 24"><circle cx="7" cy="12" r="4.5" fill="none" stroke="${on?"#ffc233":"rgba(255,255,255,.35)"}" stroke-width="3"/><path d="M11.5 12H21v3.5M17 12v3" fill="none" stroke="${on?"#ffc233":"rgba(255,255,255,.35)"}" stroke-width="3" stroke-linecap="round"/></svg>`; }
 function keyPips(n){ let s = ""; for(let i=0;i<3;i++) s += keySvg(i < n); return s; }
 const POW_SVG = {
@@ -2942,7 +2988,7 @@ function refreshHud(){
   if(sig === hudCache) return;
   hudCache = sig;
   $("hudKeys").innerHTML = keyPips(keysNow);
-  $("comboFill").style.width = fill + "%";
+  setFill($("comboFill"), fill/100);
   $("combo").classList.toggle("fever", fever);
   $("comboText").textContent = fever ? "GOLD FEVER!" : combo >= FEVER_AT*0.75 ? "ALMOST FEVER!" : "COMBO";
   let sh = "";
@@ -3815,7 +3861,8 @@ function syncToggles(){
   $("resetBtn").textContent = resetArmed ? "TAP AGAIN TO CONFIRM" : "RESET PROGRESS";
 }
 function applyGfx(){
-  renderer.setPixelRatio(save.gfx ? Math.min(window.devicePixelRatio||1, 2) : 1);
+  dprMax = save.gfx ? Math.min(window.devicePixelRatio||1, 2) : 1; dprCur = dprMax;
+  renderer.setPixelRatio(dprCur);
   renderer.shadowMap.enabled = save.gfx; sun.castShadow = save.gfx;
   scene.traverse(o=>{ if(o.material){ (Array.isArray(o.material) ? o.material : [o.material]).forEach(m=>{ m.needsUpdate = true; }); } });
   resize();
@@ -3846,19 +3893,44 @@ function resize(){
 }
 window.addEventListener("resize", resize);
 
-let lastT = performance.now();
+// Dynamic resolution: if frames get slow, render at a lower pixel ratio; raise it again when there is headroom.
+let dprMax = 1, dprCur = 1, perfSum = 0, perfN = 0, perfGood = 0;
+function tunePerf(ms){
+  if(document.hidden || ms > 250) return;
+  perfSum += ms; perfN++;
+  if(perfN < 90) return;
+  const avg = perfSum/perfN; perfSum = 0; perfN = 0;
+  let next = dprCur;
+  if(avg > 21 && dprCur > 0.75){ next = Math.max(0.75, dprCur - 0.25); perfGood = 0; }
+  else if(avg < 13.5 && dprCur < dprMax){ if(++perfGood >= 2){ next = Math.min(dprMax, dprCur + 0.25); perfGood = 0; } }
+  else perfGood = 0;
+  if(next !== dprCur){ dprCur = next; renderer.setPixelRatio(dprCur); resize(); }
+}
+let lastT = performance.now(), dtS = 1/60;
 function loop(now){
-  const dt = Math.min(0.05, (now - lastT)/1000);
+  const raw = now - lastT;
   lastT = now;
-  if(state !== "paused") update(dt);
+  tunePerf(raw);
+  // smooth out frame-time jitter so motion looks even
+  const dt = Math.min(0.05, raw/1000);
+  dtS += (dt - dtS)*0.3;
+  if(state !== "paused") update(dtS);
   renderer.render(scene, camera);
-  drawFx(dt);
+  drawFx(dtS);
   requestAnimationFrame(loop);
+}
+// Compile shaders and upload textures up front so the first frames of a level don't stutter.
+function warmUp(){
+  try{
+    renderer.compile(scene, camera);
+    levelGroup.traverse(o=>{ const m = o.material; if(m && m.map) renderer.initTexture(m.map); });
+  }catch(e){}
 }
 
 function boot(data){
   if(data && data.save){ save = Object.assign(defSave(), data.save); normalize(); }
-  renderer.setPixelRatio(save.gfx ? Math.min(window.devicePixelRatio||1, 2) : 1);
+  dprMax = save.gfx ? Math.min(window.devicePixelRatio||1, 2) : 1; dprCur = dprMax;
+  renderer.setPixelRatio(dprCur);
   renderer.shadowMap.enabled = save.gfx; sun.castShadow = save.gfx;
   applySkins();
   resize();
