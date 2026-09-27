@@ -83,9 +83,14 @@ where your gold came from.
   **hurdles** and **rolling barrels** you can jump, **pits** that make
   you fall and lose bars unless you jump, and spinning **sweeper bars** you
   have to time a jump over.
-- **Thieves** — gangs of masked runners that chase you and steal bars.
-  Dodge them, jump over them, or knock them flying with a shield or Gold
-  Fever.
+- **Thieves** — gangs of big red masked brutes that chase you (from level
+  3, faster on harder levels) and steal bars. They are too tall to jump
+  over: dodge them sideways, or knock them flying with a shield or Gold
+  Fever. Bosses are red too.
+- **Living tower** — the gold-bar tower under the runner follows your gold
+  continuously (up to 36 layers): every bar you pick up raises it with a
+  little stretch, and every loss sinks it with a squash while bars tumble
+  off the top.
 - **Power-ups** — Magnet (pulls in everything), Double Bars, Bubble Shield.
 - **Combo → Gold Fever** — good gates, pickups, jumps and near misses fill
   the combo bar; Gold Fever makes you faster, doubles bars and smashes
@@ -137,7 +142,7 @@ where your gold came from.
   particle count. Some can be bought with gems; the rest
   only come from mystery boxes.
 - **Rising difficulty** — every level is harder than the last, up to around
-  level 36: more traps, thieves and boulders, fewer power-ups and boost
+  level 35 (and the ramp is steep: level 13 is already "full" difficulty): more traps, thieves and boulders, fewer power-ups and boost
   pads, faster running speed, bigger red gates and smaller blue ones,
   harsher gate pairings, rarer golden gates, riskier mystery gates, traps
   and thieves that take more, more moving walls, faster hammers and saws,

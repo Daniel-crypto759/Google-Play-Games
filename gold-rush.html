@@ -1167,13 +1167,13 @@ const UPGRADES = [
   {id:"mine",   name:"Gold Mine",    desc:"Earns gold while you are away (8h max).",     max:20, base:750, grow:1.6,  col:"#a0662e", fx:l=>fmt(minePerHour(l))+"/h"},
 ];
 const ZONES = [
-  {name:"MEADOW", boss:"BANDIT KING",  bossCol:0x6b3fd1, sky:["#4fb0ff","#a6dbff","#eaf7ff"], fog:0xdff1ff, ground:0x8fd46a, hills:[0x93d86b,0x86cf5d,0xa1de76,0x7cc653], leaves:[0x2fa84f,0x3cb95a,0x27954a,0x49c267], trunk:0x8a5a33},
-  {name:"DESERT", boss:"SAND GOLEM",   bossCol:0xc98a3a, sky:["#ff9f5a","#ffd39a","#fff1d6"], fog:0xffe9c8, ground:0xe9c982, hills:[0xe0b96a,0xd6a95a,0xebc57a,0xcf9f52], leaves:[0x7fa33a,0x93b045,0x6c8f30,0xa2b84e], trunk:0x9a6a3a},
-  {name:"SNOW",   boss:"FROST YETI",   bossCol:0x8fc3ff, sky:["#7fb6e8","#c7e2f7","#f4fbff"], fog:0xeef6ff, ground:0xf3f7fc, hills:[0xe6eef8,0xdde8f5,0xf0f5fb,0xd4e2f2], leaves:[0x2c7a5b,0x33886a,0x24694e,0x3d9676], trunk:0x6a4a33},
-  {name:"CANDY",  boss:"SUGAR TYRANT", bossCol:0xe0457b, sky:["#b56cff","#ff9fd6","#ffe1f1"], fog:0xffe6f4, ground:0xffb3da, hills:[0xff9ccc,0xf78cc4,0xffc2e2,0xee82bb], leaves:[0xff6fae,0x9f7bff,0x5fd4ff,0xffd166], trunk:0xfff4fa},
+  {name:"MEADOW", boss:"BANDIT KING",  bossCol:0xd6263a, sky:["#4fb0ff","#a6dbff","#eaf7ff"], fog:0xdff1ff, ground:0x8fd46a, hills:[0x93d86b,0x86cf5d,0xa1de76,0x7cc653], leaves:[0x2fa84f,0x3cb95a,0x27954a,0x49c267], trunk:0x8a5a33},
+  {name:"DESERT", boss:"SAND GOLEM",   bossCol:0xb8321f, sky:["#ff9f5a","#ffd39a","#fff1d6"], fog:0xffe9c8, ground:0xe9c982, hills:[0xe0b96a,0xd6a95a,0xebc57a,0xcf9f52], leaves:[0x7fa33a,0x93b045,0x6c8f30,0xa2b84e], trunk:0x9a6a3a},
+  {name:"SNOW",   boss:"FROST YETI",   bossCol:0xe8455a, sky:["#7fb6e8","#c7e2f7","#f4fbff"], fog:0xeef6ff, ground:0xf3f7fc, hills:[0xe6eef8,0xdde8f5,0xf0f5fb,0xd4e2f2], leaves:[0x2c7a5b,0x33886a,0x24694e,0x3d9676], trunk:0x6a4a33},
+  {name:"CANDY",  boss:"SUGAR TYRANT", bossCol:0xc01848, sky:["#b56cff","#ff9fd6","#ffe1f1"], fog:0xffe6f4, ground:0xffb3da, hills:[0xff9ccc,0xf78cc4,0xffc2e2,0xee82bb], leaves:[0xff6fae,0x9f7bff,0x5fd4ff,0xffd166], trunk:0xfff4fa},
 ];
-// Difficulty keeps rising every level (0 at level 1, 1 at level 17, capped at 2.2 around level 36).
-const diffOf = lv => Math.min(2.2, (lv-1)/16);
+// Difficulty keeps rising every level (0 at level 1, 1 at level 13, capped at 2.8 around level 35).
+const diffOf = lv => Math.min(2.8, (lv-1)/12);
 const TIERS = [[1,"EASY","#4cd964"],[5,"NORMAL","#3d8bff"],[12,"HARD","#ff8a1f"],[22,"EXPERT","#e5344a"],[35,"INSANE","#8a47f0"]];
 const tierOf = lv => TIERS.filter(t=>lv >= t[0]).pop();
 const zoneFor = lv => ZONES[Math.floor((lv-1)/5) % ZONES.length];
@@ -1574,7 +1574,7 @@ G.cheekMat = new THREE.MeshBasicMaterial({color:0xff7aa2, transparent:true, opac
 G.shoeMat = toon(0xffffff);
 G.soleMat = toon(0x2d3142);
 G.browGeo = new THREE.BoxGeometry(0.17, 0.045, 0.05);
-G.thiefMat = toon(0x3b5bdb);
+G.thiefMat = toon(0xe5263d);
 G.maskMat = new THREE.MeshLambertMaterial({color:0x14182b});
 G.maskGeo = new THREE.BoxGeometry(0.84, 0.15, 0.26);
 
@@ -1815,8 +1815,11 @@ const bubble = new THREE.Mesh(G.shieldGeo, G.shieldMat);
 bubble.position.y = 1.1; bubble.visible = false; player.add(bubble);
 
 // The runner stands on a tower of gold bars that grows and shrinks with the carried value.
-const LAYERS_MAX = 16, LAYER_H = 0.19;
-const layersFor = v => v <= 0 ? 0 : Math.max(1, Math.min(LAYERS_MAX, Math.round(Math.sqrt(v)/2)));
+// The tower height follows the carried gold continuously: every bar picked up
+// raises it a little, every loss lowers it (bars tumble off the top).
+const LAYERS_MAX = 36, LAYER_H = 0.19;
+const stackOf = v => v <= 0 ? 0 : Math.max(0.6, Math.min(LAYERS_MAX, Math.sqrt(v)*0.85));
+const layersFor = v => Math.round(stackOf(v));
 const tower = new THREE.Group();
 scene.add(tower);
 const towerLayers = [];
@@ -2387,15 +2390,15 @@ function addBoost(z){
 function makeThief(){
   const f = buildFigure(G.thiefMat, {lite:true});
   const mask = new THREE.Mesh(G.maskGeo, G.maskMat); mask.position.set(0, 0.06, -0.26); f.face.add(mask);
-  f.root.scale.setScalar(0.72);
+  f.root.scale.setScalar(1.3);
   return f;
 }
 function addThieves(z, lv){
-  const n = Math.min(5, 2 + ((rng()*(lv>=6 ? 4 : 3))|0));
-  const e = {z, x:[-1.5, 0, 1.5][(rng()*3)|0], hit:false, passed:false, members:[], chase:lv >= 4};
+  const n = Math.min(lv >= 10 ? 4 : 3, 2 + ((rng()*(lv>=6 ? 3 : 2))|0));
+  const e = {z, x:[-1.5, 0, 1.5][(rng()*3)|0], hit:false, passed:false, members:[], chase:lv >= 3};
   for(let i=0;i<n;i++){
     const f = makeThief();
-    const m = {f, off:(i - (n-1)/2)*0.5, zoff:(i%2)*0.6, state:"idle", vx:0, vy:0, vz:0, ph:rng()*6};
+    const m = {f, off:(i - (n-1)/2)*0.62, zoff:(i%2)*0.8, state:"idle", vx:0, vy:0, vz:0, ph:rng()*6};
     f.root.rotation.y = Math.PI;
     addTo(e, f.root);
     e.members.push(m);
@@ -2709,6 +2712,7 @@ const FEVER_AT = 16;
 let state = "menu";
 let value = 100, finishValue = 0, px = 0, targetX = 0, pz = 4, py = 0, runPhase = 0;
 let slowT = 0, shake = 0, flashT = 0, time = 0, stepIdx = -1, celebrateT = 0, failT = 0;
+let stackTarget = 0, stackBounce = 0;
 let shownLayers = 0, towerH = 0, lastLabel = -1, reward = 0, mult = 1, stars = 1;
 let combo = 0, feverT = 0, boostT = 0, shield = 0, invulnT = 0, revived = false;
 let hurtT = 0, landT = 0, bestStreak = 0;
@@ -2726,7 +2730,7 @@ function resetPlayer(){
   hurtT = 0; landT = 0; bestStreak = 0; setMood(P, "happy"); body.scale.set(1,1,1);
   throwCd = 0; autoThrowT = 0;
   run = {bars:0, good:0, fevers:0, hits:0, dodges:0, keys:0, gems:0, jumps:0, thieves:0, pows:0, vaults:0, peak:value};
-  shownLayers = layersFor(value); towerH = shownLayers*LAYER_H;
+  shownLayers = stackOf(value); towerH = shownLayers*LAYER_H; stackTarget = shownLayers; stackBounce = 0;
   player.rotation.set(0,0,0); body.rotation.set(0,0,0); player.visible = true;
   player.position.set(px, py + towerH, pz);
   tower.position.set(px, py, pz);
@@ -2886,7 +2890,7 @@ function trapHit(o, pct, label){
   }
   o.hit = true;
   if(special === "survival"){ run.hits++; SFX.hit(); shake = 0.5; screenFlash("bad"); fail("survival"); return true; }
-  const loss = Math.max(1, Math.ceil(value*pct*armorK()*(1 + 0.15*diffOf(curLevel))));
+  const loss = Math.max(1, Math.ceil(value*pct*armorK()*(1 + 0.2*diffOf(curLevel))));
   const before = value;
   value = Math.max(0, value - loss);
   run.hits++; combo = 0; hurtT = 0.7;
@@ -3536,8 +3540,8 @@ function checkThieves(){
       continue;
     }
     if(e.hit || rel < -0.8) continue;
-    if(Math.abs(e.x - px) > 1.25) continue;
-    if(jumpY > 1.0){ e.jumpedOver = true; continue; }
+    // the red brutes are too tall to jump over: dodge sideways or smash them in Gold Fever
+    if(Math.abs(e.x - px) > 1.2 + (e.members.length - 1)*0.31) continue;
     e.hit = true;
     const alive = e.members.filter(m=>m.state==="idle" || m.state==="run");
     if(feverT > 0 || invulnT > 0 || shield > 0){
@@ -3574,7 +3578,8 @@ function updateThieves(dt){
     const active = state==="playing" && !e.hit && rel > 0 && rel < 26;
     if(active){
       e.z += 2*dt;
-      if(e.chase) e.x += Math.max(-1.4*dt, Math.min(1.4*dt, px - e.x));
+      const cs = (1.4 + 0.35*diffOf(curLevel))*dt;
+      if(e.chase) e.x += Math.max(-cs, Math.min(cs, px - e.x));
       e.x = Math.max(-2, Math.min(2, e.x));
     }
     for(const m of e.members){
@@ -3783,7 +3788,7 @@ function animatePlayer(dt){
   setMood(P, state==="failed" || hurtT > 0 ? "ouch" : (feverT > 0 || state==="celebrate" || state==="won" || jumpY > 1.4) ? "wow" : "happy");
   animateFace(P, dt);
   const dip = dipT > 0 ? -Math.sin(dipT/0.6*Math.PI)*1.1 : 0;
-  player.position.set(px, py + jumpY + dip + towerH + 0.01 + bob, pz);
+  player.position.set(px, py + jumpY + dip + towerH*tower.scale.y + 0.01 + bob, pz);
   tower.position.set(px, py + jumpY + dip, pz);
   bubble.visible = shield > 0 && state !== "failed";
   bubble.scale.setScalar(Math.max(1, bubble.scale.x - dt*2));
@@ -3805,22 +3810,30 @@ function animatePlayer(dt){
 }
 
 function updateStack(dt){
-  const target = state==="failed" ? 0 : layersFor(value);
-  const diff = target - shownLayers;
-  shownLayers += Math.sign(diff) * Math.min(Math.abs(diff), dt*30);
-  const n = Math.round(shownLayers);
+  const target = state==="failed" ? 0 : stackOf(value);
+  if(target > stackTarget + 0.02) stackBounce = Math.min(1, stackBounce + 0.6);
+  else if(target < stackTarget - 0.3 && state === "playing") stackBounce = -0.8;
+  stackTarget = target;
+  // rise quickly toward the new height, sink a little slower so losses read clearly
+  shownLayers += (target - shownLayers) * damp(target > shownLayers ? 12 : 7, dt);
+  const full = Math.floor(shownLayers), frac = shownLayers - full;
+  const n = Math.ceil(shownLayers - 0.05);
   const sway = targetX - px;
   towerLayers.forEach((l,i)=>{
     const vis = i < n;
     if(vis && !l.visible){ l.visible = true; l.userData.s = 0.3; }
     if(!vis) l.visible = false;
     if(l.visible){
-      l.userData.s += (1 - l.userData.s) * damp(14, dt);
+      const want = i < full ? 1 : Math.max(0.35, frac);
+      l.userData.s += (want - l.userData.s) * damp(14, dt);
       l.scale.setScalar(l.userData.s);
       l.position.x = sway * (n - i) * 0.006;
     }
   });
-  towerH += (n*LAYER_H - towerH) * damp(14, dt);
+  towerH = shownLayers*LAYER_H;
+  // squash-and-stretch: stretch up when gaining, squash down when losing
+  stackBounce += (0 - stackBounce) * damp(8, dt);
+  tower.scale.set(1 - stackBounce*0.06, 1 + stackBounce*0.1, 1 - stackBounce*0.06);
   const lv = Math.round(value);
   if(lv !== lastLabel){ if(lv > lastLabel && lastLabel >= 0) labelPop = Math.max(labelPop, 0.6); drawLabel(lv); lastLabel = lv; }
   labelPop = Math.max(0, labelPop - dt*4);
