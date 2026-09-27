@@ -28,23 +28,24 @@ around **gold bars** instead of cash. The runner is a cel-shaded cartoon
 character with ink outlines, big blinking eyes and expressions (happy,
 "ouch" on hits, "wow" in Gold Fever), and stands on a tower of gold bars
 that grows and shrinks with every choice. Thieves and bosses share the same
-cartoon style. The menu uses a bright sticker look: thick outlines, glossy
-buttons with shine sweeps, a bouncing logo with spinning light rays, and
-wiggling notification icons.
+cartoon style. The menus use a clean, dark "glass" interface over the 3D
+scene: frosted panels, one accent color per section, calm animations, and a
+payout breakdown after every level.
 
 ### Game modes
 
 - **Levels** — each zone has 5 levels. Most end at a rainbow **multiplier
   staircase** (x1.2 … x5) up to a gold bank; each step costs more bars than
-  the last. Every 5th level is a **boss fight**: tap as fast as you can to
+  the last. The bank pays out **30%** of what you carry (times the stairs
+  multiplier and your Income upgrade), so gold is earned, not handed out. Every 5th level is a **boss fight**: tap as fast as you can to
   throw your bars at the zone boss (Bandit King, Sand Golem, Frost Yeti,
   Sugar Tyrant) before your tower runs out. Levels are rated 1–3 stars.
 - **Daily Challenge** (from level 2) — a special level each day with a twist
   (Speed Rush, Mystery Madness, Trap Gauntlet, Thief Invasion, Golden
   Hour). First clear of the day pays +15 gems and bonus gold.
 - **Endless Run** (from level 3) — an infinite, ever-faster track. Gold
-  bank arches save 30% of your tower; you earn 1 gold per meter plus what
-  you banked. Beat your best distance.
+  bank arches save 40% of your tower; you earn 0.5 gold per meter plus 30%
+  of what you banked. Beat your best distance.
 
 ### Gameplay
 
@@ -55,6 +56,15 @@ wiggling notification icons.
   "?" gates**, **moving gates** whose panels swap sides, and **Lucky Slot**
   gates whose value keeps cycling — time your pass. Picking the better of
   two gates builds a **Best Pick** streak; every 3rd pick pays a bonus.
+- **Bonus goal** — every level rolls one extra objective (take no hits,
+  collect N bars, pass N blue gates, reach the finish with N gold, reach x3
+  on the stairs, jump N obstacles, trigger Gold Fever, crack a vault). It is
+  shown in the HUD; completing it pays +25% gold and 2 gems.
+- **Vaults** (from level 3) — a vault door on one lane: pay bars to crack it
+  open for 2 gems, a key or a 2.5x jackpot, or find it empty. Arrive with
+  too few bars and it stays locked and bounces you away.
+- **Falling boulders** (from level 4) — a red ring flashes on a lane, then a
+  rock drops in and blocks it. Dodge or jump it.
 - **Ramps** launch you through an arc of floating gold bars.
 - **Traps** — spiked walls (some move), swinging hammers, sliding saws,
   **hurdles** and **rolling barrels** you can jump, **pits** that make
@@ -95,6 +105,10 @@ wiggling notification icons.
   including animated ones: Rainbow, Lava, Galaxy, Sunfire, Toxic, plus
   see-through Ice and glowing Neon. Some can be bought with gems; the rest
   only come from mystery boxes.
+- **Economy** — gold is deliberately scarce: 30% bank payout, Income
+  +5% per level, steeper stair costs, and pricier upgrades and cosmetics.
+  Missions, achievements, daily rewards, the wheel and the gold mine all pay
+  less than before.
 - **Daily reward** (7-day streak), **Lucky Wheel** (free every 3 hours),
   **Treasure Room** (3 keys open chests; the jackpot is a free skin or hat).
 - **Settings** — sound, music, vibration, high/low graphics, reset.
