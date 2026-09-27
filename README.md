@@ -37,7 +37,7 @@ where your gold came from.
 
 - **Levels** — each zone has 5 levels. Most end at a rainbow **multiplier
   staircase** (x1.2 … x5) up to a gold bank; each step costs more bars than
-  the last. The bank pays out **30%** of what you carry (times the stairs
+  the last. The bank pays out **25%** of what you carry (times the stairs
   multiplier and your Income upgrade), so gold is earned, not handed out. Every 5th level is a **boss fight**: tap as fast as you can to
   throw your bars at the zone boss (Bandit King, Sand Golem, Frost Yeti,
   Sugar Tyrant) before your tower runs out. Levels are rated 1–3 stars.
@@ -45,7 +45,7 @@ where your gold came from.
   (Speed Rush, Mystery Madness, Trap Gauntlet, Thief Invasion, Golden
   Hour). First clear of the day pays +15 gems and bonus gold.
 - **Endless Run** (from level 3) — an infinite, ever-faster track. Gold
-  bank arches save 40% of your tower; you earn 0.5 gold per meter plus 30%
+  bank arches save 40% of your tower; you earn 0.35 gold per meter plus 25%
   of what you banked. Beat your best distance.
 
 ### Gameplay
@@ -60,7 +60,7 @@ where your gold came from.
 - **Bonus goal** — every level rolls one extra objective (take no hits,
   collect N bars, pass N blue gates, reach the finish with N gold, reach x3
   on the stairs, jump N obstacles, trigger Gold Fever, crack a vault). It is
-  shown in the HUD; completing it pays +25% gold and 2 gems.
+  shown in the HUD; completing it pays +20% gold and 2 gems.
 - **Vaults** (from level 3) — a vault door on one lane: pay bars to crack it
   open for 2 gems, a key or a 2.5x jackpot, or find it empty. Arrive with
   too few bars and it stays locked and bounces you away.
@@ -124,8 +124,16 @@ where your gold came from.
   aura's name with a small animated preview, and low graphics halves the
   particle count. Some can be bought with gems; the rest
   only come from mystery boxes.
-- **Economy** — gold is deliberately scarce: 30% bank payout, Income
-  +5% per level, steeper stair costs, and pricier upgrades and cosmetics.
+- **Rising difficulty** — every level is harder than the last, up to around
+  level 36: more traps, thieves and boulders, fewer power-ups and boost
+  pads, faster running speed, bigger red gates and smaller blue ones,
+  harsher gate pairings, rarer golden gates, riskier mystery gates, traps
+  and thieves that take more, more moving walls, faster hammers and saws,
+  pricier stair steps and tougher bosses. The menu and level banner show
+  the tier: EASY, NORMAL (5+), HARD (12+), EXPERT (22+) and INSANE (35+).
+- **Economy** — gold is deliberately scarce: 25% bank payout, Income
+  +4% per level, smaller bar pickups, steeper stair costs, and pricier
+  upgrades (costs grow faster per level) and cosmetics.
   Missions, achievements, daily rewards, the wheel and the gold mine all pay
   less than before.
 - **Daily reward** (7-day streak), **Lucky Wheel** (free every 3 hours),

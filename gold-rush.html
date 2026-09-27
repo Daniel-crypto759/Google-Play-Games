@@ -139,6 +139,7 @@
   @keyframes twinkle{0%,100%{transform:scale(0) rotate(0)}50%{transform:scale(1) rotate(90deg)}}
   .badge-row{display:flex;gap:6px;align-items:center;margin-top:8px;position:relative}
   .lvl-badge{background:linear-gradient(#3b4c7c,#1d2a4d);color:#fff;border-radius:999px;padding:3px 14px;font-size:17px;border:2.5px solid #fff;box-shadow:0 0 0 2.5px #1d2a4d,0 4px 0 2.5px #1d2a4d}
+  .tier-badge{background:var(--tc,#4cd964);color:#fff;border-radius:999px;padding:3px 9px;font-size:12.5px;border:2.5px solid #fff;box-shadow:0 0 0 2.5px #1d2a4d,0 4px 0 2.5px #1d2a4d;text-shadow:0 1.5px 0 #1d2a4d}
   .lvl-badge.bonus{background:linear-gradient(#ffb04d,#ff7a1a)}
   .lvl-badge.boss{background:linear-gradient(#ff6d7e,#d6344a)}
   .star-badge{display:flex;align-items:center;gap:4px;background:linear-gradient(#ffe066,#ffb300);color:#fff;border-radius:999px;padding:3px 11px 3px 6px;font-size:16px;border:2.5px solid #fff;box-shadow:0 0 0 2.5px #1d2a4d,0 4px 0 2.5px #1d2a4d;text-shadow:0 1.5px 0 #1d2a4d}
@@ -575,6 +576,7 @@
       </div>
       <div class="badge-row">
         <div class="lvl-badge display" id="menuLevel">LEVEL 1</div>
+        <div class="tier-badge display" id="menuTier">EASY</div>
         <div class="star-badge display"><svg viewBox="0 0 24 24"><path d="M12 2l3 6.5 7 .8-5.2 4.8 1.5 7L12 17.6 5.7 21.1l1.5-7L2 9.3l7-.8z" fill="#ffc233"/></svg><span id="menuStars">0</span></div>
       </div>
       <div class="journey" id="journey"></div>
@@ -922,18 +924,18 @@ const ICONS = {
   power:'<svg viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7z" fill="#fff"/></svg>',
   arm:'<svg viewBox="0 0 24 24"><path d="M5 19c0-6 3-9 7-11l2-4 3 1-1 4c3 1 4 4 3 7-2 4-8 5-14 3z" fill="#fff"/></svg>',
 };
-const minePerHour = l => l > 0 ? Math.round(15*l + 4*l*l) : 0;
+const minePerHour = l => l > 0 ? Math.round(12*l + 3*l*l) : 0;
 const UPGRADES = [
-  {id:"start",  name:"Start Gold",   desc:"Start every level with a taller tower.",      max:40, base:90,  grow:1.46, col:"#ffb300", fx:l=>fmt(100 + l*25)},
-  {id:"income", name:"Income",       desc:"Bigger payout at the gold bank.",             max:40, base:160, grow:1.55, col:"#4cd964", fx:l=>"x"+(1 + l*0.05).toFixed(2)},
-  {id:"magnet", name:"Magnet",       desc:"Pull in gold bars from further away.",        max:10, base:330, grow:1.68, col:"#ff4d5e", fx:l=>l ? "+"+(l*10)+"%" : "OFF"},
-  {id:"armor",  name:"Armor",        desc:"Traps and thieves take fewer bars.",          max:10, base:420, grow:1.66,  col:"#6b7a99", fx:l=>"-"+(l*5)+"%"},
-  {id:"shield", name:"Bubble Shield",desc:"Blocks a hit. Refills every level.",          max:3,  base:1400, grow:2.9,  col:"#3d8bff", fx:l=>l+(l===1?" hit":" hits")},
-  {id:"fever",  name:"Gold Fever",   desc:"Fever mode lasts longer.",                    max:10, base:520, grow:1.66,  col:"#ff8a1f", fx:l=>(4 + l*0.4).toFixed(1)+"s"},
-  {id:"power",  name:"Power-Ups",    desc:"Magnet and Double Bars last longer.",         max:10, base:450, grow:1.66,  col:"#18b7a0", fx:l=>(6 + l*0.5).toFixed(1)+"s"},
-  {id:"arm",    name:"Throw Power",  desc:"Your bars hit bosses harder.",                max:15, base:600, grow:1.6, col:"#d6344a", fx:l=>"+"+(l*8)+"%"},
-  {id:"luck",   name:"Lucky Gates",  desc:"More golden gates, better mystery gates.",    max:10, base:680, grow:1.7, col:"#9b5cff", fx:l=>"+"+(l*3)+"%"},
-  {id:"mine",   name:"Gold Mine",    desc:"Earns gold while you are away (8h max).",     max:20, base:750, grow:1.56,  col:"#a0662e", fx:l=>fmt(minePerHour(l))+"/h"},
+  {id:"start",  name:"Start Gold",   desc:"Start every level with a taller tower.",      max:40, base:90,  grow:1.5, col:"#ffb300", fx:l=>fmt(100 + l*25)},
+  {id:"income", name:"Income",       desc:"Bigger payout at the gold bank.",             max:40, base:160, grow:1.59, col:"#4cd964", fx:l=>"x"+(1 + l*0.04).toFixed(2)},
+  {id:"magnet", name:"Magnet",       desc:"Pull in gold bars from further away.",        max:10, base:330, grow:1.72, col:"#ff4d5e", fx:l=>l ? "+"+(l*10)+"%" : "OFF"},
+  {id:"armor",  name:"Armor",        desc:"Traps and thieves take fewer bars.",          max:10, base:420, grow:1.7,  col:"#6b7a99", fx:l=>"-"+(l*5)+"%"},
+  {id:"shield", name:"Bubble Shield",desc:"Blocks a hit. Refills every level.",          max:3,  base:1400, grow:2.94,  col:"#3d8bff", fx:l=>l+(l===1?" hit":" hits")},
+  {id:"fever",  name:"Gold Fever",   desc:"Fever mode lasts longer.",                    max:10, base:520, grow:1.7,  col:"#ff8a1f", fx:l=>(4 + l*0.4).toFixed(1)+"s"},
+  {id:"power",  name:"Power-Ups",    desc:"Magnet and Double Bars last longer.",         max:10, base:450, grow:1.7,  col:"#18b7a0", fx:l=>(6 + l*0.5).toFixed(1)+"s"},
+  {id:"arm",    name:"Throw Power",  desc:"Your bars hit bosses harder.",                max:15, base:600, grow:1.64, col:"#d6344a", fx:l=>"+"+(l*8)+"%"},
+  {id:"luck",   name:"Lucky Gates",  desc:"More golden gates, better mystery gates.",    max:10, base:680, grow:1.74, col:"#9b5cff", fx:l=>"+"+(l*3)+"%"},
+  {id:"mine",   name:"Gold Mine",    desc:"Earns gold while you are away (8h max).",     max:20, base:750, grow:1.6,  col:"#a0662e", fx:l=>fmt(minePerHour(l))+"/h"},
 ];
 const ZONES = [
   {name:"MEADOW", boss:"BANDIT KING",  bossCol:0x6b3fd1, sky:["#4fb0ff","#a6dbff","#eaf7ff"], fog:0xdff1ff, ground:0x8fd46a, hills:[0x93d86b,0x86cf5d,0xa1de76,0x7cc653], leaves:[0x2fa84f,0x3cb95a,0x27954a,0x49c267], trunk:0x8a5a33},
@@ -941,6 +943,10 @@ const ZONES = [
   {name:"SNOW",   boss:"FROST YETI",   bossCol:0x8fc3ff, sky:["#7fb6e8","#c7e2f7","#f4fbff"], fog:0xeef6ff, ground:0xf3f7fc, hills:[0xe6eef8,0xdde8f5,0xf0f5fb,0xd4e2f2], leaves:[0x2c7a5b,0x33886a,0x24694e,0x3d9676], trunk:0x6a4a33},
   {name:"CANDY",  boss:"SUGAR TYRANT", bossCol:0xe0457b, sky:["#b56cff","#ff9fd6","#ffe1f1"], fog:0xffe6f4, ground:0xffb3da, hills:[0xff9ccc,0xf78cc4,0xffc2e2,0xee82bb], leaves:[0xff6fae,0x9f7bff,0x5fd4ff,0xffd166], trunk:0xfff4fa},
 ];
+// Difficulty keeps rising every level (0 at level 1, 1 at level 17, capped at 2.2 around level 36).
+const diffOf = lv => Math.min(2.2, (lv-1)/16);
+const TIERS = [[1,"EASY","#4cd964"],[5,"NORMAL","#3d8bff"],[12,"HARD","#ff8a1f"],[22,"EXPERT","#e5344a"],[35,"INSANE","#8a47f0"]];
+const tierOf = lv => TIERS.filter(t=>lv >= t[0]).pop();
 const zoneFor = lv => ZONES[Math.floor((lv-1)/5) % ZONES.length];
 const isBossLevel = lv => lv % 5 === 0;
 const isBonusLevel = lv => lv % 10 === 7;
@@ -979,7 +985,7 @@ const MODS = [
   {id:"thieves", name:"THIEF INVASION",  desc:"Gangs of thieves on every stretch."},
   {id:"golden",  name:"GOLDEN HOUR",     desc:"Golden gates show up all the time."},
 ];
-// One bonus goal per level: finish it for +25% gold and 2 gems.
+// One bonus goal per level: finish it for +20% gold and 2 gems.
 const GOALS = [
   {id:"nohit",  text:()=>"Take no hits",                  n:()=>1},
   {id:"bars",   text:n=>`Collect ${n} gold bars`,         n:lv=>Math.min(45, 14 + lv*2)},
@@ -1039,16 +1045,16 @@ function persist(){ try{ localStorage.setItem(SAVE_KEY, JSON.stringify(save)); }
 const U = id => save.up[id] || 0;
 const upCost = u => Math.round(u.base*Math.pow(u.grow, U(u.id))/10)*10;
 const startValue = () => 100 + U("start")*25;
-const incomeMult = () => (1 + U("income")*0.05) * (save.vip ? 2 : 1);
+const incomeMult = () => (1 + U("income")*0.04) * (save.vip ? 2 : 1);
 // Share of the gold you carry that the bank actually pays out.
-const BANK_RATE = 0.3;
+const BANK_RATE = 0.25;
 const magnetR = () => 0.95 + U("magnet")*0.26;
 const armorK = () => 1 - U("armor")*0.05;
 const feverDur = () => 4 + U("fever")*0.4;
 const powDur = () => 6 + U("power")*0.5;
 const throwK = () => 1 + U("arm")*0.08;
 const luckP = () => U("luck")*0.03;
-const goldBase = () => 60 + save.level*15;
+const goldBase = () => 50 + save.level*12;
 const totalStars = () => Object.values(save.stars).reduce((a,b)=>a+b, 0);
 function fmt(n){
   n = Math.round(n);
@@ -1900,11 +1906,13 @@ function gateTexture(o){
 function genGateOpts(lv){
   const base = 60 + lv*25;
   const r10 = v => Math.max(10, Math.round(v/10)*10);
-  const add = () => ({kind:"add", n:r10(base*(0.8 + rng()*1.8))});
-  const sub = () => ({kind:"sub", n:r10(base*(0.5 + rng()*1.2))});
+  const d = diffOf(lv);
+  const add = () => ({kind:"add", n:r10(base*(0.8 + rng()*1.8)*(1 - 0.12*d))});
+  const sub = () => ({kind:"sub", n:r10(base*(0.5 + rng()*1.2)*(1 + 0.25*d))});
   const mul = () => ({kind:"mul", n:(lv>=4 && rng()<0.25) ? 3 : 2});
   const div = () => ({kind:"div", n:2});
-  let a, b; const r = rng();
+  // later levels skew toward the harsher pairings (add/sub, x/sub, sub/÷)
+  let a, b; const r = rng()*(1 - 0.14*d) + 0.14*d;
   if(isBonus){ a = rng()<0.5 ? mul() : add(); b = add(); }
   else if(r < 0.24){ a = add(); b = add(); if(a.n===b.n) b.n += 50; }
   else if(r < 0.5){ a = add(); b = sub(); }
@@ -1914,7 +1922,7 @@ function genGateOpts(lv){
   const opts = rng()<0.5 ? [a,b] : [b,a];
   if(mod && mod.id==="mystery") return [{kind:"mystery"},{kind:"mystery"}];
   if(!isBonus && lv >= 2 && rng() < 0.13) opts[(rng()*2)|0] = {kind:"mystery"};
-  if(rng() < 0.05 + luckP() + (mod && mod.id==="golden" ? 0.4 : 0)){
+  if(rng() < Math.max(0.02, 0.05 - 0.012*d) + luckP() + (mod && mod.id==="golden" ? 0.4 : 0)){
     const i = (rng()*2)|0;
     opts[i] = rng()<0.5 ? {kind:"mul", n:3, gold:true} : {kind:"add", n:r10(base*3.5), gold:true};
   }
@@ -1995,7 +2003,7 @@ function addObstacle(z, lv, gemOk, forced){
     const g = new THREE.Group();
     const base = new THREE.Mesh(G.wallGeo, G.wallMat); base.position.y = 0.45; base.castShadow = true; g.add(base);
     for(let i=0;i<6;i++){ const s = new THREE.Mesh(G.spike, G.metal); s.position.set(-1.15 + i*0.46, 1.15, 0); g.add(s); }
-    o.move = lv >= 4 && rng() < 0.3;
+    o.move = lv >= 4 && rng() < 0.2 + 0.15*diffOf(lv);
     o.x = side*1.5; o.w = 1.3 + rng()*0.6; o.ph = rng()*6.28;
     g.position.set(o.x, 0, z);
     o.group = addTo(o, g);
@@ -2007,7 +2015,7 @@ function addObstacle(z, lv, gemOk, forced){
     const arm = new THREE.Mesh(G.hammerArm, G.metal); arm.position.y = -2.1; pivot.add(arm);
     const headM = new THREE.Mesh(G.hammerHead, G.redMat); headM.position.y = -4.2; headM.castShadow = true; pivot.add(headM);
     frame.position.z = z; addTo(o, frame);
-    Object.assign(o, {group:pivot, pivot, w:2.1 + Math.min(1, lv*0.04), ph:rng()*6.28, angle:0});
+    Object.assign(o, {group:pivot, pivot, w:2.1 + Math.min(1.6, lv*0.04), ph:rng()*6.28, angle:0});
     if(gemOk) addPickup("gem", 0, z);
   } else if(type==="saw"){
     const g = new THREE.Group();
@@ -2017,7 +2025,7 @@ function addObstacle(z, lv, gemOk, forced){
     blade.add(new THREE.Mesh(G.sawCore, G.redMat));
     blade.position.y = 0.5; g.add(blade);
     g.position.z = z; addTo(o, g);
-    Object.assign(o, {group:blade, blade, x:0, w:1.4 + Math.min(0.9, lv*0.05), ph:rng()*6.28});
+    Object.assign(o, {group:blade, blade, x:0, w:1.4 + Math.min(1.5, lv*0.05), ph:rng()*6.28});
     if(gemOk) addPickup("gem", rng()<0.5 ? -1.8 : 1.8, z);
   } else if(type==="hurdle"){
     const g = new THREE.Group();
@@ -2157,7 +2165,7 @@ function addVault(z, lv){
 }
 // Boulders: a warning ring flashes on the lane, then a rock drops in and blocks it.
 function addRocks(z, lv){
-  const n = lv >= 8 ? 3 : 2;
+  const n = lv >= 20 ? 4 : lv >= 8 ? 3 : 2;
   let last = 9;
   for(let i=0;i<n;i++){
     let lane;
@@ -2178,16 +2186,16 @@ function addRocks(z, lv){
 function rowKind(lv, row, last){
   if(row===0) return "bars";
   if(row===1) return "gate";
-  const d = Math.min(1, (lv-1)/14);
-  let pObs = isBonus ? 0 : (lv===1 ? 0.2 : 0.26 + 0.14*d);
+  const d = diffOf(lv);
+  let pObs = isBonus ? 0 : (lv===1 ? 0.2 : 0.24 + 0.12*d);
   if(mod && mod.id==="traps") pObs *= 1.9;
-  const pThief = isBonus ? 0 : lv >= 3 ? (mod && mod.id==="thieves" ? 0.28 : 0.09) : 0;
-  const pPow = lv >= 2 ? 0.06 : 0;
-  const pBoost = lv >= 2 ? 0.07 : 0;
+  const pThief = isBonus ? 0 : lv >= 3 ? (mod && mod.id==="thieves" ? 0.28 : 0.07 + 0.04*d) : 0;
+  const pPow = lv >= 2 ? Math.max(0.03, 0.06 - 0.012*d) : 0;
+  const pBoost = lv >= 2 ? Math.max(0.035, 0.07 - 0.015*d) : 0;
   const pRamp = isBonus ? 0.1 : lv >= 3 ? 0.07 : 0;
   const pVault = isBonus ? 0 : lv >= 3 ? 0.05 : 0;
-  const pRocks = isBonus ? 0 : lv >= 4 ? 0.06 + 0.04*d : 0;
-  const table = [["obs",pObs],["thief",pThief],["gate",0.36],["pow",pPow],["boost",pBoost],["ramp",pRamp],["vault",pVault],["rocks",pRocks]];
+  const pRocks = isBonus ? 0 : lv >= 4 ? 0.05 + 0.04*d : 0;
+  const table = [["obs",pObs],["thief",pThief],["gate",0.36 - 0.05*d],["pow",pPow],["boost",pBoost],["ramp",pRamp],["vault",pVault],["rocks",pRocks]];
   const r = rng(); let acc = 0, k = "bars";
   for(const [n,p] of table){ acc += p; if(r < acc){ k = n; break; } }
   if(k===last && k!=="gate") k = "gate";
@@ -2203,7 +2211,7 @@ function genRow(kind, z, lv, ctx){
   else if(kind==="vault") addVault(z, lv);
   else if(kind==="rocks") addRocks(z, lv);
   else { const k = ctx.keys > 0 && ctx.row > 2 && rng() < 0.5; if(k) ctx.keys--; addBars(z, lv, k); }
-  const d = Math.min(1, (lv-1)/14);
+  const d = diffOf(lv);
   return (kind==="ramp" || kind==="rocks" ? 22 : kind==="bars" || kind==="boost" || kind==="pow" || kind==="vault" ? 16 : kind==="thief" ? 15 : 13) + rng()*4 - d*2;
 }
 
@@ -2218,8 +2226,8 @@ function buildLevel(lv, opts){
   isBonus = !opts.daily && isBonusLevel(lv);
   applyZone(zoneFor(lv));
   L = Math.min(520, 150 + lv*16);
-  speed = Math.min(12.5, 9 + lv*0.12) * (mod && mod.id==="speed" ? 1.35 : 1);
-  stepBase = 60 + lv*25;
+  speed = Math.min(14.5, 9 + lv*0.13) * (mod && mod.id==="speed" ? 1.35 : 1);
+  stepBase = 60 + lv*30;
 
   addRoadChunk(10, L + (isBoss ? 34 : 18));
   let z = -18, row = 0, last = "";
@@ -2308,7 +2316,7 @@ function buildBoss(z){
   f.root.rotation.y = Math.PI;
   f.root.position.set(0, 0, z);
   levelGroup.add(f.root);
-  const hp = Math.round((320 + curLevel*120) * (1 + Math.floor((curLevel-1)/20)*0.5));
+  const hp = Math.round((320 + curLevel*140) * (1 + Math.floor((curLevel-1)/20)*0.5));
   boss = {f, mat, z, hp, max:hp, hitT:0, dead:false, win:false, t:0, name:zone.boss};
 }
 
@@ -2466,7 +2474,7 @@ const stat = (k, n) => { save.stats[k] += (n||1); };
 
 /* ---------- value changes ---------- */
 function resolveMystery(){
-  const good = Math.random() < 0.6 + luckP();
+  const good = Math.random() < 0.6 - 0.05*diffOf(curLevel) + luckP();
   const base = 60 + curLevel*25;
   if(good) return Math.random() < 0.5 ? {kind:"mul", n:2} : {kind:"add", n:Math.round(base*2.5/10)*10};
   return Math.random() < 0.5 ? {kind:"div", n:2} : {kind:"sub", n:Math.round(base/10)*10};
@@ -2545,7 +2553,7 @@ function trapHit(o, pct, label){
     return false;
   }
   o.hit = true;
-  const loss = Math.max(1, Math.ceil(value*pct*armorK()));
+  const loss = Math.max(1, Math.ceil(value*pct*armorK()*(1 + 0.15*diffOf(curLevel))));
   const before = value;
   value = Math.max(0, value - loss);
   run.hits++; combo = 0; hurtT = 0.7;
@@ -2582,7 +2590,7 @@ function mprog(id, n, asMax){
     if(m.prog >= m.goal) toast("MISSION COMPLETE!");
   }
 }
-const missionReward = m => ({g:Math.round((60 + save.level*12)*(m.tier+1)/10)*10, gems:m.tier===2 ? 5 : 0});
+const missionReward = m => ({g:Math.round((50 + save.level*10)*(m.tier+1)/10)*10, gems:m.tier===2 ? 5 : 0});
 const achTier = a => { const v = a.stat(); let t = 0; while(t < 3 && v >= a.tiers[t]) t++; return t; };
 const achClaimable = () => ACH.some(a=>achTier(a) > (save.ach[a.id]||0));
 
@@ -2634,7 +2642,7 @@ function startRun(which){
     : mode==="daily" ? "DAILY · " + mod.name : (isBoss ? "BOSS " : isBonus ? "BONUS " : "") + "LEVEL " + curLevel;
   if(curLevel <= 2 && mode==="level"){ hint("SWIPE TO STACK GOLD", "side"); hintTimer = 2.5; } else hideHint();
   showBanner(mode==="endless" ? "ENDLESS RUN" : mode==="daily" ? mod.name : isBoss ? "BOSS LEVEL!" : isBonus ? "BONUS LEVEL!" : "LEVEL " + curLevel,
-    mode==="endless" ? "HOW FAR CAN YOU GO?" : mode==="daily" ? "DAILY CHALLENGE" : isBoss ? "BEAT " + zoneFor(curLevel).boss : zoneFor(curLevel).name + " ZONE");
+    mode==="endless" ? "HOW FAR CAN YOU GO?" : mode==="daily" ? "DAILY CHALLENGE" : isBoss ? "BEAT " + zoneFor(curLevel).boss + " · " + tierOf(curLevel)[1] : zoneFor(curLevel).name + " ZONE · " + tierOf(curLevel)[1]);
   refreshHud();
 }
 function fail(reason){
@@ -2704,10 +2712,10 @@ function finishLevel(kind){
     const left = value;
     mult = 1;
     stars = left >= finishValue*0.5 ? 3 : left >= finishValue*0.2 ? 2 : 1;
-    reward = Math.round((150 + curLevel*45 + left*0.6) * incomeMult());
+    reward = Math.round((120 + curLevel*35 + left*0.5) * incomeMult());
     extraGems = 3; extraKeys = save.keys < 3 ? 1 : 0;
     stat("bosses");
-    rows = [["Boss bounty", fmt(150 + curLevel*45)], ["Bars left " + fmt(left) + " × 0.6", "+" + fmt(left*0.6)]];
+    rows = [["Boss bounty", fmt(120 + curLevel*35)], ["Bars left " + fmt(left) + " × 0.5", "+" + fmt(left*0.5)]];
   } else {
     mult = stepIdx >= 0 ? steps[stepIdx].mult : 1;
     stars = stepIdx >= 8 ? 3 : stepIdx >= 4 ? 2 : 1;
@@ -2719,7 +2727,7 @@ function finishLevel(kind){
   if(incomeMult() > 1) rows.push(["Income" + (save.vip ? " + VIP" : ""), "×" + +incomeMult().toFixed(2)]);
   const goalOk = goalMet();
   if(goalOk){
-    const gb = Math.round(reward*0.25);
+    const gb = Math.round(reward*0.2);
     reward += gb; extraGems += 2;
     rows.push(["Bonus goal ✓", "+" + fmt(gb)]);
   } else if(goal) rows.push(["Bonus goal ✗", "—"]);
@@ -2755,11 +2763,11 @@ function showEndModal(){
   const d = Math.floor(endDist);
   const best = d > save.endlessBest;
   if(best) save.endlessBest = d;
-  reward = Math.round((endBank*BANK_RATE + d*0.5) * incomeMult());
+  reward = Math.round((endBank*BANK_RATE + d*0.35) * incomeMult());
   persist();
   $("endDist").textContent = fmt(d) + " m";
   show($("endBest"), best);
-  const rows = [["Distance " + fmt(d) + " m × 0.5", fmt(d*0.5)], ["Banked " + fmt(endBank) + " × " + Math.round(BANK_RATE*100) + "%", "+" + fmt(endBank*BANK_RATE)]];
+  const rows = [["Distance " + fmt(d) + " m × 0.35", fmt(d*0.35)], ["Banked " + fmt(endBank) + " × " + Math.round(BANK_RATE*100) + "%", "+" + fmt(endBank*BANK_RATE)]];
   if(incomeMult() > 1) rows.push(["Income" + (save.vip ? " + VIP" : ""), "×" + +incomeMult().toFixed(2)]);
   $("endStats").innerHTML = "Best " + fmt(save.endlessBest) + " m" + breakdownHtml(rows, reward);
   $("endGold").textContent = fmt(reward);
@@ -2883,7 +2891,7 @@ function collect(b){
   b.taken = true;
   flyers.push({m:b.mesh, from:b.mesh.position.clone(), t:0});
   if(b.type==="bar"){
-    const v = Math.round(8 + curLevel*1.5) * (feverT > 0 ? 2 : 1) * (doubleT > 0 ? 2 : 1);
+    const v = Math.round(6 + curLevel*1.2) * (feverT > 0 ? 2 : 1) * (doubleT > 0 ? 2 : 1);
     value += v; run.bars++; run.peak = Math.max(run.peak, value);
     stat("bars"); mprog("bars"); addCombo(1);
     SFX.coin();
@@ -3113,7 +3121,7 @@ function checkObstacles(prevZ){
 }
 
 /* ---------- thieves ---------- */
-const stealAmt = () => Math.round((12 + curLevel*3) * armorK());
+const stealAmt = () => Math.round((12 + curLevel*3.5) * armorK());
 function checkThieves(){
   for(const e of thieves){
     if(e.passed) continue;
@@ -3193,7 +3201,7 @@ function finishUpdate(dt){
   runPhase += 7*dt*1.3;
   const next = steps[stepIdx+1];
   if(next && pz <= next.zFront + 0.35){
-    const cost = Math.round(stepBase*(1 + (stepIdx+1)*0.35));
+    const cost = Math.round(stepBase*(1 + (stepIdx+1)*(0.35 + 0.05*diffOf(curLevel))));
     if(value >= cost){
       stepIdx++;
       value -= cost;
@@ -3583,6 +3591,8 @@ function refreshMenu(){
   lb.classList.toggle("bonus", isBonusLevel(lv));
   lb.classList.toggle("boss", isBossLevel(lv));
   $("menuStars").textContent = totalStars();
+  const tier = tierOf(lv), tb = $("menuTier");
+  tb.textContent = tier[1]; tb.style.setProperty("--tc", tier[2]);
   $("menuZone").textContent = zoneFor(lv).name + " ZONE";
   renderJourney();
   refreshSide();
