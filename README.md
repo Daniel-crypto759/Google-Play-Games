@@ -178,8 +178,19 @@ where your gold came from.
 - **Daily reward** (7-day streak), **Lucky Wheel** (free every 3 hours),
   **Treasure Room** (3 keys open chests; the jackpot is a free skin or hat).
 - **Settings** — sound, music, vibration, high/low graphics, reset.
-- Synthesized sound and music (Web Audio), vibration, confetti, fly-to-
-  counter coin animations. Progress is saved in `localStorage`.
+- **Music and sound** — all generated live with the Web Audio API (no audio
+  files): a synth band with kick/snare/hi-hat/toms, bass, detuned string
+  pads, arpeggios and a lead melody through a hall reverb and a compressor.
+  Four tracks switch automatically on the beat: a calm heroic menu theme, an
+  epic driving run theme (transposed per zone), a faster, brighter Gold
+  Fever theme and a heavy boss theme with brass stabs and tom fills.
+  Sound effects include coin chimes that climb in pitch as you chain
+  pickups, whoosh-and-chime gates, crunchy impacts, explosions, risers for
+  boosts and Gold Fever, a distorted boss roar, marimba stair steps and a
+  brass victory fanfare. Music ducks while paused and audio suspends when
+  the app is in the background.
+- Vibration, confetti, fly-to-counter coin animations. Progress is saved in
+  `localStorage`.
 
 Three.js (r128) loads from cdnjs, so the game needs an internet
 connection the first time; for an offline Play Store build, download
@@ -267,8 +278,8 @@ paid loot boxes, so check the rules for each market you publish in.
 
 - Crystal Rush renders with 2D Canvas; Bar Rush renders with Three.js.
   All UI is plain HTML/CSS overlaid on the canvas.
-- Swap the Web Audio beeps in each game's `sfx` object for real music/SFX
-  files by adding `<audio>` elements gated on `save.music` / `save.sfx`.
+- Bar Rush's music lives in `TRACKS` (tempo, chords, bass, lead lines) and
+  its effects in `SFX`; Crystal Rush still uses simple Web Audio beeps.
 - Skin colors/costs live in each file's `SKINS` object near the top of the
   `<script>` — add more there to expand the shop.
 - Bar Rush adapts to the device: it lowers its render resolution when
