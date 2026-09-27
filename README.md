@@ -28,9 +28,10 @@ around **gold bars** instead of cash. The runner is a cel-shaded cartoon
 character with ink outlines, big blinking eyes and expressions (happy,
 "ouch" on hits, "wow" in Gold Fever), and stands on a tower of gold bars
 that grows and shrinks with every choice. Thieves and bosses share the same
-cartoon style. The menus use a clean, dark "glass" interface over the 3D
-scene: frosted panels, one accent color per section, calm animations, and a
-payout breakdown after every level.
+cartoon style. The menu uses a bright sticker look: thick outlines, glossy
+buttons with shine sweeps, a bouncing logo with spinning light rays, and
+wiggling notification icons. After every level a payout breakdown shows
+where your gold came from.
 
 ### Game modes
 
