@@ -201,44 +201,80 @@
   #tabMissions{--hc:linear-gradient(#78b8ff,#347ff0)}
   #tabTrophies{--hc:linear-gradient(#c197ff,#8a47f0)}
   #tabPass{--hc:linear-gradient(#ffd24d,#ff7a1a)}
-  #tabPass h2{font-size:22px;padding-right:10px}
-  #tabPass h2 .grow{white-space:nowrap}
-  #tabPass h2 small{font-size:10.5px;text-align:right;line-height:1.2}
-  .pclose{width:32px;height:32px;border-radius:50%;border:2.5px solid #1d2a4d;background:#fff;color:#1d2a4d;font-size:15px;font-weight:900;padding:0;box-shadow:0 2px 0 #1d2a4d;text-shadow:none}
-  .phead{display:flex;align-items:center;gap:12px;padding:10px 14px 4px}
-  .ptier{width:58px;height:58px;border-radius:16px;background:linear-gradient(#ffe066,#ffb300);border:3px solid #1d2a4d;box-shadow:0 3px 0 #1d2a4d;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;text-shadow:0 2px 0 #1d2a4d;flex:0 0 auto}
-  .ptier small{font-size:10px;line-height:1}
-  .ptier b{font-weight:400;font-size:26px;line-height:1}
+  .pclose{width:32px;height:32px;border-radius:50%;border:2.5px solid #1d2a4d;background:#fff;color:#1d2a4d;font-size:15px;font-weight:900;padding:0;box-shadow:0 2px 0 #1d2a4d;flex:0 0 auto;position:relative;z-index:2}
+  .pass-panel{background:#fff8e6}
+  .pass-hero{position:relative;overflow:hidden;padding:10px 12px 12px;background:linear-gradient(160deg,#ffe066 0%,#ffae2e 45%,#ff6a3d 100%);border-bottom:3px solid #1d2a4d;flex:0 0 auto}
+  .ph-rays{position:absolute;right:-90px;top:-120px;width:340px;height:340px;border-radius:50%;pointer-events:none;
+    background:repeating-conic-gradient(rgba(255,255,255,.35) 0 8deg,rgba(255,255,255,0) 8deg 16deg);
+    -webkit-mask:radial-gradient(circle,#000 10%,transparent 68%);mask:radial-gradient(circle,#000 10%,transparent 68%);animation:spin 26s linear infinite}
+  .ph-top{position:relative;display:flex;align-items:center;justify-content:space-between}
+  .ph-title{font-size:28px;display:flex;align-items:center;gap:6px;letter-spacing:1px}
+  .ph-star{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;background:#fff;color:#ffb300;border:2.5px solid #1d2a4d;font-size:22px;text-shadow:none;box-shadow:0 3px 0 #1d2a4d;animation:nudge 2.2s ease-in-out infinite}
+  .ph-meta{position:relative;display:flex;gap:6px;margin-top:6px}
+  .ph-chip{background:rgba(29,42,77,.85);color:#fff;border-radius:999px;padding:2px 10px;font-size:12px;letter-spacing:.4px}
+  .ph-time{font-family:'Nunito',sans-serif;font-weight:900;background:rgba(255,255,255,.85);color:#1d2a4d}
+  .ph-row{position:relative;display:flex;align-items:center;gap:10px;margin-top:10px}
+  .ptier{width:62px;height:66px;background:linear-gradient(#fff6c8,#ffc233);border:3px solid #1d2a4d;box-shadow:0 4px 0 #1d2a4d;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;text-shadow:0 2px 0 #1d2a4d,1.5px 0 0 #1d2a4d,-1.5px 0 0 #1d2a4d;flex:0 0 auto;
+    clip-path:polygon(50% 0,100% 18%,100% 72%,50% 100%,0 72%,0 18%);border-radius:0;position:relative}
+  .ptier small{font-size:10px;line-height:1;margin-top:-4px}
+  .ptier b{font-weight:400;font-size:28px;line-height:1}
   .pprog{flex:1;min-width:0}
-  .pprog .progress{width:100%;max-width:none}
-  .pxp{font-weight:900;font-size:13px;margin-top:4px;font-variant-numeric:tabular-nums}
-  .pnote{font-size:11px;font-weight:800;color:#6b7a99}
-  .pbuy-row{display:flex;gap:8px;padding:6px 14px 2px;align-items:center}
-  .pbuy-row .btn{flex:1;font-size:15px;padding:8px 6px 10px}
-  .pbuy-row .btn .gem{width:16px;height:16px}
-  .powned{flex:1;text-align:center;background:linear-gradient(#ffe066,#ffb300);border:2.5px solid #1d2a4d;border-radius:14px;padding:6px;color:#fff;text-shadow:0 1.5px 0 #1d2a4d;box-shadow:0 3px 0 #1d2a4d}
-  .pcols{display:grid;grid-template-columns:1fr 34px 1fr;gap:6px;padding:8px 12px 0;font-family:'Lilita One','Arial Black',sans-serif;font-size:12px;text-align:center;color:#6b7a99}
-  .pcols span:last-child{color:#e08a00}
-  .plist{gap:6px;padding-top:6px}
-  .prow{display:grid;grid-template-columns:1fr 34px 1fr;gap:6px;align-items:center}
-  .pnum{width:34px;height:34px;border-radius:50%;background:#e3e9f4;border:2.5px solid #1d2a4d;display:grid;place-items:center;font-family:'Lilita One','Arial Black',sans-serif;font-size:14px;color:#8995b0}
+  .pbar{position:relative;height:22px;border-radius:999px;background:rgba(29,42,77,.25);border:3px solid #1d2a4d;overflow:hidden;box-shadow:0 3px 0 rgba(29,42,77,.5)}
+  .pbar .fill{height:100%;width:100%;background:linear-gradient(#b6ff9e,#2fc653);box-shadow:inset 0 4px 0 rgba(255,255,255,.4);transform-origin:left center;transform:scaleX(0);transition:transform .5s cubic-bezier(.2,1,.3,1)}
+  .pbar span{position:absolute;inset:0;display:grid;place-items:center;font-family:'Lilita One','Arial Black',sans-serif;font-size:12px;color:#fff;text-shadow:0 1.5px 0 #1d2a4d,1.5px 0 0 #1d2a4d,-1.5px 0 0 #1d2a4d,0 -1.5px 0 #1d2a4d;font-variant-numeric:tabular-nums}
+  .pnote{font-size:10.5px;font-weight:900;color:#5a2a00;margin-top:5px}
+  .ph-feature{width:74px;height:78px;border-radius:16px;background:radial-gradient(circle at 50% 45%,#fff6c8,#ffb300 70%);border:3px solid #1d2a4d;box-shadow:0 4px 0 #1d2a4d;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden;flex:0 0 auto}
+  .ph-feature .fig{width:44px;height:50px;animation:float 2.4s ease-in-out infinite}
+  .ph-feature em{font-style:normal;position:absolute;bottom:0;left:0;right:0;background:#1d2a4d;color:#ffe066;font-family:'Lilita One','Arial Black',sans-serif;font-size:9.5px;text-align:center;padding:1px 0}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+  .pass-upsell{margin:10px 10px 0;background:linear-gradient(135deg,#2c3c6c,#1d2a4d);border:3px solid #1d2a4d;border-radius:18px;padding:9px 10px 10px;box-shadow:0 4px 0 rgba(29,42,77,.5);flex:0 0 auto;position:relative;overflow:hidden}
+  .pass-upsell::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 85% 0%,rgba(255,194,51,.35),transparent 55%);pointer-events:none}
+  .pu-head{position:relative;color:#ffe066;font-size:15px;display:flex;align-items:baseline;justify-content:space-between;gap:6px;text-shadow:0 2px 0 #000}
+  .pu-head small{font-family:'Nunito',sans-serif;font-weight:900;font-size:10.5px;color:#c9d6ff;text-shadow:none}
+  .pu-items{position:relative;display:flex;gap:4px;margin:6px 0 7px;justify-content:space-between}
+  .pu-items > div{flex:1;min-width:0;height:38px;border-radius:10px;background:radial-gradient(circle,#fff6c8,#ffb84d 80%);border:2px solid #ffe066;display:grid;place-items:center}
+  .pu-items .fig{width:26px;height:31px}
+  .pu-btns{position:relative;display:flex;gap:8px}
+  .pu-btns .btn{flex:1;font-size:15px;padding:8px 6px 10px}
+  .pu-btns .btn .gem{width:16px;height:16px}
+  .powned{margin:10px 10px 0;text-align:center;background:linear-gradient(#ffe066,#ffb300);border:3px solid #1d2a4d;border-radius:14px;padding:6px;color:#fff;text-shadow:0 2px 0 #1d2a4d;box-shadow:0 3px 0 #1d2a4d;font-size:16px;letter-spacing:1px}
+  .pcols{display:grid;grid-template-columns:1fr 40px 1fr;gap:6px;padding:10px 12px 0;font-size:12px;text-align:center;letter-spacing:.8px}
+  .pc-free{color:#347ff0}
+  .pc-prem{color:#e08a00}
+  .plist{gap:0;padding:6px 12px 70px;background:none}
+  .prow{position:relative;display:grid;grid-template-columns:1fr 40px 1fr;gap:6px;align-items:center;padding:4px 0}
+  .prow::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:8px;margin-left:-4px;background:#d3dceb;border-left:2px solid #1d2a4d;border-right:2px solid #1d2a4d}
+  .prow.reached::before{background:linear-gradient(#ffe066,#ffb300)}
+  .prow:first-child::before{top:50%}
+  .prow:last-child::before{bottom:50%}
+  .pnum{position:relative;z-index:1;width:36px;height:36px;margin:0 auto;border-radius:50%;background:#e3e9f4;border:3px solid #1d2a4d;display:grid;place-items:center;font-family:'Lilita One','Arial Black',sans-serif;font-size:14px;color:#8995b0}
   .prow.reached .pnum{background:linear-gradient(#ffe066,#ffb300);color:#fff;text-shadow:0 1.5px 0 #1d2a4d}
-  .prow.next .pnum{background:#fff;color:#1d2a4d;box-shadow:0 0 0 3px #ffc233}
-  .pcell{position:relative;height:66px;border-radius:14px;border:2.5px solid #1d2a4d;box-shadow:0 3px 0 #1d2a4d;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;padding:2px;overflow:hidden}
-  .pcell.prem{background:linear-gradient(#fff6d6,#ffe7a8)}
-  .pcell.item.prem{background:linear-gradient(#ffe38a,#ffb84d)}
-  .pcell.item.free{background:linear-gradient(#e7f1ff,#c9dcff)}
-  .pcell .fig{width:30px;height:36px}
-  .pcell .pbox svg{width:34px;height:34px}
-  .pcell .pl{font-size:10px;font-weight:900;line-height:1;white-space:nowrap}
-  .pcell .pv{display:flex;align-items:center;gap:3px;font-family:'Lilita One','Arial Black',sans-serif;font-size:15px}
-  .pcell .pv .coin,.pcell .pv .gem{width:17px;height:17px}
-  .pcell .pv .keyi{width:19px;height:19px}
-  .pcell.ready{box-shadow:0 0 0 3px #4cd964,0 3px 0 3px #1d2a4d;animation:nudge 1.4s ease-in-out infinite}
-  .pcell.claimed{opacity:.55}
-  .pcell.locked > :not(.plock){filter:grayscale(.6);opacity:.65}
-  .pchk,.plock{position:absolute;right:4px;top:3px;font-style:normal;font-size:13px;font-weight:900;color:#2a9d44}
-  .plock{color:#1d2a4d;font-size:12px}
+  .prow.next .pnum{background:#fff;color:#1d2a4d;box-shadow:0 0 0 4px rgba(255,194,51,.6);animation:nudge 1.4s ease-in-out infinite}
+  .prow.milestone .pnum{width:40px;height:40px;background:linear-gradient(#ff8391,#e5344a);color:#fff;text-shadow:0 1.5px 0 #1d2a4d}
+  .prow.milestone.reached .pnum{background:linear-gradient(#c197ff,#8a47f0)}
+  .pcell{position:relative;height:72px;border-radius:16px;border:2.5px solid #1d2a4d;box-shadow:0 3px 0 #1d2a4d;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;padding:2px;overflow:hidden;transition:transform .1s}
+  .pcell:active{transform:translateY(2px);box-shadow:0 1px 0 #1d2a4d}
+  .pcell.free{background:linear-gradient(#ffffff,#e8f0ff)}
+  .pcell.prem{background:linear-gradient(#fff8dc,#ffe08a)}
+  .pcell.item::before{content:"";position:absolute;inset:-40%;background:repeating-conic-gradient(rgba(255,255,255,.55) 0 10deg,rgba(255,255,255,0) 10deg 20deg);animation:spin 14s linear infinite;pointer-events:none}
+  .pcell.item.free{background:radial-gradient(circle at 50% 45%,#dff0ff,#7ab8ff)}
+  .pcell.item.prem{background:radial-gradient(circle at 50% 45%,#fff3b0,#ff9f1a)}
+  .pcell > *{position:relative}
+  .pcell .fig{width:32px;height:38px;filter:drop-shadow(0 2px 0 rgba(29,42,77,.25))}
+  .pcell .pbox svg{width:36px;height:36px}
+  .pcell .pl{font-size:10px;font-weight:900;line-height:1;white-space:nowrap;background:rgba(255,255,255,.85);border-radius:999px;padding:1px 6px;color:#1d2a4d}
+  .pcell .pv{display:flex;align-items:center;gap:3px;font-family:'Lilita One','Arial Black',sans-serif;font-size:16px}
+  .pcell .pv .coin,.pcell .pv .gem{width:18px;height:18px}
+  .pcell .pv .keyi{width:20px;height:20px}
+  .pcell .ptag{position:absolute;top:0;left:0;background:#1d2a4d;color:#ffe066;font-style:normal;font-family:'Lilita One','Arial Black',sans-serif;font-size:8px;padding:1px 6px 1px 5px;border-bottom-right-radius:8px;letter-spacing:.3px}
+  .pcell.ready{border-color:#1d2a4d;box-shadow:0 0 0 3px #4cd964,0 3px 0 3px #1d2a4d,0 0 18px 4px rgba(76,217,100,.6);animation:nudge 1.4s ease-in-out infinite}
+  .pcell.ready::after{content:"CLAIM";position:absolute;bottom:0;left:0;right:0;background:linear-gradient(#86f394,#2bc452);color:#fff;font-family:'Lilita One','Arial Black',sans-serif;font-size:10px;text-align:center;text-shadow:0 1px 0 #1d2a4d;border-top:2px solid #1d2a4d}
+  .pcell.ready{padding-bottom:14px}
+  .pcell.claimed{filter:saturate(.35);opacity:.7}
+  .pcell.locked > :not(.plock):not(.ptag){opacity:.55;filter:grayscale(.5)}
+  .pchk{position:absolute;right:4px;top:3px;width:20px;height:20px;border-radius:50%;background:#4cd964;border:2px solid #1d2a4d;color:#fff;font-style:normal;font-size:11px;font-weight:900;display:grid;place-items:center}
+  .plock{position:absolute;right:4px;top:3px;width:22px;height:22px;border-radius:50%;background:#1d2a4d;display:grid;place-items:center;font-style:normal;font-size:11px}
+  .pclaim-all{position:absolute;left:16px;right:16px;bottom:12px;z-index:3;font-size:18px;animation:playb 1.3s ease-in-out infinite}
   .xp-pill{background:linear-gradient(#ffd24d,#ff8a1f);color:#fff;border:2.5px solid #1d2a4d;border-radius:999px;padding:0 10px;font-size:14px;text-shadow:0 1.5px 0 #1d2a4d;box-shadow:0 2px 0 #1d2a4d}
   .panel h2 .grow{flex:1}
   .panel h2 small{font-family:'Nunito',sans-serif;font-size:12px;font-weight:900;color:#fff;text-shadow:0 1px 0 #1d2a4d}
@@ -422,6 +458,27 @@
   .modbox b{font-family:'Lilita One','Arial Black',sans-serif;font-weight:400;font-size:21px;color:#ff6a1f}
   .modbox span{font-weight:800;font-size:13px;color:#6b7a99}
 
+  .modal.bottom{align-items:flex-end;padding:40px 10px calc(10px + env(safe-area-inset-bottom,0px))}
+  .modal.bottom .sheet{max-width:420px;animation:slideup .38s cubic-bezier(.2,1.1,.3,1);max-height:100%;display:flex;flex-direction:column}
+  .modal.bottom .sheet-body{min-height:0;flex:1}
+  .modal.bottom.closing .sheet{animation:slidedown .2s ease-in forwards}
+  @keyframes slideup{from{transform:translateY(100%)}}
+  @keyframes slidedown{to{transform:translateY(100%)}}
+  .mode-list{display:flex;flex-direction:column;gap:9px;overflow-y:auto;max-height:62vh;padding:2px 2px 6px;overscroll-behavior:contain}
+  .mcard{display:flex;align-items:center;gap:10px;text-align:left;background:#fff;border:2.5px solid #1d2a4d;border-radius:18px;box-shadow:0 4px 0 #1d2a4d;padding:9px 10px;animation:cardin .4s cubic-bezier(.2,1.3,.4,1) both;transition:transform .1s;flex-shrink:0}
+  .mcard:active{transform:translateY(3px);box-shadow:0 1px 0 #1d2a4d}
+  @keyframes cardin{from{opacity:0;transform:translateY(24px) scale(.95)}}
+  .mico{width:50px;height:50px;border-radius:15px;background:var(--mc);border:2.5px solid #1d2a4d;display:grid;place-items:center;flex:0 0 auto;box-shadow:inset 0 3px 0 rgba(255,255,255,.35)}
+  .mico svg{width:30px;height:30px;filter:drop-shadow(0 2px 0 rgba(0,0,0,.25))}
+  .minfo{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}
+  .minfo b{font-weight:400;font-size:17px}
+  .minfo span{font-size:11.5px;font-weight:800;color:#6b7a99;line-height:1.25}
+  .minfo em{font-style:normal;font-size:11px;font-weight:900;color:#8a47f0;margin-top:2px}
+  .mgo{flex:0 0 auto;background:linear-gradient(#86f394,#2bc452);color:#fff;border:2.5px solid #1d2a4d;border-radius:12px;padding:6px 10px;font-size:15px;text-shadow:0 1.5px 0 #1d2a4d;box-shadow:0 3px 0 #1d2a4d}
+  .mcard.locked{background:#eef2f8}
+  .mcard.locked .mico{filter:grayscale(.9)}
+  .mcard.locked .mgo{background:#c9d3e3}
+  .dist.hurry{color:#ff4d5e;animation:nudge .5s ease-in-out infinite}
   .daily-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
   .dcell{background:#fff;border:2.5px solid #1d2a4d;box-shadow:0 3px 0 #1d2a4d;border-radius:14px;padding:7px 2px;display:flex;flex-direction:column;align-items:center;gap:4px;font-family:'Lilita One','Arial Black',sans-serif;font-size:14px;position:relative}
   .dcell .d{font-family:'Nunito',sans-serif;font-weight:900;font-size:11px;color:#6b7a99}
@@ -641,8 +698,9 @@
             <span class="dot" id="dailyChalDot" hidden></span>
           </button>
           <button class="mode endless shine" id="modeEndless">
-            <svg viewBox="0 0 24 24"><path d="M7 8c-2.5 0-4.5 1.8-4.5 4s2 4 4.5 4c4 0 6-8 10-8 2.5 0 4.5 1.8 4.5 4s-2 4-4.5 4c-4 0-6-8-10-8z" fill="none" stroke="#fff" stroke-width="2.8"/></svg>
-            <div><div class="mt">ENDLESS<br>RUN</div><div class="ms" id="modeEndlessSub">BEST 0 m</div></div>
+            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="2" fill="#fff"/><rect x="13" y="3" width="8" height="8" rx="2" fill="#fff" opacity=".8"/><rect x="3" y="13" width="8" height="8" rx="2" fill="#fff" opacity=".8"/><rect x="13" y="13" width="8" height="8" rx="2" fill="#fff"/></svg>
+            <div><div class="mt">GAME<br>MODES</div><div class="ms" id="modeEndlessSub">5 MODES</div></div>
+            <span class="dot" id="modesDot" hidden></span>
           </button>
         </div>
         <button class="btn green play shine" id="playBtn">PLAY<svg viewBox="0 0 24 24"><path d="M7 4.5v15l12-7.5z" fill="#fff" stroke="#1d2a4d" stroke-width="2" stroke-linejoin="round"/></svg></button>
@@ -684,20 +742,35 @@
 
     <!-- GOLD PASS -->
     <div class="tab" id="tabPass" hidden>
-      <div class="panel">
-        <h2 class="display outline"><span class="grow">GOLD PASS</span><small><span id="passSeason">SEASON 1</span> · <span id="passTimer"></span></small><button class="pclose" id="passClose" aria-label="Close">&#10005;</button></h2>
-        <div class="phead">
-          <div class="ptier display"><small>TIER</small><b id="passTierN">0</b></div>
-          <div class="pprog"><div class="progress"><div class="fill" id="passFill"></div></div><div class="pxp" id="passXp">0 / 120 XP</div>
-            <div class="pnote">Earn XP by finishing levels, missions and Endless runs</div></div>
+      <div class="panel pass-panel">
+        <div class="pass-hero">
+          <div class="ph-rays"></div>
+          <div class="ph-top">
+            <div class="ph-title display outline"><span class="ph-star">&#9733;</span>GOLD PASS</div>
+            <button class="pclose" id="passClose" aria-label="Close">&#10005;</button>
+          </div>
+          <div class="ph-meta"><span class="ph-chip display" id="passSeason">SEASON 1</span><span class="ph-chip ph-time" id="passTimer"></span></div>
+          <div class="ph-row">
+            <div class="ptier display"><small>TIER</small><b id="passTierN">0</b></div>
+            <div class="pprog">
+              <div class="pbar"><div class="fill" id="passFill"></div><span id="passXp">0 / 120 XP</span></div>
+              <div class="pnote">Play levels, missions &amp; modes to earn XP</div>
+            </div>
+            <div class="ph-feature" id="passFeature"></div>
+          </div>
         </div>
-        <div class="pbuy-row">
-          <button class="btn orange small shine" id="passBuy">UNLOCK €4.99</button>
-          <button class="btn purple small" id="passGemBuy">OR 450</button>
-          <div class="powned display" id="passOwned" hidden>&#9733; GOLD PASS ACTIVE</div>
+        <div class="pass-upsell" id="passUpsell">
+          <div class="pu-head display">UNLOCK THE GOLD PASS <small>7 exclusives + boxes &amp; gems</small></div>
+          <div class="pu-items" id="passExcl"></div>
+          <div class="pu-btns">
+            <button class="btn orange small shine" id="passBuy">UNLOCK €4.99</button>
+            <button class="btn purple small" id="passGemBuy">OR 450</button>
+          </div>
         </div>
-        <div class="pcols"><span>FREE</span><span></span><span>GOLD PASS</span></div>
+        <div class="powned display" id="passOwned" hidden>&#9733; GOLD PASS ACTIVE &#9733;</div>
+        <div class="pcols display"><span class="pc-free">FREE</span><span></span><span class="pc-prem">&#9733; GOLD</span></div>
         <div class="scroll plist" id="passList"></div>
+        <button class="btn green pclaim-all shine" id="passClaimAll" hidden>CLAIM ALL</button>
       </div>
     </div>
 
@@ -755,7 +828,7 @@
   </div>
 
   <div class="modal" id="endModal" hidden>
-    <div class="sheet"><div class="ribbon purple display">RUN OVER</div>
+    <div class="sheet"><div class="ribbon purple display" id="endTitle">RUN OVER</div>
       <div class="sheet-body">
         <div class="reward" style="font-size:44px"><div class="rays"></div><span id="endDist">0 m</span></div>
         <div class="newbest" id="endBest" hidden>NEW BEST!</div>
@@ -763,6 +836,15 @@
         <div class="reward" style="font-size:34px"><span class="coin" style="width:32px;height:32px"></span><span id="endGold">0</span></div>
         <button class="btn purple" id="endRevive">REVIVE <span class="gem"></span> 10</button>
         <button class="btn green" id="endCollect">COLLECT</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal bottom" id="modesModal" hidden>
+    <div class="sheet"><div class="ribbon purple display">GAME MODES</div>
+      <div class="sheet-body">
+        <div class="mode-list" id="modeList"></div>
+        <button class="btn ghost small" id="modesClose">CLOSE</button>
       </div>
     </div>
   </div>
@@ -1004,6 +1086,42 @@ function passReward(track, t){
   if(track === "free") return k === 2 ? {gems:3 + Math.floor(t/10)*2} : k === 4 ? {keys:1} : {g:150 + t*30};
   return k === 1 || k === 4 ? {gems:10 + Math.floor(t/10)*5} : {g:400 + t*60};
 }
+// Every runner skin and hat also has its own effect around the character.
+const RUN_AURAS = {
+  red:    {name:"Spark",        tex:"star",  move:"twinkle", n:4,  size:0.22, cols:["#ff6b6b","#ffffff"]},
+  blue:   {name:"Splash",       tex:"bubble",move:"rise",    n:6,  size:0.24, cols:["#6fb3ff","#c9e4ff"]},
+  green:  {name:"Leafy",        tex:"star",  move:"orbit",   n:6,  size:0.22, cols:["#4cd964","#b6ff8a"]},
+  purple: {name:"Grape Fizz",   tex:"soft",  move:"rise",    n:7,  size:0.26, cols:["#b98cff","#e4d4ff"]},
+  orange: {name:"Tiger Fire",   tex:"flame", move:"rise",    n:7,  size:0.24, cols:["#ffb01a","#ff6a1a"]},
+  pink:   {name:"Crush",        tex:"heart", move:"rise",    n:7,  size:0.22, cols:["#ff8fd1","#ff5aa0"]},
+  black:  {name:"Shadow Veil",  tex:"soft",  move:"rise",    n:9,  size:0.36, cols:["#2d3142","#4a2a6a"], dark:true},
+  white:  {name:"Spectral",     tex:"soft",  move:"rise",    n:9,  size:0.32, cols:["#e6f0ff","#bfd8ff"], glow:"#bfd8ff"},
+  gold:   {name:"Midas Touch",  tex:"star",  move:"orbit",   n:10, size:0.26, cols:["#ffe066","#ffb300"], glow:"#ffc233", ring:"#ffc233"},
+  teal:   {name:"Tide",         tex:"bubble",move:"orbit",   n:7,  size:0.24, cols:["#18b7a0","#8fffe6"]},
+  sky:    {name:"Cloud Nine",   tex:"flake", move:"fall",    n:8,  size:0.24, cols:["#7fd4ff","#c9efff"]},
+  cherry: {name:"Sweetheart",   tex:"heart", move:"twinkle", n:7,  size:0.26, cols:["#d6344a","#ff8aa0"]},
+  lemon:  {name:"Sunny",        tex:"star",  move:"twinkle", n:8,  size:0.26, cols:["#ffe14d","#fff3a0"], glow:"#ffe14d"},
+  navy:   {name:"Starlight",    tex:"star",  move:"orbit",   n:9,  size:0.24, cols:["#6f8cff","#ffffff"], glow:"#2d4ba8"},
+  neonr:  {name:"Overcharge",   tex:"soft",  move:"orbit",   n:12, size:0.22, cols:["#5ffcff","#ff5ff2"], glow:"#5ffcff", ring:"#5ffcff", spin:true},
+  magma:  {name:"Eruption",     tex:"flame", move:"rise",    n:12, size:0.3,  cols:["#ffd24d","#ff6a1a","#ff2a1a"], glow:"#ff5a1f", ring:"#ff6a1a"},
+  prism:  {name:"Spectrum",     tex:"star",  move:"orbit",   n:12, size:0.26, cols:["#ff4d6d","#ffc233","#4cd964","#3d8bff","#9b5cff"], glow:"rainbow", ring:"rainbow", spin:true},
+  cosmic: {name:"Nebula",       tex:"star",  move:"orbit",   n:12, size:0.24, cols:["#ffe066","#b69cff","#6fd0ff"], glow:"#6a4dff", ring:"#6a4dff", spin:true},
+};
+const HAT_FX = {
+  cap:        {name:"Swagger",     tex:"star",  move:"twinkle", n:3, size:0.16, cols:["#ff4d5e","#ffffff"]},
+  party:      {name:"Confetti",    tex:"soft",  move:"fall",    n:6, size:0.12, cols:["#ff5a8a","#5ad1ff","#ffe066","#8aff7a"]},
+  cowboy:     {name:"Tumbleweed",  tex:"soft",  move:"rise",    n:4, size:0.2,  cols:["#d9b88a","#b98a5a"]},
+  tophat:     {name:"Magic Trick", tex:"star",  move:"twinkle", n:5, size:0.18, cols:["#ffffff","#ffe066"]},
+  crown:      {name:"Royalty",     tex:"star",  move:"orbit",   n:6, size:0.18, cols:["#ffe066","#ffffff"], glow:"#ffc233"},
+  viking:     {name:"North Wind",  tex:"flake", move:"fall",    n:5, size:0.18, cols:["#bfeaff","#ffffff"]},
+  halo:       {name:"Holy Light",  tex:"star",  move:"twinkle", n:6, size:0.2,  cols:["#fff3a0","#ffffff"], glow:"#fff3a0"},
+  beanie:     {name:"Snow Day",    tex:"flake", move:"fall",    n:5, size:0.16, cols:["#ffffff","#bfeaff"]},
+  chef:       {name:"Steam",       tex:"soft",  move:"rise",    n:5, size:0.26, cols:["#ffffff","#e6ecf5"]},
+  pirate:     {name:"Doubloons",   tex:"star",  move:"orbit",   n:5, size:0.18, cols:["#ffc233","#ffe066"]},
+  headphones: {name:"Beats",       tex:"note",  move:"rise",    n:5, size:0.24, cols:["#ff4d5e","#3d8bff","#ffc233"]},
+  wizard:     {name:"Arcane",      tex:"star",  move:"orbit",   n:8, size:0.2,  cols:["#b98cff","#6fd0ff","#ffe066"], glow:"#6a4dff", spin:true},
+  horns:      {name:"Hellfire",    tex:"flame", move:"rise",    n:7, size:0.22, cols:["#ff6a1a","#ff2a1a","#ffd24d"], glow:"#e5344a"},
+};
 const BOXES = {
   common:   {name:"BAR BOX",    cost:30,  col:"#3d8bff", odds:{common:70, rare:25, epic:4.5, legendary:0.5}},
   epic:     {name:"EPIC BOX",   cost:90,  col:"#9b5cff", odds:{common:30, rare:48, epic:18, legendary:4}},
@@ -1089,6 +1207,19 @@ const ACH = [
   {id:"style",  name:"Fashionista",  desc:"Own cosmetics",             stat:()=>save.owned.length + save.hats.length + save.bars.length, tiers:[5,10,18]},
 ];
 const ACH_REWARD = [{gems:5, g:250}, {gems:15, g:800}, {gems:40, g:2500}];
+// Extra game modes, picked from the GAME MODES sheet.
+const GAME_MODES = [
+  {id:"endless",  name:"ENDLESS RUN", unlock:3,  col:"linear-gradient(135deg,#b67aff,#3d8bff)", desc:"An infinite, ever-faster track. Bank arches keep 40% of your tower safe.",
+   icon:'<path d="M7 8c-2.5 0-4.5 1.8-4.5 4s2 4 4.5 4c4 0 6-8 10-8 2.5 0 4.5 1.8 4.5 4s-2 4-4.5 4c-4 0-6-8-10-8z" fill="none" stroke="#fff" stroke-width="2.8"/>', best:()=>fmt(save.endlessBest) + " m"},
+  {id:"rush",     name:"GOLD RUSH",   unlock:4,  col:"linear-gradient(135deg,#ffd24d,#ff8a1f)", desc:"60 seconds on the clock. Bars count double and every blue gate adds +2s.",
+   icon:'<circle cx="12" cy="13" r="8" fill="#fff"/><path d="M12 8v5l3 2" stroke="#ff8a1f" stroke-width="2.4" fill="none" stroke-linecap="round"/><rect x="9.5" y="2" width="5" height="3" rx="1" fill="#fff"/>', best:()=>fmt(save.best.rush) + " gold"},
+  {id:"frenzy",   name:"GATE FRENZY", unlock:5,  col:"linear-gradient(135deg,#5fe3c4,#3d8bff)", desc:"Nothing but gates, lucky slots and mystery doors at top speed, up to the stairs.",
+   icon:'<rect x="3" y="4" width="7" height="16" rx="1.5" fill="#fff"/><rect x="14" y="4" width="7" height="16" rx="1.5" fill="#fff" opacity=".75"/><text x="6.5" y="15" text-anchor="middle" font-size="8" font-family="Lilita One,Arial Black" fill="#3d8bff">x2</text>', best:()=>fmt(save.best.frenzy) + " bars"},
+  {id:"survival", name:"SURVIVAL",    unlock:6,  col:"linear-gradient(135deg,#ff8391,#b0203a)", desc:"More traps, and a single hit ends the run. Shields and Gold Fever still save you.",
+   icon:'<path d="M12 2l8 3v6c0 5-3.5 9-8 11-4.5-2-8-6-8-11V5z" fill="#fff"/><path d="M12 7v6M12 16v1" stroke="#e5344a" stroke-width="2.6" stroke-linecap="round"/>', best:()=>fmt(save.best.survival) + " m"},
+  {id:"bossrush", name:"BOSS RUSH",   unlock:10, col:"linear-gradient(135deg,#6b3fd1,#e0457b)", desc:"Short run-up, then boss after boss. Every wave is tougher; survive as long as your bars last.",
+   icon:'<path d="M3 18 2 7l5 4 5-7 5 7 5-4-1 11z" fill="#fff"/><circle cx="12" cy="14" r="2" fill="#e0457b"/>', best:()=>save.best.bossrush + " bosses"},
+];
 const MODS = [
   {id:"speed",   name:"SPEED RUSH",      desc:"Everything moves 35% faster."},
   {id:"mystery", name:"MYSTERY MADNESS", desc:"Every gate is a purple mystery gate."},
@@ -1128,12 +1259,12 @@ function defSave(){
     sound:true, music:true, vibe:true, gfx:true, stars:{}, daily:{streak:0, last:""}, missions:{date:"", list:[], bonus:false},
     wheelAt:0, mineAt:Date.now(), stats:defStats(), ach:{}, endlessBest:0, chalDone:"", tut:{},
     boxInv:{common:0, epic:0, legendary:0}, pity:0, freeBoxAt:0, vip:false, bought:[],
-    pass:{season:0, xp:0, free:[], prem:[], premium:false}};
+    pass:{season:0, xp:0, free:[], prem:[], premium:false}, best:{rush:0, frenzy:0, survival:0, bossrush:0}};
 }
 let save = defSave();
 function normalize(){
   const d = defSave();
-  for(const k of ["up","stars","daily","missions","ach","tut","boxInv","pass"]) save[k] = Object.assign({}, d[k], save[k]||{});
+  for(const k of ["up","stars","daily","missions","ach","tut","boxInv","pass","best"]) save[k] = Object.assign({}, d[k], save[k]||{});
   if(!Array.isArray(save.pass.free)) save.pass.free = [];
   if(!Array.isArray(save.pass.prem)) save.pass.prem = [];
   if(!Array.isArray(save.bought)) save.bought = [];
@@ -1732,6 +1863,8 @@ function applyLook(skin, bar, hat){
   if(G.barMat.transparent !== tr){ G.barMat.transparent = tr; G.barMat.needsUpdate = true; }
   G.barMat.opacity = b.opacity || 1;
   setAura(b.id);
+  setAuraDef(runAura, "run:" + s.id, RUN_AURAS[s.id]);
+  setAuraDef(hatAura, "hat:" + hat, HAT_FX[hat]);
   if(hat !== appliedHat){ setHat(hat); appliedHat = hat; }
 }
 let appliedHat = null;
@@ -1799,6 +1932,10 @@ function auraTex(kind){
     } else if(kind==="streak"){
       const g = x.createLinearGradient(0,0,0,h); g.addColorStop(0,"rgba(255,255,255,0)"); g.addColorStop(0.5,"rgba(255,255,255,1)"); g.addColorStop(1,"rgba(255,255,255,0)");
       x.fillStyle = g; x.fillRect(c-5,0,10,h);
+    } else if(kind==="note"){
+      x.beginPath(); x.ellipse(22, 46, 11, 8, -0.4, 0, 7); x.fill();
+      x.fillRect(30, 10, 6, 36);
+      x.beginPath(); x.moveTo(30, 10); x.quadraticCurveTo(50, 14, 52, 30); x.quadraticCurveTo(44, 20, 36, 22); x.closePath(); x.fill();
     } else if(kind==="rays"){
       for(let i=0;i<12;i++){
         const a = i*Math.PI/6, g = x.createLinearGradient(c, c, c + Math.cos(a)*32, c + Math.sin(a)*32);
@@ -1810,90 +1947,101 @@ function auraTex(kind){
   AURA_TEX[kind] = t;
   return t;
 }
-const aura = {id:null, group:new THREE.Group(), parts:[], mats:[], glow:null, ring:null, rays:null, def:null};
-tower.add(aura.group);
-function auraMat(tex, col, dark){
-  const m = new THREE.SpriteMaterial({map:auraTex(tex), color:new THREE.Color(col), transparent:true, depthWrite:false, opacity:dark ? 0.75 : 0.95});
-  aura.mats.push(m); return m;
+// One aura emitter: particles + optional glow halo, ground ring and sun rays.
+// o.h(): height covered · o.r: radius scale · o.glowW: halo width · o.ring: ring scale (0 = none)
+function makeAura(parent, o){
+  const a = {id:null, group:new THREE.Group(), parts:[], mats:[], glow:null, ring:null, rays:null, def:null, o};
+  a.group.position.y = o.y0 || 0;
+  parent.add(a.group);
+  return a;
 }
-function setAura(barId){
-  if(aura.id === barId) return;
-  aura.id = barId;
-  aura.group.clear(); aura.mats.forEach(m=>m.dispose()); aura.mats = []; aura.parts = [];
-  aura.glow = aura.ring = aura.rays = null;
-  const d = aura.def = AURAS[barId];
+const aura = makeAura(tower, {h:()=>towerH + 1.7, r:1, glowW:2.2, ring:1});
+const runAura = makeAura(player, {h:()=>2.1, r:0.8, glowW:1.7, ring:0.62, y0:0.02, gz:0});
+const hatAura = makeAura(player, {h:()=>0.75, r:0.5, glowW:1.0, ring:0, y0:1.85, gz:0});
+function auraMat(a, tex, col, dark){
+  const m = new THREE.SpriteMaterial({map:auraTex(tex), color:new THREE.Color(col), transparent:true, depthWrite:false, opacity:dark ? 0.75 : 0.95});
+  a.mats.push(m); return m;
+}
+function setAuraDef(a, key, d){
+  if(a.id === key) return;
+  a.id = key;
+  a.group.clear(); a.mats.forEach(m=>m.dispose()); a.mats = []; a.parts = [];
+  a.glow = a.ring = a.rays = null;
+  a.def = d || null;
   if(!d) return;
-  const n = Math.round(d.n * (save.gfx ? 1 : 0.5));
-  const mats = d.cols.map(c=>auraMat(d.tex, c, d.dark));
+  const n = Math.max(1, Math.round(d.n * (save.gfx ? 1 : 0.5)));
+  const mats = d.cols.map(c=>auraMat(a, d.tex, c, d.dark));
   for(let i=0;i<n;i++){
     const sp = new THREE.Sprite(mats[i % mats.length]);
     sp.renderOrder = 3;
-    aura.group.add(sp);
-    aura.parts.push({sp, life:Math.random(), rate:0.35 + Math.random()*0.4, a:Math.random()*6.28, r:0.45 + Math.random()*0.45, y:Math.random(), sz:d.size*1.25*(0.7 + Math.random()*0.6), sw:Math.random()*6.28, band:i%2});
+    a.group.add(sp);
+    a.parts.push({sp, life:Math.random(), rate:0.35 + Math.random()*0.4, a:Math.random()*6.28, r:0.45 + Math.random()*0.45, y:Math.random(), sz:d.size*1.25*(0.7 + Math.random()*0.6), sw:Math.random()*6.28, band:i%2});
   }
   if(d.glow){
-    aura.glow = new THREE.Sprite(auraMat("glow", d.glow === "rainbow" ? "#ffffff" : d.glow, false));
-    aura.glow.material.opacity = 0.42; aura.glow.renderOrder = 1; aura.group.add(aura.glow);
+    a.glow = new THREE.Sprite(auraMat(a, "glow", d.glow === "rainbow" ? "#ffffff" : d.glow, false));
+    a.glow.material.opacity = 0.42; a.glow.renderOrder = 1; a.group.add(a.glow);
   }
-  if(d.ring){
+  if(d.ring && a.o.ring){
     const m = new THREE.MeshBasicMaterial({map:auraTex("ring"), color:new THREE.Color(d.ring === "rainbow" ? "#ffffff" : d.ring), transparent:true, opacity:0.9, depthWrite:false, side:THREE.DoubleSide});
-    aura.mats.push(m);
-    aura.ring = new THREE.Mesh(G.auraRingGeo, m); aura.ring.position.y = 0.03; aura.group.add(aura.ring);
+    a.mats.push(m);
+    a.ring = new THREE.Mesh(G.auraRingGeo, m); a.ring.position.y = 0.03; a.group.add(a.ring);
   }
   if(d.rays){
-    aura.rays = new THREE.Sprite(auraMat("rays", "#ffd24d", false));
-    aura.rays.material.opacity = 0.5; aura.rays.renderOrder = 0; aura.group.add(aura.rays);
+    a.rays = new THREE.Sprite(auraMat(a, "rays", "#ffd24d", false));
+    a.rays.material.opacity = 0.5; a.rays.renderOrder = 0; a.group.add(a.rays);
   }
 }
-function updateAura(dt){
-  const d = aura.def;
-  aura.group.visible = !!d && state !== "failed";
+const setAura = barId => setAuraDef(aura, "bar:" + barId, AURAS[barId]);
+function updateAuraObj(a, dt){
+  const d = a.def;
+  a.group.visible = !!d && state !== "failed";
   if(!d) return;
-  const H = towerH + 1.7, running = state === "playing" || state === "finish";
+  const H = a.o.h(), R = a.o.r, running = state === "playing" || state === "finish";
   const hueNow = (time*0.2) % 1;
-  for(const p of aura.parts){
+  for(const p of a.parts){
     p.life += dt*p.rate;
     if(p.life >= 1){ p.life -= 1; p.a = Math.random()*6.28; p.r = 0.45 + Math.random()*0.45; p.y = Math.random(); p.sw = Math.random()*6.28; }
     const L = p.life, sp = p.sp;
     let x, y, z, k;
     if(d.move === "rise"){
-      y = L*H*1.05; x = Math.cos(p.a)*p.r + Math.sin(time*2 + p.sw)*0.12; z = Math.sin(p.a)*p.r*0.8 + (running ? L*1.6 : 0);
+      y = L*H*1.05; x = Math.cos(p.a)*p.r*R + Math.sin(time*2 + p.sw)*0.12*R; z = Math.sin(p.a)*p.r*0.8*R + (running ? L*1.6 : 0);
       k = Math.sin(L*Math.PI);
     } else if(d.move === "fall"){
-      y = (1 - L)*(H + 0.6); x = Math.cos(p.a)*p.r*1.1 + Math.sin(time*1.5 + p.sw)*0.2; z = Math.sin(p.a)*p.r*0.8 + (running ? L*1.2 : 0);
+      y = (1 - L)*(H + 0.6*R); x = Math.cos(p.a)*p.r*1.1*R + Math.sin(time*1.5 + p.sw)*0.2*R; z = Math.sin(p.a)*p.r*0.8*R + (running ? L*1.2 : 0);
       k = Math.sin(L*Math.PI);
     } else if(d.move === "orbit"){
-      const dir = d.spin && p.band ? -1 : 1, rr = 0.75 + p.r*0.5;
-      const a = p.a + time*(1.8 + p.rate)*dir;
-      y = (0.15 + p.y*0.85)*H + Math.sin(time*2 + p.sw)*0.12; x = Math.cos(a)*rr; z = Math.sin(a)*rr*0.9;
+      const dir = d.spin && p.band ? -1 : 1, rr = (0.75 + p.r*0.5)*R;
+      const an = p.a + time*(1.8 + p.rate)*dir;
+      y = (0.15 + p.y*0.85)*H + Math.sin(time*2 + p.sw)*0.12*R; x = Math.cos(an)*rr; z = Math.sin(an)*rr*0.9;
       k = 0.65 + 0.35*Math.sin(time*5 + p.sw);
       p.life = Math.min(p.life, 0.999);
     } else {
-      y = p.y*H; x = Math.cos(p.a)*p.r*1.1; z = Math.sin(p.a)*p.r;
+      y = p.y*H; x = Math.cos(p.a)*p.r*1.1*R; z = Math.sin(p.a)*p.r*R;
       k = Math.max(0, Math.sin(L*Math.PI*2 - Math.PI/2)*0.5 + 0.5); k = k*k;
     }
     sp.position.set(x, y, z);
     sp.scale.setScalar(Math.max(0.001, p.sz*k*(d.tex === "flame" ? 1.2 : 1)));
     if(d.tex === "flame") sp.scale.y *= 1.5;
   }
-  if(d.cols.length > 1 && d.glow === "rainbow") aura.mats.forEach((m,i)=>{ if(i < d.cols.length) m.color.setHSL((hueNow + i/d.cols.length) % 1, 0.9, 0.6); });
-  if(aura.glow){
+  if(d.cols.length > 1 && d.glow === "rainbow") a.mats.forEach((m,i)=>{ if(i < d.cols.length) m.color.setHSL((hueNow + i/d.cols.length) % 1, 0.9, 0.6); });
+  if(a.glow){
     const pulse = 1 + 0.08*Math.sin(time*3);
-    aura.glow.position.set(0, H*0.45, -0.15);
-    aura.glow.scale.set(2.2*pulse, (H + 1.2)*pulse, 1);
-    if(d.glow === "rainbow") aura.glow.material.color.setHSL(hueNow, 0.9, 0.6);
+    a.glow.position.set(0, H*0.45, a.o.gz != null ? a.o.gz : -0.15);
+    a.glow.scale.set(a.o.glowW*pulse, (H + 1.2*R)*pulse, 1);
+    if(d.glow === "rainbow") a.glow.material.color.setHSL(hueNow, 0.9, 0.6);
   }
-  if(aura.ring){
-    aura.ring.rotation.y -= dt*1.6;
-    aura.ring.scale.setScalar(1 + 0.06*Math.sin(time*4));
-    if(d.ring === "rainbow") aura.ring.material.color.setHSL((hueNow + 0.5) % 1, 0.9, 0.6);
+  if(a.ring){
+    a.ring.rotation.y -= dt*1.6;
+    a.ring.scale.setScalar(a.o.ring*(1 + 0.06*Math.sin(time*4)));
+    if(d.ring === "rainbow") a.ring.material.color.setHSL((hueNow + 0.5) % 1, 0.9, 0.6);
   }
-  if(aura.rays){
-    aura.rays.position.set(0, H*0.5, -0.3);
-    aura.rays.scale.setScalar(H*1.3 + 1);
-    aura.rays.material.rotation += dt*0.5;
+  if(a.rays){
+    a.rays.position.set(0, H*0.5, -0.3);
+    a.rays.scale.setScalar(H*1.3 + R);
+    a.rays.material.rotation += dt*0.5;
   }
 }
+function updateAura(dt){ updateAuraObj(aura, dt); updateAuraObj(runAura, dt); updateAuraObj(hatAura, dt); }
 
 /* ---------- world effects: pooled particles and shockwaves ---------- */
 const VFX_MAX = 160;
@@ -1999,6 +2147,8 @@ let levelGroup = new THREE.Group(); scene.add(levelGroup);
 let disposables = [];
 const track = o => { disposables.push(o); return o; };
 let rng = Math.random;
+// gm: which game mode is running; special: the extra-mode id (null for levels, daily and endless)
+let gm = "level", special = null, rushT = 0, rushOver = false, bossWave = 0, cdT = 0, cdStep = 0;
 let mode = "level", L = 200, speed = 9, isBonus = false, isBoss = false, stepBase = 100, curLevel = 1, mod = null;
 let gates = [], pickups = [], obstacles = [], boosts = [], steps = [], thieves = [], pows = [], banks = [], chunks = [], ramps = [], vaults = [];
 const allLists = () => [gates, pickups, obstacles, boosts, thieves, pows, banks, chunks, ramps, vaults];
@@ -2079,7 +2229,8 @@ function genGateOpts(lv){
     const i = (rng()*2)|0;
     opts[i] = rng()<0.5 ? {kind:"mul", n:3, gold:true} : {kind:"add", n:r10(base*3.5), gold:true};
   }
-  if(!isBonus && lv >= 3 && rng() < 0.16) opts[(rng()*2)|0] = {kind:"slot"};
+  if(!isBonus && lv >= 3 && rng() < (special === "frenzy" ? 0.3 : 0.16)) opts[(rng()*2)|0] = {kind:"slot"};
+  if(special === "frenzy" && rng() < 0.15) opts[(rng()*2)|0] = {kind:"mystery"};
   return opts;
 }
 function addGate(z, lv){
@@ -2102,7 +2253,7 @@ function addGate(z, lv){
     m.position.set(i===0 ? -1.5 : 1.5, 1.8, z);
     return addTo(e, m);
   });
-  e.moving = !isBonus && lv >= 3 && rng() < 0.18 + Math.min(0.2, lv*0.01);
+  e.moving = !isBonus && lv >= 3 && rng() < 0.18 + Math.min(0.2, lv*0.01) + (special === "frenzy" ? 0.25 : 0);
   e.ph = rng()*6.28;
   for(const x of (e.moving ? [-2.96, 2.96] : [-2.96, 0, 2.96])){
     const p = new THREE.Mesh(G.post, G.postMat); p.position.set(x, 1.95, z); p.castShadow = true; addTo(e, p);
@@ -2339,9 +2490,13 @@ function addRocks(z, lv){
 function rowKind(lv, row, last){
   if(row===0) return "bars";
   if(row===1) return "gate";
+  if(special === "frenzy") return row % 3 === 2 ? (rng() < 0.3 ? "ramp" : "bars") : "gate";
+  if(special === "bossrush") return row % 2 ? "bars" : rng() < 0.6 ? "gate" : "pow";
   const d = diffOf(lv);
   let pObs = isBonus ? 0 : (lv===1 ? 0.2 : 0.24 + 0.12*d);
   if(mod && mod.id==="traps") pObs *= 1.9;
+  if(special === "survival") pObs *= 1.45;
+  if(special === "rush") pObs *= 0.7;
   const pThief = isBonus ? 0 : lv >= 3 ? (mod && mod.id==="thieves" ? 0.28 : 0.07 + 0.04*d) : 0;
   const pPow = lv >= 2 ? Math.max(0.03, 0.06 - 0.012*d) : 0;
   const pBoost = lv >= 2 ? Math.max(0.035, 0.07 - 0.015*d) : 0;
@@ -2371,15 +2526,16 @@ function genRow(kind, z, lv, ctx){
 function buildLevel(lv, opts){
   opts = opts || {};
   clearLevel();
-  mode = opts.daily ? "daily" : "level";
+  special = opts.special || null;
+  mode = opts.daily ? "daily" : special ? "special" : "level";
   mod = opts.daily ? todayMod() : null;
   curLevel = lv;
-  rng = mulberry(opts.daily ? hashStr(todayKey()) : lv*7919 + 13);
-  isBoss = !opts.daily && isBossLevel(lv);
-  isBonus = !opts.daily && isBonusLevel(lv);
+  rng = special ? mulberry((Math.random()*1e9)|0) : mulberry(opts.daily ? hashStr(todayKey()) : lv*7919 + 13);
+  isBoss = special === "bossrush" || (!opts.daily && !special && isBossLevel(lv));
+  isBonus = !opts.daily && !special && isBonusLevel(lv);
   applyZone(zoneFor(lv));
-  L = Math.min(520, 150 + lv*16);
-  speed = Math.min(14.5, 9 + lv*0.13) * (mod && mod.id==="speed" ? 1.35 : 1);
+  L = special === "bossrush" ? 150 : special === "frenzy" ? Math.min(420, 220 + lv*8) : Math.min(520, 150 + lv*16);
+  speed = Math.min(14.5, 9 + lv*0.13) * (mod && mod.id==="speed" ? 1.35 : 1) * (special === "frenzy" ? 1.15 : 1);
   stepBase = 60 + lv*30;
 
   addRoadChunk(10, L + (isBoss ? 34 : 18));
@@ -2458,8 +2614,9 @@ function buildStairs(fz){
 /* ---------- boss ---------- */
 let boss = null;
 const projectiles = [];
-function buildBoss(z){
-  const zone = zoneFor(curLevel);
+function buildBoss(z, wave){
+  wave = wave || 0;
+  const zone = ZONES[(ZONES.indexOf(zoneFor(curLevel)) + wave) % ZONES.length];
   const mat = track(toon(zone.bossCol, {emissive:0x000000}));
   const f = buildFigure(mat, {shadows:true, outline:true, mood:"angry"});
   f.body.add(fitHat(buildHat("crown")));
@@ -2469,16 +2626,36 @@ function buildBoss(z){
   f.root.rotation.y = Math.PI;
   f.root.position.set(0, 0, z);
   levelGroup.add(f.root);
-  const hp = Math.round((320 + curLevel*140) * (1 + Math.floor((curLevel-1)/20)*0.5));
+  const hp = Math.round((320 + curLevel*140) * (1 + Math.floor((curLevel-1)/20)*0.5) * (special === "bossrush" ? 0.7 + 0.45*wave : 1));
   boss = {f, mat, z, hp, max:hp, hitT:0, dead:false, win:false, t:0, name:zone.boss};
+}
+
+function nextBoss(){
+  if(state !== "boss" && state !== "bossIntro") return;
+  const z = boss.z;
+  levelGroup.remove(boss.f.root);
+  bossWave++;
+  save.best.bossrush = Math.max(save.best.bossrush, bossWave);
+  buildBoss(z, bossWave);
+  const bonus = Math.round(boss.max*0.45/throwK());
+  value += bonus;
+  popup("+" + fmt(bonus) + " BARS", "#ffe066", 2.8, "big");
+  fxWave(px, py + 0.08, pz, "#ffc233", 5);
+  state = "bossIntro"; bossIntroT = 0; boss.win = false;
+  show($("bossBar"), true); $("bossName").textContent = boss.name; updateBossBar();
+  $("hudLevel").textContent = "BOSS RUSH · WAVE " + (bossWave + 1);
+  showBanner("WAVE " + (bossWave + 1), boss.name); SFX.roar(); shake = 0.4;
 }
 
 /* ---------- endless ---------- */
 let endXpGiven = false;
 let endDist = 0, endBank = 0, genZ = 0, genLen = 0, nextBankGen = 350, endLvBase = 2, endRow = 0, endLast = "";
-function buildEndless(){
+function buildEndless(kind){
+  endXpGiven = false;
   clearLevel();
   mode = "endless"; mod = null; isBoss = false; isBonus = false; goal = null;
+  special = kind && kind !== "endless" ? kind : null;
+  rushT = 60; rushOver = false;
   endLvBase = Math.max(2, Math.min(save.level, 12));
   curLevel = endLvBase;
   rng = Math.random;
@@ -2670,6 +2847,7 @@ function applyGate(o, g){
     }
   }
   const gp = headPos().clone();
+  if(delta >= 0 && special === "rush"){ rushT += 2; popup("+2s", "#8fe6ff", 3.6, "small"); }
   if(delta >= 0){
     run.good++; stat("gates"); mprog("gates");
     addCombo(o.gold ? 6 : 3);
@@ -2707,6 +2885,7 @@ function trapHit(o, pct, label){
     return false;
   }
   o.hit = true;
+  if(special === "survival"){ run.hits++; SFX.hit(); shake = 0.5; screenFlash("bad"); fail("survival"); return true; }
   const loss = Math.max(1, Math.ceil(value*pct*armorK()*(1 + 0.15*diffOf(curLevel))));
   const before = value;
   value = Math.max(0, value - loss);
@@ -2761,11 +2940,11 @@ const show = (el, on) => {
   }
   el.hidden = !on;
 };
-const MODAL_IDS = ["boxModal","payModal","settingsModal","pauseModal","winModal","failModal","endModal","dailyModal","wheelModal","chestModal","chalModal"];
+const MODAL_IDS = ["modesModal","boxModal","payModal","settingsModal","pauseModal","winModal","failModal","endModal","dailyModal","wheelModal","chestModal","chalModal"];
 const anyModalOpen = () => MODAL_IDS.some(id=>{ const m = $(id); return !m.hidden && !m.classList.contains("closing"); });
 
 function toMenu(){
-  state = "menu";
+  state = "menu"; gm = "level"; special = null;
   ["pauseModal","winModal","failModal","endModal"].forEach(id=>show($(id), false));
   show(hudEl, false); menuEl.classList.remove("out"); clearTimeout(menuEl._outT); show(menuEl, true); show($("bossBar"), false);
   hideHint();
@@ -2780,24 +2959,46 @@ let hintTimer = 0;
 function startRun(which){
   if(anyModalOpen()) return;
   ac(); startMusic();
-  if(which==="endless") buildEndless();
+  gm = which;
+  if(which==="endless" || which==="rush" || which==="survival") buildEndless(which);
   else if(which==="daily") buildLevel(Math.max(3, save.level), {daily:true});
+  else if(which==="frenzy" || which==="bossrush") buildLevel(Math.max(5, save.level), {special:which});
   else if(mode !== "level" || curLevel !== save.level) buildLevel(save.level);
   if(previewSel){ previewSel = null; applySkins(); }
-  if(which === "endless" || which === "daily") warmUp();
-  state = "playing";
+  bossWave = 0;
+  if(which === "bossrush") value = Math.round(startValue()*2 + curLevel*60);
+  if(which !== "level") warmUp();
+  // extra modes open with a short 3-2-1 countdown so the camera settles first
+  if(which === "level" || which === "daily"){ state = "playing"; }
+  else { state = "countdown"; cdT = 0; cdStep = 0; }
   stat("runs");
   menuEl.classList.add("out");
   clearTimeout(menuEl._outT);
   menuEl._outT = setTimeout(()=>{ if(state !== "menu") show(menuEl, false); menuEl.classList.remove("out"); }, 220);
   show(hudEl, true);
   show($("hudProgWrap"), mode !== "endless"); show($("hudDist"), mode === "endless");
-  $("hudLevel").textContent = mode==="endless" ? "ENDLESS · BEST " + fmt(save.endlessBest) + " m"
+  const gmDef = GAME_MODES.find(g=>g.id===gm);
+  $("hudLevel").textContent = gm==="endless" ? "ENDLESS · BEST " + fmt(save.endlessBest) + " m"
+    : gm==="rush" ? "GOLD RUSH · BEST " + fmt(save.best.rush)
+    : gm==="survival" ? "SURVIVAL · BEST " + fmt(save.best.survival) + " m"
+    : gm==="frenzy" ? "GATE FRENZY"
+    : gm==="bossrush" ? "BOSS RUSH · WAVE 1"
     : mode==="daily" ? "DAILY · " + mod.name : (isBoss ? "BOSS " : isBonus ? "BONUS " : "") + "LEVEL " + curLevel;
+  $("hudDist").classList.remove("hurry");
+  $("hudDist").textContent = special === "rush" ? "⏱ 1:00" : "0 m";
   if(curLevel <= 2 && mode==="level"){ hint("SWIPE TO STACK GOLD", "side"); hintTimer = 2.5; } else hideHint();
-  showBanner(mode==="endless" ? "ENDLESS RUN" : mode==="daily" ? mod.name : isBoss ? "BOSS LEVEL!" : isBonus ? "BONUS LEVEL!" : "LEVEL " + curLevel,
+  if(gmDef) showBanner(gmDef.name, "GET READY");
+  else showBanner(mode==="endless" ? "ENDLESS RUN" : mode==="daily" ? mod.name : isBoss ? "BOSS LEVEL!" : isBonus ? "BONUS LEVEL!" : "LEVEL " + curLevel,
     mode==="endless" ? "HOW FAR CAN YOU GO?" : mode==="daily" ? "DAILY CHALLENGE" : isBoss ? "BEAT " + zoneFor(curLevel).boss + " · " + tierOf(curLevel)[1] : zoneFor(curLevel).name + " ZONE · " + tierOf(curLevel)[1]);
   refreshHud();
+}
+function timeUp(){
+  rushOver = true;
+  state = "celebrate"; celebrateT = 0;
+  feverT = 0; $("feverGlow").style.opacity = "0";
+  showBanner("TIME UP!"); SFX.win(); buzz([30,50,30]);
+  saveRunStats();
+  setTimeout(()=>{ if(state === "celebrate") showEndModal(); }, 1300);
 }
 function fail(reason){
   if(state === "failed") return;
@@ -2811,7 +3012,7 @@ function fail(reason){
   saveRunStats();
   setTimeout(()=>{
     if(state !== "failed") return;
-    if(mode === "endless"){ showEndModal(); return; }
+    if(mode === "endless" || gm === "bossrush"){ showEndModal(); return; }
     const rb = $("reviveBtn");
     rb.hidden = revived;
     rb.disabled = save.gems < 10;
@@ -2893,6 +3094,7 @@ function finishLevel(kind){
   const xpGain = 40 + stars*20 + (kind === "boss" ? 40 : 0) + (goalOk ? 20 : 0) + (chalBonus ? 60 : 0);
   passXP(xpGain);
   if(mode === "level") save.stars[curLevel] = Math.max(save.stars[curLevel]||0, stars);
+  if(gm === "frenzy") save.best.frenzy = Math.max(save.best.frenzy, finishValue);
   save.gems += extraGems + run.gems;
   save.keys = Math.min(3, save.keys + run.keys + extraKeys);
   saveRunStats();
@@ -2901,7 +3103,7 @@ function finishLevel(kind){
   setTimeout(()=>{
     if(state !== "celebrate") return;
     state = "won";
-    $("winTitle").textContent = mode==="daily" ? "CHALLENGE COMPLETE!" : kind==="boss" ? "BOSS DEFEATED!" : (isBonus ? "BONUS " : "LEVEL " + curLevel + " ") + "COMPLETE!";
+    $("winTitle").textContent = gm==="frenzy" ? "FRENZY COMPLETE!" : mode==="daily" ? "CHALLENGE COMPLETE!" : kind==="boss" ? "BOSS DEFEATED!" : (isBonus ? "BONUS " : "LEVEL " + curLevel + " ") + "COMPLETE!";
     $("winMult").textContent = kind==="boss" ? boss.name + " DOWN" : "x" + mult + " MULTIPLIER";
     $("winStars").innerHTML = [0,1,2].map(i=>`<svg viewBox="0 0 24 24" class="${i<stars?"on":""}" style="animation-delay:${i*0.18}s"><path d="M12 2l3 6.5 7 .8-5.2 4.8 1.5 7L12 17.6 5.7 21.1l1.5-7L2 9.3l7-.8z"/></svg>`).join("");
     const gemTotal = extraGems + run.gems, keyTotal = run.keys + extraKeys;
@@ -2916,19 +3118,44 @@ function breakdownHtml(rows, total){
     `<div class="tot"><span>Total</span><b>${fmt(total)}</b></div></div>`;
 }
 function showEndModal(){
-  const d = Math.floor(endDist);
-  const best = d > save.endlessBest;
-  if(best) save.endlessBest = d;
-  reward = Math.round((endBank*BANK_RATE + d*0.35) * incomeMult());
-  if(!endXpGiven){ endXpGiven = true; passXP(Math.min(150, Math.floor(d/15))); }
+  const d = Math.floor(endDist), inc = incomeMult();
+  let big, best = false, bestTxt, rows, xp, title = "RUN OVER";
+  if(gm === "rush"){
+    const tower = rushOver ? value : 0, g = Math.round((tower + endBank)*BANK_RATE);
+    reward = Math.round((g + d*0.2) * inc);
+    best = reward > save.best.rush; if(best) save.best.rush = reward;
+    big = fmt(reward) + " gold"; bestTxt = "Best " + fmt(save.best.rush) + " gold";
+    rows = [["Tower " + fmt(tower) + " × " + Math.round(BANK_RATE*100) + "%", fmt(tower*BANK_RATE)], ["Banked " + fmt(endBank) + " × " + Math.round(BANK_RATE*100) + "%", "+" + fmt(endBank*BANK_RATE)], ["Distance " + fmt(d) + " m × 0.2", "+" + fmt(d*0.2)]];
+    xp = 60 + Math.min(90, Math.floor(d/12)); title = rushOver ? "TIME UP!" : "OUT OF GOLD!";
+  } else if(gm === "survival"){
+    reward = Math.round((endBank*BANK_RATE + d*0.6) * inc);
+    best = d > save.best.survival; if(best) save.best.survival = d;
+    big = fmt(d) + " m"; bestTxt = "Best " + fmt(save.best.survival) + " m";
+    rows = [["Distance " + fmt(d) + " m × 0.6", fmt(d*0.6)], ["Banked " + fmt(endBank) + " × " + Math.round(BANK_RATE*100) + "%", "+" + fmt(endBank*BANK_RATE)]];
+    xp = Math.min(150, Math.floor(d/10)); title = "WIPED OUT!";
+  } else if(gm === "bossrush"){
+    const per = 150 + curLevel*30;
+    reward = Math.round(bossWave*per*inc);
+    best = bossWave > 0 && bossWave >= save.best.bossrush; save.best.bossrush = Math.max(save.best.bossrush, bossWave);
+    big = bossWave + (bossWave === 1 ? " boss" : " bosses"); bestTxt = "Best " + save.best.bossrush + " bosses";
+    rows = [["Bosses beaten " + bossWave + " × " + fmt(per), fmt(bossWave*per)]];
+    xp = Math.min(150, 30 + bossWave*40); title = "BOSS RUSH OVER";
+  } else {
+    reward = Math.round((endBank*BANK_RATE + d*0.35) * inc);
+    best = d > save.endlessBest; if(best) save.endlessBest = d;
+    big = fmt(d) + " m"; bestTxt = "Best " + fmt(save.endlessBest) + " m";
+    rows = [["Distance " + fmt(d) + " m × 0.35", fmt(d*0.35)], ["Banked " + fmt(endBank) + " × " + Math.round(BANK_RATE*100) + "%", "+" + fmt(endBank*BANK_RATE)]];
+    xp = Math.min(150, Math.floor(d/15));
+  }
+  if(!endXpGiven){ endXpGiven = true; passXP(xp); }
   persist();
-  $("endDist").textContent = fmt(d) + " m";
+  if(inc > 1) rows.push(["Income" + (save.vip ? " + VIP" : ""), "×" + +inc.toFixed(2)]);
+  $("endTitle").textContent = title;
+  $("endDist").textContent = big;
   show($("endBest"), best);
-  const rows = [["Distance " + fmt(d) + " m × 0.35", fmt(d*0.35)], ["Banked " + fmt(endBank) + " × " + Math.round(BANK_RATE*100) + "%", "+" + fmt(endBank*BANK_RATE)]];
-  if(incomeMult() > 1) rows.push(["Income" + (save.vip ? " + VIP" : ""), "×" + +incomeMult().toFixed(2)]);
-  $("endStats").innerHTML = "Best " + fmt(save.endlessBest) + " m" + breakdownHtml(rows, reward);
+  $("endStats").innerHTML = bestTxt + ` · <span class="xp-pill">+${xp} XP</span>` + breakdownHtml(rows, reward);
   $("endGold").textContent = fmt(reward);
-  const rb = $("endRevive"); rb.hidden = revived; rb.disabled = save.gems < 10;
+  const rb = $("endRevive"); rb.hidden = revived || rushOver; rb.disabled = save.gems < 10;
   show($("endModal"), true);
 }
 function countUp(el, target){
@@ -3022,6 +3249,7 @@ function update(rawDt){
   if(hatObj && hatObj.userData.halo) hatObj.userData.halo.position.y = 2.5 + Math.sin(time*3)*0.05;
 
   if(state==="playing") playUpdate(dt);
+  else if(state==="countdown") countdownUpdate(dt);
   else if(state==="finish") finishUpdate(dt);
   else if(state==="bossIntro" || state==="boss") bossUpdate(dt);
   else if(state==="celebrate" || state==="won") celebrateT += dt;
@@ -3042,14 +3270,14 @@ function update(rawDt){
   updateStack(dt);
   updateDebris(dt);
   updateCamera(dt);
-  if(state==="playing" || state==="finish" || state==="boss") refreshHud();
+  if(state==="playing" || state==="finish" || state==="boss" || state==="bossIntro" || state==="countdown") refreshHud();
 }
 
 function collect(b){
   b.taken = true;
   flyers.push({m:b.mesh, from:b.mesh.position.clone(), t:0});
   if(b.type==="bar"){
-    const v = Math.round(6 + curLevel*1.2) * (feverT > 0 ? 2 : 1) * (doubleT > 0 ? 2 : 1);
+    const v = Math.round(6 + curLevel*1.2) * (special === "rush" ? 2 : 1) * (feverT > 0 ? 2 : 1) * (doubleT > 0 ? 2 : 1);
     value += v; run.bars++; run.peak = Math.max(run.peak, value);
     stat("bars"); mprog("bars"); addCombo(1);
     SFX.coin();
@@ -3100,6 +3328,16 @@ function openVault(v){
   addCombo(2);
   if(before > 0 && value <= 0) fail();
 }
+function countdownUpdate(dt){
+  cdT += dt;
+  const steps = [0.9, 1.5, 2.1, 2.7];
+  if(cdStep < 3 && cdT >= steps[cdStep]){ showBanner(String(3 - cdStep)); SFX.tick(); SFX.step(cdStep*3); buzz(10); cdStep++; }
+  else if(cdStep === 3 && cdT >= steps[3]){
+    cdStep++; showBanner("GO!"); SFX.great(); buzz(20);
+    fxWave(px, py + 0.08, pz, "#7dff8a", 4); fovKick = 5;
+    state = "playing";
+  }
+}
 function doJump(){
   if(state !== "playing" || jumpY > 0.05 || jumpV > 0) return;
   jumpV = 9.5; jumpY = 0.001;
@@ -3130,6 +3368,10 @@ function playUpdate(dt){
   const prevZ = pz;
   pz -= sp*dt;
   runPhase += sp*dt*1.3;
+  if(special === "rush"){
+    rushT -= dt;
+    if(rushT <= 0){ rushT = 0; timeUp(); return; }
+  }
   if(mode === "endless"){
     endDist += sp*dt;
     genEndless(pz - 230);
@@ -3215,6 +3457,10 @@ function playUpdate(dt){
   if(mode !== "endless"){
     setFill($("hudProg"), (4 - pz)/(L + 4));
     if(pz <= -L) startFinish();
+  } else if(special === "rush"){
+    const tl = Math.ceil(rushT);
+    $("hudDist").textContent = "⏱ " + Math.floor(tl/60) + ":" + String(tl%60).padStart(2,"0");
+    $("hudDist").classList.toggle("hurry", rushT < 10);
   } else $("hudDist").textContent = fmt(Math.floor(endDist)) + " m";
 }
 
@@ -3302,6 +3548,8 @@ function checkThieves(){
       popup("BOOM! x" + alive.length, "#ffe066", 2.9);
       fxBurst(e.x, 1.2, e.z, {n:22, tex:"star", cols:["#ffe066","#ffffff","#ff8a1f"], speed:5, up:4, grav:8, life:0.8, size:0.4});
       fxWave(e.x, 0.08, e.z, "#ffe066", 4);
+    } else if(special === "survival"){
+      run.hits++; SFX.steal(); screenFlash("bad"); fail("survival"); return;
     } else {
       const loss = Math.min(value, stealAmt()*alive.length);
       const before = value;
@@ -3443,7 +3691,7 @@ function updateProjectiles(dt){
         fxWave(0, 0.08, boss.z, "#ffc233", 10, 0.8);
         show($("bossBar"), false);
         projectiles.forEach(q=>scene.remove(q.m)); projectiles.length = 0;
-        setTimeout(()=>finishLevel("boss"), 900);
+        setTimeout(()=>{ if(gm === "bossrush") nextBoss(); else finishLevel("boss"); }, 900);
       }
     }
   }
@@ -3475,7 +3723,7 @@ function animateBoss(dt){
 }
 
 function animatePlayer(dt){
-  const moving = state==="playing" || state==="finish" || (state==="bossIntro" && pz > bossStopZ() + 0.05);
+  const moving = state==="playing" || state==="finish" || state==="countdown" || (state==="bossIntro" && pz > bossStopZ() + 0.05);
   let bob = 0;
   if(moving){
     const s = Math.sin(runPhase*2.4);
@@ -3643,10 +3891,10 @@ function refreshHud(){
   const fever = feverT > 0;
   const fill = fever ? (feverT/feverDur())*100 : (combo/FEVER_AT)*100;
   const gp = goal ? goalProg() : 0;
-  const sig = keysNow + "|" + shield + "|" + fever + "|" + Math.round(fill) + "|" + Math.ceil(magnetT) + "|" + Math.ceil(doubleT) + "|" + gp + "|" + run.hits;
+  const sig = keysNow + "|" + shield + "|" + fever + "|" + Math.round(fill) + "|" + Math.ceil(magnetT) + "|" + Math.ceil(doubleT) + "|" + gp + "|" + run.hits + "|" + state;
   if(sig === hudCache) return;
   hudCache = sig;
-  show($("goalChip"), !!goal);
+  show($("goalChip"), !!goal && state !== "boss" && state !== "bossIntro");
   if(goal){
     const met = goalMet(), live = goal.id !== "nohit" && goal.id !== "stairs";
     const failed = goal.id === "nohit" && run.hits > 0;
@@ -3762,7 +4010,10 @@ function refreshMenu(){
   const chalDone = save.chalDone === todayKey();
   $("modeDailySub").textContent = chalLocked ? "UNLOCKS AT LV 2" : chalDone ? "DONE · NEW TOMORROW" : todayMod().name;
   show($("dailyChalDot"), !chalLocked && !chalDone);
-  $("modeEndlessSub").textContent = endLocked ? "UNLOCKS AT LV 3" : "BEST " + fmt(save.endlessBest) + " m";
+  const openModes = GAME_MODES.filter(g=>lv >= g.unlock).length;
+  $("modeEndlessSub").textContent = endLocked ? "UNLOCKS AT LV 3" : openModes + "/" + GAME_MODES.length + " UNLOCKED";
+  const seen = save.tut.modesSeen || 0;
+  show($("modesDot"), !endLocked && openModes > seen);
   const canUp = UPGRADES.some(u=>U(u.id) < u.max && save.gold >= upCost(u));
   show($("upDot"), canUp);
   const canMis = save.missions.list.some(m=>m.prog >= m.goal && !m.claimed) || (save.missions.list.every(m=>m.claimed) && !save.missions.bonus);
@@ -3873,6 +4124,7 @@ const AURA_SHAPES = {
   flame:"M0-4c2 2 2.6 3.6 2.6 5A2.6 2.6 0 0 1-2.6 1C-2.6-.4-2-2 0-4z",
   flake:"M-3.5 0h7M-1.8-3 1.8 3M1.8-3-1.8 3",
   heart:"M0 3.4C-4 .6-3.6-3 0-1.4 3.6-3 4 .6 0 3.4z",
+  note:"M-1 2.4a1.6 1.2 0 1 0 .01 0zM.4 2.2V-3.4l2.6 1v1.2L.9-2",
   bubble:"M0-3a3 3 0 1 0 .01 0z",
 };
 function auraSvg(A){
@@ -3910,9 +4162,9 @@ function hatSvg(id){
   return `<svg class="fig" viewBox="0 0 38 46">${id==="none" ? "" : head}${hats[id]}</svg>`;
 }
 function wardrobeItems(){
-  if(skinSeg==="runners") return {list:SKINS, owned:save.owned, cur:save.skin, key:"skin", svg:s=>figSvg(s.color, s.fx), cost:s=>({cur:"gold", n:s.cost, pass:s.pass})};
-  if(skinSeg==="bars") return {list:BAR_SKINS, owned:save.bars, cur:save.bar, key:"bar", svg:s=>barSvg(s), cost:s=>({cur:"gems", n:s.cost, pass:s.pass})};
-  return {list:HATS, owned:save.hats, cur:save.hat, key:"hat", svg:s=>hatSvg(s.id), cost:s=>({cur:s.cur, n:s.cost, pass:s.pass})};
+  if(skinSeg==="runners") return {list:SKINS, owned:save.owned, cur:save.skin, key:"skin", svg:s=>figSvg(s.color, s.fx).replace(/<\/svg>$/, auraSvg(RUN_AURAS[s.id]) + "</svg>"), fxs:RUN_AURAS, cost:s=>({cur:"gold", n:s.cost, pass:s.pass})};
+  if(skinSeg==="bars") return {list:BAR_SKINS, owned:save.bars, cur:save.bar, key:"bar", svg:s=>barSvg(s), fxs:AURAS, cost:s=>({cur:"gems", n:s.cost, pass:s.pass})};
+  return {list:HATS, owned:save.hats, cur:save.hat, key:"hat", svg:s=>hatSvg(s.id).replace(/<\/svg>$/, auraSvg(HAT_FX[s.id]) + "</svg>"), fxs:HAT_FX, cost:s=>({cur:s.cur, n:s.cost, pass:s.pass})};
 }
 function previewLook(id){
   const W = {skin:save.skin, bar:save.bar, hat:save.hat};
@@ -3931,7 +4183,8 @@ function renderSkins(){
     b.className = "skin" + (on ? " on" : "") + (sel ? " sel" : "") + (!has ? " locked" : "");
     const price = `<span class="${wallet==="gems" ? "gem" : "coin"}"></span>${fmt(c.n)}`;
     const rar = s.r ? `<span class="rar" style="--rc:${RARITY[s.r].col}">${RARITY[s.r].name}</span>` : "";
-    const aur = skinSeg === "bars" && AURAS[s.id] ? `<div class="aur">&#10022; ${AURAS[s.id].name}</div>` : "";
+    const fxd = W.fxs[s.id];
+    const aur = fxd ? `<div class="aur">&#10022; ${fxd.name}</div>` : "";
     b.innerHTML = W.svg(s) + `<div class="nm">${s.name}</div>` + rar + aur +
       (on ? `<div class="pr" style="color:#2a9d44">ON</div>` :
        has ? `<div class="pr">EQUIP</div>` :
@@ -3993,8 +4246,8 @@ function passItem(r){
   return null;
 }
 function passRewardHtml(r){
-  if(r.skin){ const it = passItem(r); return figSvg(it.color, it.fx) + `<span class="pl">${it.name}</span>`; }
-  if(r.hat){ const it = passItem(r); return hatSvg(it.id) + `<span class="pl">${it.name}</span>`; }
+  if(r.skin){ const it = passItem(r); return figSvg(it.color, it.fx).replace(/<\/svg>$/, auraSvg(RUN_AURAS[it.id]) + "</svg>") + `<span class="pl">${it.name}</span>`; }
+  if(r.hat){ const it = passItem(r); return hatSvg(it.id).replace(/<\/svg>$/, auraSvg(HAT_FX[it.id]) + "</svg>") + `<span class="pl">${it.name}</span>`; }
   if(r.bar){ const it = passItem(r); return barSvg(it) + `<span class="pl">${it.name}</span>`; }
   if(r.box) return `<div class="pbox">${boxSvg(BOXES[r.box].col)}</div><span class="pl">${BOXES[r.box].name}</span>`;
   return `<span class="pv">${rewardHtml(r)}</span>`;
@@ -4012,33 +4265,54 @@ function grantPass(r, el){
   buzz(15);
   persist();
 }
+function passReady(){
+  const P = save.pass, t = passTier(), out = [];
+  for(let i=1;i<=t;i++){
+    if(!P.free.includes(i)) out.push(["free", i]);
+    if(P.premium && !P.prem.includes(i)) out.push(["prem", i]);
+  }
+  return out;
+}
+function claimPass(track, i, el){
+  const P = save.pass;
+  (track === "free" ? P.free : P.prem).push(i);
+  grantPass(passReward(track, i), el);
+}
 function renderPass(){
   ensurePass();
   const P = save.pass, t = passTier(), L = $("passList");
   $("passSeason").textContent = "SEASON " + P.season;
-  $("passTimer").textContent = "Ends in " + Math.ceil((seasonEnds() - Date.now())/864e5) + " days";
+  $("passTimer").textContent = "⏳ " + Math.ceil((seasonEnds() - Date.now())/864e5) + " DAYS LEFT";
   const into = t >= PASS_TIERS ? PASS_XP : P.xp - t*PASS_XP;
   $("passTierN").textContent = t;
-  $("passXp").textContent = t >= PASS_TIERS ? "MAX TIER" : fmt(into) + " / " + PASS_XP + " XP";
-  setFill($("passFill"), into/PASS_XP);
-  const pb = $("passBuy");
-  pb.hidden = P.premium; $("passGemBuy").hidden = P.premium; $("passOwned").hidden = !P.premium;
-  pb.textContent = "UNLOCK " + IAP.price(PRODUCTS.find(x=>x.id==="gold_pass"));
+  $("passXp").textContent = t >= PASS_TIERS ? "MAX TIER!" : fmt(into) + " / " + PASS_XP + " XP";
+  requestAnimationFrame(()=>setFill($("passFill"), into/PASS_XP));
+  const top = passItem(PASS_PREM[30]);
+  $("passFeature").innerHTML = barSvg(top) + "<em>TIER 30</em>";
+  $("passExcl").innerHTML = Object.values(PASS_PREM).filter(r=>passItem(r)).map(r=>{
+    const it = passItem(r);
+    return "<div>" + (r.skin ? figSvg(it.color, it.fx) : r.hat ? hatSvg(it.id) : barSvg(it)) + "</div>";
+  }).join("");
+  show($("passUpsell"), !P.premium); show($("passOwned"), P.premium);
+  $("passBuy").textContent = "UNLOCK " + IAP.price(PRODUCTS.find(x=>x.id==="gold_pass"));
   $("passGemBuy").innerHTML = `OR <span class="gem"></span> ${PASS_GEMS}`;
   $("passGemBuy").disabled = save.gems < PASS_GEMS;
+  const ready = passReady();
+  show($("passClaimAll"), ready.length > 1);
+  $("passClaimAll").textContent = "CLAIM ALL (" + ready.length + ")";
   L.innerHTML = "";
   for(let i=1;i<=PASS_TIERS;i++){
     const row = document.createElement("div");
-    row.className = "prow" + (i <= t ? " reached" : "") + (i === t + 1 ? " next" : "");
+    row.className = "prow" + (i <= t ? " reached" : "") + (i === t + 1 ? " next" : "") + (i % 10 === 0 ? " milestone" : "");
     const cell = (track, r) => {
       const claimed = (track === "free" ? P.free : P.prem).includes(i);
       const locked = track === "prem" && !P.premium;
-      const ready = i <= t && !claimed && !locked;
+      const isReady = i <= t && !claimed && !locked;
       const b = document.createElement("button");
-      b.className = "pcell " + track + (claimed ? " claimed" : "") + (ready ? " ready" : "") + (locked ? " locked" : "") + (passItem(r) ? " item" : "");
-      b.innerHTML = passRewardHtml(r) + (claimed ? '<i class="pchk">&#10003;</i>' : locked ? '<i class="plock">&#128274;</i>' : "");
+      b.className = "pcell " + track + (claimed ? " claimed" : "") + (isReady ? " ready" : "") + (locked ? " locked" : "") + (passItem(r) ? " item" : "");
+      b.innerHTML = passRewardHtml(r) + (passItem(r) ? '<i class="ptag">EXCLUSIVE</i>' : "") + (claimed ? '<i class="pchk">&#10003;</i>' : locked ? '<i class="plock">&#128274;</i>' : "");
       b.addEventListener("click", ()=>{
-        if(ready){ (track === "free" ? P.free : P.prem).push(i); grantPass(r, b); renderPass(); refreshMenu(); }
+        if(isReady){ claimPass(track, i, b); L._keepScroll = true; renderPass(); refreshMenu(); }
         else if(locked){ SFX.click(); toast("UNLOCK THE GOLD PASS FOR THIS REWARD"); }
         else { SFX.click(); if(!claimed) toast("REACH TIER " + i + " TO CLAIM"); }
       });
@@ -4049,8 +4323,15 @@ function renderPass(){
     L.appendChild(row);
   }
   const next = L.children[Math.max(0, t - 1)];
-  if(next) requestAnimationFrame(()=>{ L.scrollTop = Math.max(0, next.offsetTop - 70); });
+  if(next && !L._keepScroll) requestAnimationFrame(()=>{ L.scrollTop = Math.max(0, next.offsetTop - L.offsetTop - 8); });
+  L._keepScroll = false;
 }
+$("passClaimAll").addEventListener("click", ()=>{
+  const list = passReady();
+  list.forEach(([track, i])=>claimPass(track, i, $("passClaimAll")));
+  $("passList")._keepScroll = true;
+  renderPass(); refreshMenu();
+});
 $("passBtn").addEventListener("click", ()=>{ SFX.click(); showTab("Pass"); });
 $("passBuy").addEventListener("click", ()=>{ SFX.click(); IAP.buy(PRODUCTS.find(x=>x.id==="gold_pass")); });
 $("passGemBuy").addEventListener("click", ()=>{
@@ -4196,8 +4477,29 @@ $("chalGo").addEventListener("click", ()=>{ SFX.click(); show($("chalModal"), fa
 $("modeEndless").addEventListener("click", ()=>{
   SFX.click();
   if(save.level < 3){ toast("REACH LEVEL 3 TO UNLOCK", true); return; }
-  startRun("endless");
+  renderModes(); show($("modesModal"), true);
+  save.tut.modesSeen = GAME_MODES.filter(g=>save.level >= g.unlock).length; persist(); refreshMenu();
 });
+function renderModes(){
+  const list = $("modeList"); list.innerHTML = "";
+  GAME_MODES.forEach((g, i)=>{
+    const locked = save.level < g.unlock;
+    const c = document.createElement("button");
+    c.className = "mcard" + (locked ? " locked" : "");
+    c.style.setProperty("--mc", g.col); c.style.animationDelay = (i*0.05) + "s";
+    c.innerHTML = `<span class="mico"><svg viewBox="0 0 24 24">${g.icon}</svg></span>
+      <span class="minfo"><b class="display">${g.name}</b><span>${g.desc}</span>
+      <em>${locked ? "&#128274; UNLOCKS AT LEVEL " + g.unlock : "BEST: " + g.best()}</em></span>
+      <span class="mgo display">${locked ? "LV " + g.unlock : "PLAY"}</span>`;
+    c.addEventListener("click", ()=>{
+      if(locked){ SFX.click(); toast("REACH LEVEL " + g.unlock + " TO UNLOCK", true); return; }
+      SFX.click(); show($("modesModal"), false);
+      setTimeout(()=>startRun(g.id), 200);
+    });
+    list.appendChild(c);
+  });
+}
+$("modesClose").addEventListener("click", ()=>{ SFX.click(); show($("modesModal"), false); });
 $("endCollect").addEventListener("click", ()=>{
   const from = centerOf($("endGold"));
   grant({g:reward}, true);
@@ -4639,14 +4941,14 @@ window.addEventListener("keyup", e=>{
   if(e.key==="ArrowLeft" || e.key==="a") keys.left = false;
   if(e.key==="ArrowRight" || e.key==="d") keys.right = false;
 });
-document.addEventListener("visibilitychange", ()=>{ if(document.hidden && (state==="playing" || state==="boss")) pauseGame(); });
+document.addEventListener("visibilitychange", ()=>{ if(document.hidden && (state==="playing" || state==="boss" || state==="countdown")) pauseGame(); });
 
 let pausedFrom = "playing";
-function pauseGame(){ if(state !== "playing" && state !== "boss") return; pausedFrom = state; state = "paused"; show($("pauseModal"), true); }
+function pauseGame(){ if(state !== "playing" && state !== "boss" && state !== "countdown") return; pausedFrom = state; state = "paused"; show($("pauseModal"), true); }
 $("playBtn").addEventListener("click", ()=>{ SFX.click(); startRun("level"); });
 $("pauseBtn").addEventListener("click", ()=>{ SFX.click(); pauseGame(); });
 $("resumeBtn").addEventListener("click", ()=>{ SFX.click(); show($("pauseModal"), false); state = pausedFrom; });
-const restartSame = () => { const m = mode; toMenu(); startRun(m); };
+const restartSame = () => { const m = gm; toMenu(); startRun(m); };
 $("restartBtn").addEventListener("click", ()=>{ SFX.click(); show($("pauseModal"), false); restartSame(); });
 $("quitBtn").addEventListener("click", ()=>{ SFX.click(); toMenu(); });
 $("retryBtn").addEventListener("click", ()=>{ SFX.click(); show($("failModal"), false); restartSame(); });
@@ -4679,7 +4981,7 @@ function applyGfx(){
   renderer.setPixelRatio(dprCur);
   renderer.shadowMap.enabled = save.gfx; sun.castShadow = save.gfx;
   scene.traverse(o=>{ if(o.material){ (Array.isArray(o.material) ? o.material : [o.material]).forEach(m=>{ m.needsUpdate = true; }); } });
-  aura.id = null; applySkins();
+  aura.id = runAura.id = hatAura.id = null; applySkins();
   resize();
 }
 $("settingsBtn").addEventListener("click", ()=>{ SFX.click(); resetArmed = false; syncToggles(); show($("settingsModal"), true); });

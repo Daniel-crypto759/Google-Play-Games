@@ -44,9 +44,21 @@ where your gold came from.
 - **Daily Challenge** (from level 2) — a special level each day with a twist
   (Speed Rush, Mystery Madness, Trap Gauntlet, Thief Invasion, Golden
   Hour). First clear of the day pays +15 gems and bonus gold.
-- **Endless Run** (from level 3) — an infinite, ever-faster track. Gold
-  bank arches save 40% of your tower; you earn 0.35 gold per meter plus 25%
-  of what you banked. Beat your best distance.
+- **Game Modes** (the GAME MODES card on the home screen opens a sliding
+  mode picker; every mode starts with a 3-2-1 countdown and keeps a best
+  score):
+  - **Endless Run** (level 3) — an infinite, ever-faster track. Gold bank
+    arches save 40% of your tower; you earn 0.35 gold per meter plus 25% of
+    what you banked.
+  - **Gold Rush** (level 4) — 60 seconds on the clock; bars count double and
+    every blue gate adds +2 s. When time is up, 25% of your tower is paid out.
+  - **Gate Frenzy** (level 5) — a fast track of nothing but gates, lucky
+    slots, mystery doors and moving gates, ending at the multiplier stairs.
+  - **Survival** (level 6) — more traps, and one hit ends the run (shields
+    and Gold Fever still protect you); 0.6 gold per meter.
+  - **Boss Rush** (level 10) — a short run-up, then boss after boss. Each
+    beaten boss adds reinforcement bars and the next one is tougher; you are
+    paid per boss beaten.
 
 ### Gameplay
 
@@ -145,6 +157,15 @@ where your gold came from.
   Wizard hat, Devil Horns, and the Magma, Prism and Cosmic runners (animated
   glow, lava, rainbow and galaxy looks), plus the Plasma and Phoenix bars.
   Progress resets each season.
+- **Every cosmetic has an effect** — besides the gold-bar auras, each runner
+  skin has its own aura around the character (sparks, bubbles, flames,
+  hearts, shadow veil, Midas-touch orbit, rainbow spectrum, nebula...) and
+  each hat has a small effect (confetti, steam, snowflakes, music notes,
+  arcane stars, hellfire...). Effect names are shown on every wardrobe card.
+- **Gold Pass screen** — a golden hero banner with the tier shield, XP bar
+  and the tier-30 prize, an unlock card previewing all 7 exclusives, a
+  track with a filling center line, glowing EXCLUSIVE reward cards, CLAIM
+  ribbons on ready rewards and a CLAIM ALL button.
 - **More skins** — 5 new runner colors, Beanie, Chef and Pirate hats, and
   the Copper, Honey, Jade, Amethyst, Sakura and Void bars (each with its own
   aura). Pass exclusives show a PASS tag in the wardrobe and never drop from
