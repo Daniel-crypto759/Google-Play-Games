@@ -80,6 +80,17 @@ where your gold came from.
   traps.
 - **Pickups** — gold bars, gems (often in risky spots), keys; boost pads.
 - **Revive** for 10 gems once per run.
+- **Effects everywhere** — a pooled 3D particle system adds star bursts and
+  ground shockwaves on gates (bigger and golden for golden gates), sparkles
+  on every bar/gem/key pickup, dust puffs when running, jumping and
+  landing, dizzy stars and a red screen flash on hits, fire bursts when
+  Gold Fever smashes traps, bubble shards on shield blocks, dust clouds
+  from boulders, coin fountains from vault jackpots, confetti on every
+  stair step and a huge burst on a boss K.O. Gold Fever adds flames, a
+  spinning gold ring and speed streaks; boost pads add streaks too; Magnet
+  pulls in a swirl of sparkles and Double Bars fizzes green. The camera
+  punches in on big moments and the tower's gold counter pops when it
+  grows.
 - **Zones** — Meadow, Desert, Snow and Candy, switching every 5 levels.
 
 ### Main menu (Home / Upgrades / Skins / Missions / Trophies)

@@ -305,6 +305,10 @@
   @keyframes tap{50%{transform:scale(.8) translateY(6px)}}
   #feverGlow{position:absolute;inset:0;pointer-events:none;z-index:5;opacity:0;transition:opacity .3s;box-shadow:inset 0 0 70px 20px rgba(255,194,51,.75)}
   #slowmo{position:absolute;inset:0;pointer-events:none;z-index:5;opacity:0;transition:opacity .2s;box-shadow:inset 0 0 90px 30px rgba(61,139,255,.55)}
+  #flash{position:absolute;inset:0;pointer-events:none;z-index:6;opacity:0}
+  #flash.bad{box-shadow:inset 0 0 80px 26px rgba(255,40,60,.75);animation:flash .45s ease-out}
+  #flash.gold{box-shadow:inset 0 0 90px 30px rgba(255,210,60,.8);background:radial-gradient(circle,rgba(255,240,180,.25),rgba(255,240,180,0) 60%);animation:flash .5s ease-out}
+  @keyframes flash{0%{opacity:1}100%{opacity:0}}
 
   .toast{
     position:absolute;left:50%;top:calc(72px + env(safe-area-inset-top,0px));transform:translateX(-50%);z-index:55;
@@ -512,6 +516,7 @@
   <div id="pops"></div>
   <div id="feverGlow"></div>
   <div id="slowmo"></div>
+  <div id="flash"></div>
   <div id="banner" class="display outline"></div>
 
   <!-- ================= HUD ================= -->
@@ -1548,6 +1553,7 @@ for(let i=0;i<LAYERS_MAX;i++){
   layer.visible = false; layer.userData.s = 1;
   tower.add(layer); towerLayers.push(layer);
 }
+let labelPop = 0;
 const labelCanvas = document.createElement("canvas"); labelCanvas.width = 320; labelCanvas.height = 100;
 const labelTex = new THREE.CanvasTexture(labelCanvas);
 const label = new THREE.Sprite(new THREE.SpriteMaterial({map:labelTex, depthTest:false, transparent:true}));
@@ -1628,6 +1634,12 @@ function auraTex(kind){
       x.lineWidth = 4; x.beginPath(); x.arc(c, c, 27, 0, 7); x.stroke();
       for(let i=0;i<12;i++){ const a = i*Math.PI/6; x.beginPath(); x.arc(c + Math.cos(a)*21, c + Math.sin(a)*21, 2.6, 0, 7); x.fill(); }
       x.lineWidth = 2; x.setLineDash([6,5]); x.beginPath(); x.arc(c, c, 16, 0, 7); x.stroke();
+    } else if(kind==="wave"){
+      const g = x.createRadialGradient(c,c,14,c,c,31); g.addColorStop(0,"rgba(255,255,255,0)"); g.addColorStop(0.55,"rgba(255,255,255,.95)"); g.addColorStop(0.8,"rgba(255,255,255,.6)"); g.addColorStop(1,"rgba(255,255,255,0)");
+      x.fillStyle = g; x.fillRect(0,0,w,h);
+    } else if(kind==="streak"){
+      const g = x.createLinearGradient(0,0,0,h); g.addColorStop(0,"rgba(255,255,255,0)"); g.addColorStop(0.5,"rgba(255,255,255,1)"); g.addColorStop(1,"rgba(255,255,255,0)");
+      x.fillStyle = g; x.fillRect(c-5,0,10,h);
     } else if(kind==="rays"){
       for(let i=0;i<12;i++){
         const a = i*Math.PI/6, g = x.createLinearGradient(c, c, c + Math.cos(a)*32, c + Math.sin(a)*32);
@@ -1721,6 +1733,104 @@ function updateAura(dt){
     aura.rays.position.set(0, H*0.5, -0.3);
     aura.rays.scale.setScalar(H*1.3 + 1);
     aura.rays.material.rotation += dt*0.5;
+  }
+}
+
+/* ---------- world effects: pooled particles and shockwaves ---------- */
+const VFX_MAX = 160;
+const vfx = {parts:[], waves:[], mats:{}, free:[]};
+function vfxMat(tex, col){
+  const k = tex + col;
+  return vfx.mats[k] || (vfx.mats[k] = new THREE.SpriteMaterial({map:auraTex(tex), color:new THREE.Color(col), transparent:true, depthWrite:false}));
+}
+for(let i=0;i<VFX_MAX;i++){
+  const sp = new THREE.Sprite(vfxMat("soft", "#ffffff"));
+  sp.visible = false; sp.renderOrder = 4; scene.add(sp);
+  vfx.free.push({sp});
+}
+for(let i=0;i<8;i++){
+  const m = new THREE.Mesh(G.auraRingGeo, new THREE.MeshBasicMaterial({map:auraTex("wave"), transparent:true, depthWrite:false, side:THREE.DoubleSide}));
+  m.visible = false; m.renderOrder = 2; scene.add(m);
+  vfx.waves.push({m, t:1, dur:0.5, size:3});
+}
+// o: n, tex, cols, speed, up, grav, life, size, spread (xz jitter), drag, stretch
+function fxBurst(x, y, z, o){
+  const n = Math.round((o.n || 10) * (save.gfx ? 1 : 0.5));
+  for(let i=0;i<n;i++){
+    const q = vfx.free.pop(); if(!q) return;
+    const a = Math.random()*6.28, sp = (o.speed || 3)*(0.5 + Math.random()*0.7), sr = o.spread || 0;
+    q.sp.material = vfxMat(o.tex || "soft", o.cols[i % o.cols.length]);
+    q.sp.position.set(x + (Math.random()-0.5)*sr, y + (Math.random()-0.5)*sr*0.5, z + (Math.random()-0.5)*sr);
+    q.vx = Math.cos(a)*sp; q.vz = Math.sin(a)*sp*0.8; q.vy = (o.up != null ? o.up : 3)*(0.6 + Math.random()*0.8);
+    q.g = o.grav != null ? o.grav : 9; q.drag = o.drag || 1.5;
+    q.t = 0; q.life = (o.life || 0.7)*(0.7 + Math.random()*0.6);
+    q.s = (o.size || 0.3)*1.35*(0.7 + Math.random()*0.6); q.stretch = o.stretch || 1;
+    q.sp.material.rotation = 0;
+    q.sp.visible = true;
+    vfx.parts.push(q);
+  }
+}
+function fxWave(x, y, z, col, size, dur){
+  let w = vfx.waves.find(w=>w.t >= 1) || vfx.waves[0];
+  w.t = 0; w.dur = dur || 0.45; w.size = size || 3.2;
+  w.m.material.color.set(col); w.m.position.set(x, y, z); w.m.visible = true;
+}
+const feverRing = new THREE.Mesh(G.auraRingGeo, new THREE.MeshBasicMaterial({map:auraTex("ring"), color:0xffc233, transparent:true, depthWrite:false, side:THREE.DoubleSide}));
+feverRing.visible = false; scene.add(feverRing);
+let powFxT = 0;
+const feetPos = () => tmpFx.set(px, py + jumpY + towerH + 0.05, pz);
+const headPos = () => tmpFx.set(px, py + jumpY + towerH + 1.8, pz);
+const tmpFx = new THREE.Vector3();
+function fxAt(v, o){ fxBurst(v.x, v.y, v.z, o); }
+let dustT = 0, emberT = 0;
+function updateVfx(dt){
+  for(let i=vfx.parts.length-1;i>=0;i--){
+    const q = vfx.parts[i];
+    q.t += dt;
+    if(q.t >= q.life){ q.sp.visible = false; vfx.parts.splice(i,1); vfx.free.push(q); continue; }
+    const f = Math.exp(-q.drag*dt);
+    q.vx *= f; q.vz *= f; q.vy = q.vy*f - q.g*dt;
+    q.sp.position.x += q.vx*dt; q.sp.position.y += q.vy*dt; q.sp.position.z += q.vz*dt;
+    const k = q.t/q.life, sc = q.s*(k < 0.15 ? k/0.15 : 1 - (k - 0.15)/0.85);
+    q.sp.scale.set(sc, sc*q.stretch, 1);
+  }
+  for(const w of vfx.waves){
+    if(w.t >= 1) continue;
+    w.t = Math.min(1, w.t + dt/w.dur);
+    const e = 1 - Math.pow(1 - w.t, 3);
+    w.m.scale.setScalar(0.2 + e*w.size/2.4);
+    w.m.material.opacity = 1 - w.t;
+    if(w.t >= 1) w.m.visible = false;
+  }
+  // fever ring, power-up swirls, running dust, fever embers and speed streaks
+  feverRing.visible = feverT > 0 && state === "playing";
+  if(feverRing.visible){
+    feverRing.position.set(px, py + 0.06, pz);
+    feverRing.rotation.y += dt*4;
+    feverRing.scale.setScalar(1.25 + 0.12*Math.sin(time*10));
+  }
+  powFxT -= dt;
+  if(state === "playing" && powFxT <= 0 && (magnetT > 0 || doubleT > 0)){
+    powFxT = 0.07;
+    if(magnetT > 0){
+      const a = Math.random()*6.28, r = 2.6;
+      fxBurst(px + Math.cos(a)*r, py + towerH*0.5 + 0.4 + Math.random()*1.2, pz + Math.sin(a)*r*0.7, {n:1, tex:"star", cols:["#ff8a9a","#ffffff"], speed:0, up:0, grav:0, life:0.4, size:0.3});
+      const q = vfx.parts[vfx.parts.length-1]; if(q){ q.vx = -Math.cos(a)*r/0.4; q.vz = -Math.sin(a)*r*0.7/0.4; q.drag = 0; }
+    }
+    if(doubleT > 0) fxBurst(px + (Math.random()-0.5)*0.9, py + jumpY + Math.random()*towerH + 0.2, pz, {n:1, tex:"star", cols:["#7df0de","#ffffff"], speed:0.4, up:1.8, grav:0, life:0.6, size:0.28});
+  }
+  if(state === "playing" && save.gfx){
+    dustT -= dt;
+    if(dustT <= 0 && jumpY < 0.05){ dustT = 0.13; fxBurst(px + (Math.random()-0.5)*0.4, py + 0.1, pz + 0.3, {n:1, cols:["#e9eef8"], speed:0.6, up:1, grav:0, life:0.5, size:0.45, drag:3}); }
+    emberT -= dt;
+    if(emberT <= 0 && (feverT > 0 || boostT > 0)){
+      emberT = 0.05;
+      if(feverT > 0) fxBurst(px + (Math.random()-0.5)*0.8, py + jumpY + towerH*Math.random() + 0.3, pz + 0.3, {n:2, tex:"flame", cols:["#ffd24d","#ff8a1f","#ff4d1f"], speed:0.5, up:2.5, grav:-2, life:0.45, size:0.45, stretch:1.4});
+      const sx = px + (Math.random() < 0.5 ? -1 : 1)*(1.3 + Math.random()*1.8);
+      fxBurst(sx, py + 0.4 + Math.random()*2.6, pz - 3, {n:1, tex:"streak", cols:[feverT > 0 ? "#ffe066" : "#9dffb0"], speed:0, up:0, grav:0, life:0.3, size:0.35, stretch:6});
+      const last = vfx.parts[vfx.parts.length-1];
+      if(last && last.stretch === 6){ last.vz = 22; last.vx = 0; last.vy = 0; }
+    }
   }
 }
 
@@ -2249,6 +2359,8 @@ function shiftWorld(dz){
   levelGroup.children.forEach(c=>{ c.position.z += dz; });
   flyers.forEach(f=>{ f.from.z += dz; });
   debris.forEach(d=>{ d.m.position.z += dz; });
+  vfx.parts.forEach(q=>{ q.sp.position.z += dz; });
+  vfx.waves.forEach(w=>{ w.m.position.z += dz; });
   pz += dz; genZ += dz;
   camPos.z += dz; camLook.z += dz;
 }
@@ -2309,6 +2421,10 @@ function showBanner(text, sub){
   if(sub){ const sp = document.createElement("span"); sp.className = "bsub"; sp.textContent = sub; b.appendChild(sp); }
   b.classList.remove("show"); void b.offsetWidth; b.classList.add("show");
 }
+function screenFlash(kind){
+  const f = $("flash");
+  f.className = ""; void f.offsetWidth; f.className = kind;
+}
 function toast(text, bad){
   const t = document.createElement("div");
   t.className = "toast" + (bad ? " bad" : ""); t.textContent = text;
@@ -2342,6 +2458,8 @@ function startFever(){
   run.fevers++; save.stats.fevers++; mprog("fever");
   showBanner("GOLD FEVER!");
   SFX.fever(); buzz([30,40,30]);
+  fxAt(headPos().setY(py + jumpY + towerH + 1), {n:30, tex:"flame", cols:["#ffe066","#ff8a1f","#ff4d1f"], speed:5, up:5, grav:4, life:0.9, size:0.5, stretch:1.4});
+  fxWave(px, py + 0.08, pz, "#ffb300", 6, 0.6); fovKick = 8; screenFlash("gold");
   shake = 0.25;
 }
 const stat = (k, n) => { save.stats[k] += (n||1); };
@@ -2389,12 +2507,17 @@ function applyGate(o, g){
       } else if(value < alt) bestStreak = 0;
     }
   }
+  const gp = headPos().clone();
   if(delta >= 0){
     run.good++; stat("gates"); mprog("gates");
     addCombo(o.gold ? 6 : 3);
-    if(o.gold){ SFX.great(); shake = 0.2; } else SFX.good();
+    if(o.gold){ SFX.great(); shake = 0.2; fovKick = 7; screenFlash("gold"); } else SFX.good();
     buzz(15);
+    fxAt(gp, {n:o.gold ? 26 : 14, tex:"star", cols:o.gold ? ["#ffe066","#ffffff","#ffb300"] : ["#7ab8ff","#ffffff","#7dff8a"], speed:o.gold ? 5 : 3.5, up:3, grav:6, life:0.8, size:o.gold ? 0.45 : 0.35, spread:0.8});
+    fxWave(px, py + 0.08, pz, o.gold ? "#ffc233" : "#6fb3ff", o.gold ? 5 : 3.4);
   } else {
+    fxAt(gp, {n:12, tex:"soft", cols:["#ff4d5e","#ff9aa5"], speed:3, up:1.5, grav:8, life:0.6, size:0.35, spread:0.8});
+    screenFlash("bad");
     combo = Math.max(0, combo - 8); hurtT = 0.5;
     SFX.bad(); buzz(40);
     spawnDebris(Math.min(10, 2 + 2*(layersFor(before) - layersFor(value))));
@@ -2407,6 +2530,8 @@ function trapHit(o, pct, label){
     o.hit = true; o.smashed = true;
     SFX.smash(); shake = 0.3; buzz(25);
     popup("SMASH!", "#ffe066", 2.8);
+    fxAt(headPos().setY(py + jumpY + towerH*0.5 + 0.6).setZ(pz - 0.8), {n:20, tex:"flame", cols:["#ffd24d","#ff8a1f","#ffffff"], speed:6, up:4, grav:10, life:0.6, size:0.4});
+    fxWave(px, py + 0.08, pz - 0.8, "#ff8a1f", 4);
     return false;
   }
   if(invulnT > 0){ o.hit = true; return false; }
@@ -2414,6 +2539,8 @@ function trapHit(o, pct, label){
     o.hit = true; shield--;
     SFX.block(); buzz(20);
     popup("BLOCKED!", "#8fd0ff", 2.8);
+    fxAt(headPos().setY(py + jumpY + towerH + 1.1), {n:16, tex:"bubble", cols:["#8fd0ff","#ffffff"], speed:4, up:2, grav:3, life:0.6, size:0.35});
+    fxWave(px, py + jumpY + towerH + 0.1, pz, "#8fd0ff", 3.5);
     bubble.scale.setScalar(1.5);
     return false;
   }
@@ -2424,6 +2551,9 @@ function trapHit(o, pct, label){
   run.hits++; combo = 0; hurtT = 0.7;
   SFX.hit(); buzz(70);
   shake = 0.4; slowT = 0.4; flashT = 0.35;
+  screenFlash("bad");
+  fxAt(headPos().setY(py + jumpY + towerH + 2.1), {n:8, tex:"star", cols:["#ffe066","#ffffff"], speed:2.2, up:1.5, grav:0, drag:2, life:0.9, size:0.32});
+  fxAt(feetPos(), {n:10, tex:"soft", cols:["#d9dfea","#b9c3d3"], speed:3, up:1.5, grav:3, life:0.6, size:0.5});
   spawnDebris(Math.min(12, 3 + 2*(layersFor(before) - layersFor(value))));
   popup((label ? label + " " : "") + "-" + fmt(loss), "#ff6b7a");
   if(value <= 0) fail();
@@ -2513,6 +2643,8 @@ function fail(reason){
   feverT = 0; timeScale = 1; $("feverGlow").style.opacity = "0"; $("slowmo").style.opacity = "0";
   hideHint();
   SFX.fail(); buzz([60,40,60]);
+  fxAt(feetPos(), {n:18, tex:"soft", cols:["#ffffff","#d9dfea","#b9c3d3"], speed:3, up:2, grav:1, life:0.9, size:0.7, drag:2});
+  screenFlash("bad");
   spawnDebris(Math.min(12, 2 + Math.round(shownLayers)*2));
   saveRunStats();
   setTimeout(()=>{
@@ -2670,6 +2802,8 @@ function update(rawDt){
         if(o.y <= 0.7){
           o.y = 0.7; o.falling = false; o.landed = true; o.ring.visible = false;
           if(Math.abs(pz - o.z) < 30){ shake = Math.max(shake, 0.18); SFX.thud(); }
+          fxBurst(o.x, 0.3, o.z, {n:14, tex:"soft", cols:["#c9b8a0","#a8957c","#e6dccb"], speed:3.5, up:1.5, grav:3, life:0.8, size:0.7, drag:3});
+          fxWave(o.x, 0.06, o.z, "#c9b8a0", 3.2);
         }
         o.group.position.y = o.y;
       }
@@ -2738,6 +2872,7 @@ function update(rawDt){
   animatePlayer(dt);
   barFx();
   updateAura(dt);
+  updateVfx(dt);
   updateStack(dt);
   updateDebris(dt);
   updateCamera(dt);
@@ -2753,12 +2888,18 @@ function collect(b){
     stat("bars"); mprog("bars"); addCombo(1);
     SFX.coin();
     popup("+"+v, "#ffe066", 2.2, "small");
+    fxAt(b.mesh.position, {n:4, tex:"star", cols:["#ffe066","#ffffff"], speed:1.8, up:2.5, grav:4, life:0.45, size:0.3});
+    labelPop = 1;
   } else if(b.type==="gem"){
     run.gems++; SFX.gem(); buzz(20);
     popup("+1 GEM", "#8fe6ff", 2.6);
+    fxAt(b.mesh.position, {n:12, tex:"star", cols:["#8fe6ff","#ffffff","#3db8ff"], speed:3.5, up:3, grav:5, life:0.7, size:0.35});
+    fxWave(b.mesh.position.x, 0.08, b.mesh.position.z, "#5fd6ff", 2.4);
   } else {
     run.keys++; SFX.key(); buzz([20,30,20]);
     popup("KEY!", "#ffe066", 2.8, "big");
+    fxAt(b.mesh.position, {n:18, tex:"star", cols:["#ffe066","#ffffff"], speed:4, up:4, grav:6, life:0.8, size:0.4});
+    fxWave(b.mesh.position.x, 0.08, b.mesh.position.z, "#ffc233", 3); screenFlash("gold");
   }
 }
 function openVault(v){
@@ -2775,15 +2916,20 @@ function openVault(v){
   const keysNow = save.keys + run.keys;
   if(r < 0.18){
     popup("EMPTY!", "#ff6b7a", 2.9, "big"); SFX.bad(); buzz(40);
+    fxBurst(v.x, 1.4, v.z, {n:14, tex:"soft", cols:["#9aa4b8","#c9d0dc"], speed:2.5, up:2, grav:2, life:0.9, size:0.6});
     spawnDebris(3);
   } else if(r < 0.52){
     run.gems += 2; popup("+2 GEMS", "#8fe6ff", 2.9, "big"); SFX.gem(); buzz(20);
+    fxBurst(v.x, 1.4, v.z, {n:20, tex:"star", cols:["#8fe6ff","#ffffff"], speed:3.5, up:5, grav:8, life:0.9, size:0.4});
   } else if(r < 0.7 && keysNow < 3){
     run.keys++; popup("KEY!", "#ffe066", 2.9, "big"); SFX.key(); buzz([20,30,20]);
+    fxBurst(v.x, 1.4, v.z, {n:20, tex:"star", cols:["#ffe066","#ffffff"], speed:3.5, up:5, grav:8, life:0.9, size:0.4});
   } else {
     const win = Math.round(v.cost*2.5);
     value += win; run.peak = Math.max(run.peak, value);
     showBanner("JACKPOT!", "+" + fmt(win) + " GOLD"); SFX.great(); shake = 0.2; buzz([20,40,20]);
+    fxBurst(v.x, 1.4, v.z, {n:36, tex:"star", cols:["#ffe066","#ffc233","#ffffff"], speed:4, up:7, grav:12, life:1.1, size:0.45});
+    fxWave(v.x, 0.08, v.z, "#ffc233", 5); screenFlash("gold");
   }
   addCombo(2);
   if(before > 0 && value <= 0) fail();
@@ -2792,6 +2938,7 @@ function doJump(){
   if(state !== "playing" || jumpY > 0.05 || jumpV > 0) return;
   jumpV = 9.5; jumpY = 0.001;
   SFX.jump(); buzz(10);
+  fxAt(feetPos().setY(py + 0.1), {n:8, tex:"soft", cols:["#ffffff","#dfe7f4"], speed:2.5, up:0.8, grav:1, life:0.5, size:0.45, drag:4});
   if(timeScale < 1){ timeScale = 1; $("slowmo").style.opacity = "0"; hideHint(); save.tut.jump = true; persist(); }
 }
 
@@ -2812,7 +2959,7 @@ function playUpdate(dt){
   // jump physics
   if(jumpY > 0 || jumpV > 0){
     jumpY += jumpV*dt; jumpV -= 28*dt;
-    if(jumpY <= 0){ jumpY = 0; jumpV = 0; landT = 0.22; SFX.land(); }
+    if(jumpY <= 0){ jumpY = 0; jumpV = 0; landT = 0.22; SFX.land(); fxAt(tmpFx.set(px, py + 0.1, pz), {n:10, tex:"soft", cols:["#ffffff","#dfe7f4"], speed:3.5, up:0.6, grav:1, life:0.45, size:0.45, drag:4}); fxWave(px, py + 0.06, pz, "#ffffff", 2.6, 0.35); }
   }
   const prevZ = pz;
   pz -= sp*dt;
@@ -2839,6 +2986,7 @@ function playUpdate(dt){
       SFX.boost(); buzz(20); addCombo(2);
       run.jumps++; stat("jumps"); mprog("jumps");
       popup("WHEEE!", "#7dff8a", 3, "big");
+      fxAt(feetPos(), {n:16, tex:"star", cols:["#7dff8a","#ffe066","#ffffff"], speed:3, up:3, grav:5, life:0.8, size:0.35});
     }
   }
   for(const b of boosts){
@@ -2846,6 +2994,7 @@ function playUpdate(dt){
       b.done = true; boostT = 1.3;
       SFX.boost(); buzz(15); addCombo(2);
       popup("BOOST!", "#7dff8a", 2.8);
+      fxWave(b.x, 0.08, b.z, "#2fd07a", 3.6); fovKick = 5;
     }
   }
   for(const v of vaults){
@@ -2869,6 +3018,8 @@ function playUpdate(dt){
     p.taken = true; p.mesh.visible = false;
     run.pows++; mprog("powers");
     SFX.pow(); buzz(20); addCombo(2);
+    fxAt(p.mesh.position, {n:18, tex:"star", cols:[POW_COL[p.kind], "#ffffff"], speed:4, up:3, grav:4, life:0.8, size:0.4});
+    fxWave(p.x, py + 0.08, p.z, POW_COL[p.kind], 4);
     if(p.kind === "magnet"){ magnetT = powDur(); popup("MAGNET!", "#ff8a9a", 2.9); }
     else if(p.kind === "double"){ doubleT = powDur(); popup("DOUBLE BARS!", "#7df0de", 2.9); }
     else { shield = Math.min(5, shield + 1); bubble.scale.setScalar(1.5); popup("SHIELD +1", "#8fd0ff", 2.9); }
@@ -2983,6 +3134,8 @@ function checkThieves(){
       run.thieves += alive.length; stat("thieves", alive.length); mprog("thieves", alive.length);
       SFX.smash(); shake = 0.25; buzz(25); addCombo(3);
       popup("BOOM! x" + alive.length, "#ffe066", 2.9);
+      fxBurst(e.x, 1.2, e.z, {n:22, tex:"star", cols:["#ffe066","#ffffff","#ff8a1f"], speed:5, up:4, grav:8, life:0.8, size:0.4});
+      fxWave(e.x, 0.08, e.z, "#ffe066", 4);
     } else {
       const loss = Math.min(value, stealAmt()*alive.length);
       const before = value;
@@ -2995,6 +3148,7 @@ function checkThieves(){
       SFX.steal(); buzz(50); flashT = 0.3;
       spawnDebris(Math.min(8, 2 + 2*(layersFor(before) - layersFor(value))));
       popup("STOLEN -" + fmt(loss), "#ff6b7a");
+      screenFlash("bad");
       if(value <= 0) fail();
       if(state !== "playing") return;
     }
@@ -3044,6 +3198,9 @@ function finishUpdate(dt){
       stepIdx++;
       value -= cost;
       SFX.step(stepIdx); buzz(12);
+      fxBurst(0, next.top + 0.3, next.zFront - 0.8, {n:10 + stepIdx*2, tex:"star", cols:["#ff5a5a","#ffc93c","#3ddc97","#4d8bff","#d66bff"], speed:3 + stepIdx*0.3, up:4, grav:8, life:0.8, size:0.35, spread:3});
+      fxWave(0, next.top + 0.05, next.zFront - 1.2, "#ffffff", 3 + stepIdx*0.3);
+      if(stepIdx >= 6) fovKick = 3;
       popup("x"+next.mult, "#ffe066", 2.6);
       for(let k=0;k<3;k++){
         const m = new THREE.Mesh(G.bar, G.barMat);
@@ -3109,12 +3266,15 @@ function updateProjectiles(dt){
       const dmg = Math.round(p.dmg*(crit ? 2 : 1));
       boss.hp -= dmg; boss.hitT = 0.12;
       SFX.bhit(); buzz(8);
+      fxBurst(p.to.x, p.to.y, p.to.z, {n:crit ? 16 : 7, tex:"star", cols:crit ? ["#ffe066","#ffffff"] : ["#ffffff","#ffd0a0"], speed:crit ? 5 : 3, up:2, grav:6, life:0.5, size:crit ? 0.5 : 0.35});
       popupAt(tmpA.set(p.to.x, p.to.y + 0.6, p.to.z), (crit ? "CRIT " : "-") + fmt(dmg), crit ? "#ffe066" : "#ff9aa5", crit ? "big" : "small");
       updateBossBar();
       if(boss.hp <= 0 && !boss.dead){
         boss.dead = true; boss.t = 0;
         SFX.roar(); shake = 0.6; buzz([40,40,80]);
-        showBanner("K.O.!");
+        showBanner("K.O.!"); screenFlash("gold"); fovKick = 8;
+        fxBurst(0, 4, boss.z, {n:60, tex:"star", cols:["#ffe066","#ff8a1f","#ffffff","#ff4d6d"], speed:8, up:8, grav:10, life:1.3, size:0.6, spread:2});
+        fxWave(0, 0.08, boss.z, "#ffc233", 10, 0.8);
         show($("bossBar"), false);
         projectiles.forEach(q=>scene.remove(q.m)); projectiles.length = 0;
         setTimeout(()=>finishLevel("boss"), 900);
@@ -3248,7 +3408,10 @@ function updateStack(dt){
   });
   towerH += (n*LAYER_H - towerH) * damp(14, dt);
   const lv = Math.round(value);
-  if(lv !== lastLabel){ drawLabel(lv); lastLabel = lv; }
+  if(lv !== lastLabel){ if(lv > lastLabel && lastLabel >= 0) labelPop = Math.max(labelPop, 0.6); drawLabel(lv); lastLabel = lv; }
+  labelPop = Math.max(0, labelPop - dt*4);
+  const lp = 1 + 0.3*Math.sin(labelPop*Math.PI)*labelPop;
+  label.scale.set(2.3*lp, 0.72*lp, 1);
   label.visible = state !== "failed" && !(state==="menu" && curTab==="Skins");
 }
 
@@ -3262,7 +3425,7 @@ function updateDebris(dt){
   }
 }
 
-let baseFov = 60;
+let baseFov = 60, fovKick = 0;
 function updateCamera(dt){
   let ox = px*0.35, oy = 6.3, oz = 8.6, look = 6.5, lx = px*0.2, ly = 1.1 + towerH*0.5;
   if(state==="menu"){
@@ -3286,7 +3449,8 @@ function updateCamera(dt){
     camera.position.y += (Math.random()-0.5)*shake*0.8;
   }
   camera.lookAt(camLook);
-  const wantFov = baseFov + ((boostT > 0 || feverT > 0) && state==="playing" ? 9 : 0);
+  fovKick = Math.max(0, fovKick - dt*14);
+  const wantFov = baseFov + ((boostT > 0 || feverT > 0) && state==="playing" ? 9 : 0) + fovKick;
   if(Math.abs(camera.fov - wantFov) > 0.05){ camera.fov += (wantFov - camera.fov)*damp(4, dt); camera.updateProjectionMatrix(); }
   sun.position.set(px + 6, py + 16, pz + 8);
   sun.target.position.set(px, py, pz - 4);
