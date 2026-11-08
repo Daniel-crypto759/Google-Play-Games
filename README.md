@@ -1,5 +1,10 @@
 # Google Play Games
 
+> **New: [Study AI](study-ai/)**, a black-and-neon-white homework AI for
+> school and college. It works as a website and as an installable app, scans
+> exercises with the camera, and speaks 16 languages. See
+> [`study-ai/README.md`](study-ai/README.md).
+
 Two self-contained HTML5 games — each a single `.html` file (Canvas +
 vanilla JS, no build step, no dependencies), so each opens and plays
 directly in any modern browser, desktop or mobile.

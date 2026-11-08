@@ -1,0 +1,17 @@
+{
+  "name": "study-ai",
+  "version": "1.0.0",
+  "description": "Study AI: a homework solver for school and college that also installs as an app.",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "demo": "STUDY_AI_MOCK=1 node server.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^1.6.0"
+  }
+}
